@@ -64,8 +64,8 @@ a{color:inherit;text-decoration:none}
 /* ═══════════════════════════════════════════
    CURSOR
 ═══════════════════════════════════════════ */
-#dot{position:fixed;width:8px;height:8px;background:var(--green);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .1s}
-#ring{position:fixed;width:32px;height:32px;border:1.5px solid var(--green);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.4;transition:opacity .2s}
+#dot{position:fixed;width:8px;height:8px;background:var(--green);border-radius:50%;pointer-events:none;z-index:139139;transform:translate(-50%,-50%);transition:transform .1s}
+#ring{position:fixed;width:32px;height:32px;border:1.5px solid var(--green);border-radius:50%;pointer-events:none;z-index:13998;transform:translate(-50%,-50%);opacity:.4;transition:opacity .2s}
 @media(hover:none){#dot,#ring{display:none}}
 
 /* ═══════════════════════════════════════════
@@ -123,7 +123,7 @@ nav{
 
 /* mobile menu */
 .mob-menu{
-  position:fixed;inset:0;top:64px;background:var(--bg);z-index:399;
+  position:fixed;inset:0;top:64px;background:var(--bg);z-index:3139;
   display:none;flex-direction:column;gap:0;padding:1rem 4vw;
   border-top:1px solid var(--border);
 }
@@ -475,12 +475,12 @@ h1.hero-headline .outline{
 /* plan-specific tints */
 .ex-card.basic .ex-ms-hero{background:rgba(59,130,246,.1)}
 .ex-card.basic .ex-ms-avatar{background:linear-gradient(135deg,#3b82f6,#6366f1)}
-.ex-card.basic .ex-ms-line{background:rgba(99,102,241,.2)}
+.ex-card.basic .ex-ms-line{background:rgba(139,102,241,.2)}
 .ex-card.animated .ex-ms-hero{background:rgba(0,232,122,.08)}
 .ex-card.animated .ex-ms-avatar{background:linear-gradient(135deg,var(--green),#00b8ff)}
 .ex-card.animated .ex-ms-line{background:rgba(0,232,122,.2)}
 .ex-card.premium .ex-ms-hero{background:rgba(168,85,247,.1)}
-.ex-card.premium .ex-ms-avatar{background:linear-gradient(135deg,#a855f7,#ec4899)}
+.ex-card.premium .ex-ms-avatar{background:linear-gradient(135deg,#a855f7,#ec48139)}
 .ex-card.premium .ex-ms-line{background:rgba(168,85,247,.2)}
 /* overlay badge */
 .ex-overlay{
@@ -515,13 +515,13 @@ h1.hero-headline .outline{
 .ex-btn.basic-btn{
   background:linear-gradient(135deg,#3b82f6,#6366f1);color:#fff;
 }
-.ex-btn.basic-btn:hover{box-shadow:0 0 22px rgba(99,102,241,.4);transform:translateY(-2px)}
+.ex-btn.basic-btn:hover{box-shadow:0 0 22px rgba(139,102,241,.4);transform:translateY(-2px)}
 .ex-btn.animated-btn{
   background:linear-gradient(135deg,var(--green),#00b8ff);color:#000;
 }
 .ex-btn.animated-btn:hover{box-shadow:0 0 22px rgba(0,232,122,.35);transform:translateY(-2px)}
 .ex-btn.premium-btn{
-  background:linear-gradient(135deg,#a855f7,#ec4899);color:#fff;
+  background:linear-gradient(135deg,#a855f7,#ec48139);color:#fff;
 }
 .ex-btn.premium-btn:hover{box-shadow:0 0 22px rgba(168,85,247,.4);transform:translateY(-2px)}
 .ex-btn svg{width:13px;height:13px;fill:currentColor;flex-shrink:0}
@@ -704,7 +704,7 @@ h1.hero-headline .outline{
 .theme-design .gs-hero{background:#1a0f00}.gs-avatar.des{background:linear-gradient(135deg,#f97316,#ef4444)}
 .theme-minimal .gs-hero{background:#111111}.gs-avatar.min{background:#e5e5e5}
 .theme-creative .gs-hero{background:#0a1a0f}.gs-avatar.cre{background:linear-gradient(135deg,var(--green),#00b8ff)}
-.theme-student .gs-hero{background:#12001a}.gs-avatar.stu{background:linear-gradient(135deg,#a855f7,#ec4899)}
+.theme-student .gs-hero{background:#12001a}.gs-avatar.stu{background:linear-gradient(135deg,#a855f7,#ec48139)}
 .theme-startup .gs-hero{background:#1a1000}.gs-avatar.sta{background:linear-gradient(135deg,#fbbf24,#f97316)}
 .gal-info{padding:1.25rem}
 .gal-type{font-family:var(--font-mono);font-size:.68rem;color:var(--green);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem}
@@ -929,6 +929,224 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 4vw
 .footer-copy{font-size:.77rem;color:var(--text3)}
 .footer-copy a{color:var(--green)}
 .footer-mono{font-family:var(--font-mono);font-size:.7rem;color:var(--text3);opacity:.5}
+
+/* ═══════════════════════════════════════════
+   LAUNCH OFFER SECTION
+═══════════════════════════════════════════ */
+.offer-sec{
+  background:var(--bg2);
+  border-bottom:1px solid var(--border);
+  padding:5rem 4vw;
+  position:relative;
+  overflow:hidden;
+}
+.offer-sec::before{
+  content:'';
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 80% at 80% 50%, rgba(0,232,122,.06) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 10% 50%, rgba(0,232,122,.04) 0%, transparent 70%);
+  pointer-events:none;
+}
+.offer-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:4rem;
+  align-items:center;
+  position:relative;z-index:1;
+}
+@media(max-width:860px){.offer-grid{grid-template-columns:1fr;gap:2.5rem}}
+
+/* Left column */
+.offer-left{}
+.offer-eyebrow{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:rgba(255,71,87,.12);border:1px solid rgba(255,71,87,.3);
+  padding:.3rem .9rem;border-radius:100px;
+  font-family:var(--font-mono);font-size:.68rem;color:var(--red);
+  letter-spacing:.08em;text-transform:uppercase;margin-bottom:1.5rem;
+}
+.offer-eyebrow .pulse-dot{
+  width:6px;height:6px;border-radius:50%;background:var(--red);
+  animation:blink 1.2s ease infinite;
+}
+.offer-headline{
+  font-family:var(--font-display);
+  font-size:clamp(2.5rem,5vw,5rem);
+  letter-spacing:.03em;line-height:.9;
+  color:var(--text);
+  margin-bottom:1.25rem;
+}
+.offer-headline .price-tag{
+  color:var(--green);
+  position:relative;
+  display:inline-block;
+}
+.offer-headline .crossed{
+  color:var(--text3);
+  text-decoration:line-through;
+  text-decoration-color:var(--red);
+  font-size:60%;
+  vertical-align:middle;
+  margin-right:.2em;
+}
+.offer-desc{
+  font-size:.95rem;font-weight:300;color:var(--text2);line-height:1.8;
+  max-width:460px;margin-bottom:2rem;
+}
+.offer-desc strong{color:var(--text);font-weight:700}
+.offer-ctas{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:2rem}
+.offer-btn-primary{
+  background:var(--green);color:#000;
+  padding:.9rem 2.5rem;border-radius:var(--r);
+  font-size:.9rem;font-weight:800;letter-spacing:.04em;
+  display:inline-flex;align-items:center;gap:.5rem;
+  transition:box-shadow .2s,transform .2s;border:none;cursor:pointer;
+  position:relative;overflow:hidden;
+}
+.offer-btn-primary::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.15) 0%,transparent 60%);
+}
+.offer-btn-primary:hover{box-shadow:0 0 40px rgba(0,232,122,.4);transform:translateY(-2px)}
+.offer-btn-secondary{
+  background:transparent;border:1px solid var(--border);color:var(--text2);
+  padding:.9rem 1.75rem;border-radius:var(--r);
+  font-size:.88rem;font-weight:600;
+  transition:border-color .2s,color .2s;cursor:pointer;
+  display:inline-flex;align-items:center;gap:.5rem;
+}
+.offer-btn-secondary:hover{border-color:var(--green);color:var(--green)}
+.offer-badges{display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap}
+.offer-badge{
+  display:flex;align-items:center;gap:.4rem;
+  font-size:.75rem;font-weight:600;color:var(--text3);
+}
+.offer-badge .b-icon{font-size:.9rem}
+
+/* Slots remaining bar */
+.slots-wrap{margin-bottom:2rem}
+.slots-label{
+  display:flex;align-items:center;justify-content:space-between;
+  font-family:var(--font-mono);font-size:.7rem;color:var(--text3);
+  letter-spacing:.06em;margin-bottom:.5rem;
+}
+.slots-label .slots-count{color:var(--red);font-weight:700}
+.slots-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.slots-fill{
+  height:100%;background:linear-gradient(90deg,var(--red),#ff8c00);
+  border-radius:3px;width:60%;
+  animation:slotsGrow .8s ease .5s both;
+}
+@keyframes slotsGrow{from{width:0}to{width:60%}}
+
+/* Right column — offer card */
+.offer-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  box-shadow:0 24px 80px rgba(0,0,0,.5);
+  position:relative;
+}
+.offer-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--green),#00b8ff,var(--green));
+}
+.offer-card-head{
+  background:linear-gradient(135deg,rgba(0,232,122,.1),rgba(0,184,255,.07));
+  border-bottom:1px solid var(--border);
+  padding:1.75rem 2rem 1.5rem;
+  position:relative;
+}
+.offer-card-tag{
+  font-family:var(--font-mono);font-size:.65rem;color:var(--green);
+  letter-spacing:.14em;text-transform:uppercase;margin-bottom:.5rem;
+}
+.offer-card-title{
+  font-family:var(--font-display);font-size:1.8rem;letter-spacing:.04em;
+  color:var(--text);line-height:1;margin-bottom:.3rem;
+}
+.offer-card-sub{font-size:.82rem;color:var(--text2);font-weight:300}
+.offer-price-block{
+  display:flex;align-items:baseline;gap:.5rem;margin-top:1.25rem;
+}
+.offer-price-old{
+  font-family:var(--font-display);font-size:1.6rem;color:var(--text3);
+  text-decoration:line-through;text-decoration-color:var(--red);
+  letter-spacing:.04em;
+}
+.offer-price-new{
+  font-family:var(--font-display);font-size:3.8rem;color:var(--green);
+  letter-spacing:.04em;line-height:1;
+}
+.offer-price-note{font-size:.75rem;color:var(--text3);align-self:center;font-weight:500}
+.offer-card-body{padding:1.75rem 2rem}
+
+/* countdown */
+.countdown-wrap{
+  background:var(--bg);border:1px solid var(--border);border-radius:var(--r);
+  padding:1rem 1.25rem;margin-bottom:1.5rem;
+}
+.countdown-label{
+  font-family:var(--font-mono);font-size:.62rem;color:var(--text3);
+  letter-spacing:.1em;text-transform:uppercase;margin-bottom:.75rem;
+  display:flex;align-items:center;gap:.4rem;
+}
+.countdown-label::before{content:'⏱';font-size:.8rem}
+.countdown-digits{
+  display:flex;align-items:center;gap:.5rem;
+}
+.cd-unit{display:flex;flex-direction:column;align-items:center;gap:.2rem}
+.cd-num{
+  font-family:var(--font-display);font-size:2rem;letter-spacing:.06em;
+  color:var(--text);line-height:1;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:6px;padding:.1rem .6rem;min-width:52px;text-align:center;
+}
+.cd-lbl{font-family:var(--font-mono);font-size:.55rem;color:var(--text3);letter-spacing:.1em}
+.cd-sep{
+  font-family:var(--font-display);font-size:1.5rem;color:var(--text3);
+  margin-bottom:.8rem;
+}
+.offer-features{display:flex;flex-direction:column;gap:.7rem;margin-bottom:1.75rem}
+.offer-feat{
+  display:flex;align-items:flex-start;gap:.65rem;
+  font-size:.85rem;color:var(--text2);line-height:1.5;
+}
+.offer-feat-icon{
+  width:20px;height:20px;border-radius:50%;
+  background:var(--green-dim);border:1px solid rgba(0,232,122,.25);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.6rem;color:var(--green);flex-shrink:0;margin-top:.05rem;
+}
+.offer-card-cta{
+  width:100%;padding:1rem;background:var(--green);color:#000;
+  border:none;border-radius:var(--r);font-size:.95rem;font-weight:800;
+  letter-spacing:.04em;cursor:pointer;
+  transition:transform .2s,box-shadow .2s;
+  display:flex;align-items:center;justify-content:center;gap:.5rem;
+}
+.offer-card-cta:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(0,232,122,.35)}
+.offer-card-foot{
+  padding:.9rem 2rem;border-top:1px solid var(--border);
+  background:var(--bg);
+  font-family:var(--font-mono);font-size:.65rem;color:var(--text3);
+  display:flex;align-items:center;gap:.4rem;
+  letter-spacing:.05em;
+}
+.offer-card-foot::before{content:'🔒';font-size:.75rem}
+
+/* floating badge on card */
+.offer-savings-badge{
+  position:absolute;top:1.25rem;right:1.5rem;
+  background:var(--red);color:#fff;
+  font-family:var(--font-display);font-size:1.1rem;
+  letter-spacing:.04em;
+  padding:.35rem .75rem;border-radius:var(--r);
+  transform:rotate(3deg);
+  box-shadow:0 4px 16px rgba(255,71,87,.4);
+}
 </style>
 </head>
 <body>
@@ -948,15 +1166,17 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 4vw
   <a href="#" class="nav-logo">Portfolio<span class="g">Forge</span></a>
   <div class="nav-links">
     <a href="#gallery">Gallery</a>
+    <a href="#offer" style="color:var(--red);font-weight:800">⚡ ₹49 Offer</a>
     <a href="#examples">Examples</a>
     <a href="#pricing-calc">Pricing</a>
     <a href="#compare">Compare Plans</a>
     <a href="#faq">FAQ</a>
     <a href="#founder">About</a>
+    <a href="dashboard.html" style="color:var(--green)">My Dashboard</a>
   </div>
   <div class="nav-actions">
     <button class="theme-btn" id="themeBtn" title="Toggle theme">🌙</button>
-    <a href="#order" class="nav-cta">Order Now →</a>
+    <a href="submit-order.html" class="nav-cta">Order Now →</a>
     <button class="ham-btn" id="hamBtn" onclick="toggleMob()">
       <span></span><span></span><span></span>
     </button>
@@ -964,25 +1184,26 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 4vw
 </nav>
 <div class="mob-menu" id="mobMenu">
   <a href="#gallery" onclick="toggleMob()">Gallery</a>
+  <a href="#offer" onclick="toggleMob()" style="color:var(--red);font-weight:800">⚡ ₹49 Founding Offer</a>
   <a href="#examples" onclick="toggleMob()">Real Examples</a>
   <a href="#pricing-calc" onclick="toggleMob()">Pricing</a>
   <a href="#compare" onclick="toggleMob()">Compare Plans</a>
-  <a href="#order" onclick="toggleMob()">Order Now</a>
+  <a href="submit-order.html" onclick="toggleMob()">Order Now</a>
 </div>
 
 <!-- STICKY BAR -->
 <div id="sticky-bar">
   <div class="sticky-text"><strong>PortfolioForge</strong> — Get yours delivered in 24h</div>
   <div class="sticky-actions">
-    <span class="sticky-plan">from ₹99</span>
-    <a href="#order" class="sticky-cta">Order Now →</a>
+    <span class="sticky-plan">from ₹139</span>
+    <a href="submit-order.html" class="sticky-cta">Order Now →</a>
   </div>
 </div>
 
 <!-- WHATSAPP FAB -->
-<a href="https://wa.me/919999999999?text=Hi!%20I%20want%20to%20order%20a%20portfolio%20from%20PortfolioForge" target="_blank" class="wa-fab" title="Chat on WhatsApp">
+<a href="https://wa.me/91139139139139139?text=Hi!%20I%20want%20to%20order%20a%20portfolio%20from%20PortfolioForge" target="_blank" class="wa-fab" title="Chat on WhatsApp">
   <div class="wa-pulse"></div>
-  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.0139-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.1139-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.0139-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.1398-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.1394c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
 <!-- ═══ HERO ═══ -->
@@ -997,10 +1218,10 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 4vw
       <span class="outline">PORTFOLIO</span>
     </h1>
     <p class="hero-sub">
-      Professional portfolio websites built by a developer who knows what recruiters want. Starting at just <strong>₹99.</strong> Delivered in <strong>24 hours.</strong>
+      Professional portfolio websites built by a developer who knows what recruiters want. Starting at just <strong>₹49.</strong> Delivered in <strong>24 hours.</strong>
     </p>
     <div class="hero-ctas">
-      <a href="#order" class="btn-green">Get Your Portfolio <span>→</span></a>
+      <a href="submit-order.html" class="btn-green">Get Your Portfolio <span>→</span></a>
       <a href="#gallery" class="btn-ghost">See Examples <span>↓</span></a>
     </div>
     <div class="trust-row">
@@ -1013,7 +1234,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 4vw
       <div><div class="hstat-num" data-count="50">0</div><div class="hstat-label">Portfolios Built</div></div>
       <div><div class="hstat-num">24h</div><div class="hstat-label">Delivery Time</div></div>
       <div><div class="hstat-num" data-count="100">0</div><div class="hstat-label">% Satisfaction</div></div>
-      <div><div class="hstat-num">₹99</div><div class="hstat-label">Starting Price</div></div>
+      <div><div class="hstat-num">₹49</div><div class="hstat-label">Starting Price</div></div>
     </div>
   </div>
 </section>
@@ -1023,7 +1244,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 4vw
   <div class="ticker-track">
     <span>Professional Design</span><span class="sep"> ◆ </span>
     <span>24 Hour Delivery</span><span class="sep"> ◆ </span>
-    <span>Starting ₹99</span><span class="sep"> ◆ </span>
+    <span>Starting ₹139</span><span class="sep"> ◆ </span>
     <span>Mobile Optimized</span><span class="sep"> ◆ </span>
     <span>Source Code Included</span><span class="sep"> ◆ </span>
     <span>Student Built</span><span class="sep"> ◆ </span>
@@ -1031,7 +1252,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 4vw
     <span>Free Revision</span><span class="sep"> ◆ </span>
     <span>Professional Design</span><span class="sep"> ◆ </span>
     <span>24 Hour Delivery</span><span class="sep"> ◆ </span>
-    <span>Starting ₹99</span><span class="sep"> ◆ </span>
+    <span>Starting ₹139</span><span class="sep"> ◆ </span>
     <span>Mobile Optimized</span><span class="sep"> ◆ </span>
     <span>Source Code Included</span><span class="sep"> ◆ </span>
     <span>Student Built</span><span class="sep"> ◆ </span>
@@ -1039,6 +1260,135 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 4vw
     <span>Free Revision</span><span class="sep"> ◆ </span>
   </div>
 </div>
+
+<!-- ═══ LAUNCH OFFER ═══ -->
+<section class="offer-sec" id="offer">
+  <div class="offer-grid">
+
+    <!-- LEFT: Copy -->
+    <div class="offer-left rv">
+      <div class="offer-eyebrow">
+        <span class="pulse-dot"></span>
+        Limited Time — Only 5 Spots Available
+      </div>
+
+      <h2 class="offer-headline">
+        GET YOUR<br/>
+        PORTFOLIO FOR<br/>
+        <span class="price-tag">
+          <span class="crossed">₹99</span>₹49
+        </span>
+      </h2>
+
+      <p class="offer-desc">
+        We're launching a <strong>founding member offer</strong> — the first <strong>5 clients</strong> get a complete, professional portfolio website at half price. Same quality. Same 24h delivery. Same source code. Just <strong>₹49.</strong>
+      </p>
+
+      <!-- Slots progress -->
+      <div class="slots-wrap">
+        <div class="slots-label">
+          <span>Slots claimed</span>
+          <span class="slots-count">3 of 5 taken — 2 left</span>
+        </div>
+        <div class="slots-bar">
+          <div class="slots-fill"></div>
+        </div>
+      </div>
+
+      <div class="offer-ctas">
+        <a href="submit-order.html" class="offer-btn-primary">
+          Claim ₹49 Spot →
+        </a>
+        <a href="https://sujay1234-hub.github.io/Sujay-Banarjee/" target="_blank" class="offer-btn-secondary">
+          See Live Demo ↗
+        </a>
+      </div>
+
+      <div class="offer-badges">
+        <div class="offer-badge"><span class="b-icon">✅</span> 24h Delivery</div>
+        <div class="offer-badge"><span class="b-icon">🔄</span> Free Revision</div>
+        <div class="offer-badge"><span class="b-icon">📦</span> Source Code</div>
+        <div class="offer-badge"><span class="b-icon">🚀</span> Deploy-Ready</div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Offer Card -->
+    <div class="offer-card rv d2">
+      <div class="offer-savings-badge">SAVE 50%</div>
+
+      <div class="offer-card-head">
+        <div class="offer-card-tag">// founding member offer</div>
+        <div class="offer-card-title">Starter Portfolio</div>
+        <div class="offer-card-sub">Everything you need to get hired — at an unbeatable price.</div>
+        <div class="offer-price-block">
+          <span class="offer-price-old">₹99</span>
+          <span class="offer-price-new">₹49</span>
+          <span class="offer-price-note">one-time · no hidden fees</span>
+        </div>
+      </div>
+
+      <div class="offer-card-body">
+
+        <!-- Countdown -->
+        <div class="countdown-wrap">
+          <div class="countdown-label">Offer expires in</div>
+          <div class="countdown-digits">
+            <div class="cd-unit">
+              <div class="cd-num" id="cdH">23</div>
+              <div class="cd-lbl">HRS</div>
+            </div>
+            <div class="cd-sep">:</div>
+            <div class="cd-unit">
+              <div class="cd-num" id="cdM">59</div>
+              <div class="cd-lbl">MIN</div>
+            </div>
+            <div class="cd-sep">:</div>
+            <div class="cd-unit">
+              <div class="cd-num" id="cdS">00</div>
+              <div class="cd-lbl">SEC</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="offer-features">
+          <div class="offer-feat">
+            <div class="offer-feat-icon">✓</div>
+            <span>Fully responsive portfolio — works on all devices</span>
+          </div>
+          <div class="offer-feat">
+            <div class="offer-feat-icon">✓</div>
+            <span>Hero, About, Skills, Projects &amp; Contact sections</span>
+          </div>
+          <div class="offer-feat">
+            <div class="offer-feat-icon">✓</div>
+            <span>Clean, recruiter-approved design — just like the <a href="https://sujay1234-hub.github.io/Sujay-Banarjee/" target="_blank" style="color:var(--green);text-decoration:underline">live demo</a></span>
+          </div>
+          <div class="offer-feat">
+            <div class="offer-feat-icon">✓</div>
+            <span>Full source code &amp; deployment guide included</span>
+          </div>
+          <div class="offer-feat">
+            <div class="offer-feat-icon">✓</div>
+            <span>Delivered in <strong style="color:var(--text)">24 hours</strong> after order</span>
+          </div>
+          <div class="offer-feat">
+            <div class="offer-feat-icon">✓</div>
+            <span>One free revision round</span>
+          </div>
+        </div>
+
+        <a href="submit-order.html" class="offer-card-cta">
+            Claim My ₹49 Portfolio →
+        </a>
+      </div>
+
+      <div class="offer-card-foot">
+        Secure payment · Only 2 spots remaining at this price
+      </div>
+    </div>
+
+  </div>
+</section>
 
 <!-- ═══ QUIZ ═══ -->
 <section class="quiz-sec sec" id="quiz">
@@ -1100,7 +1450,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 4vw
         <div style="margin-bottom:.5rem;font-size:.75rem;font-family:var(--font-mono);color:var(--text3);letter-spacing:.1em;text-transform:uppercase">Recommended for you</div>
         <div class="quiz-result-plan" id="quizPlan">—</div>
         <div class="quiz-result-desc" id="quizDesc">—</div>
-        <a href="#order" class="btn-green" style="display:inline-flex">Order This Plan →</a>
+        <a href="submit-order.html" class="btn-green" style="display:inline-flex">Order This Plan →</a>
         <button onclick="quizReset()" style="display:block;margin:.75rem auto 0;background:none;border:none;color:var(--text3);font-size:.8rem;cursor:pointer;text-decoration:underline">Retake Quiz</button>
       </div>
     </div>
@@ -1257,10 +1607,10 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 4vw
         <div class="ex-overlay"><span class="ex-overlay-text">↗ Live Preview</span></div>
       </div>
       <div class="ex-body">
-        <div class="ex-plan-tag">// Basic Plan · ₹99</div>
+        <div class="ex-plan-tag">// Basic Plan · ₹139</div>
         <div class="ex-title">Basic Portfolio</div>
         <div class="ex-desc">Simple clean HTML developer portfolio — responsive, fast, and professional.</div>
-        <a href="https://sujay1234-hub.github.io/My-Portfolio/" target="_blank" rel="noopener" class="ex-btn basic-btn">
+        <a href="https://sujay1234-hub.github.io/S-bastien-Lempens//" target="_blank" rel="noopener" class="ex-btn basic-btn">
           View Demo
           <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
         </a>
@@ -1375,7 +1725,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 4vw
         <div class="np-name">Starter Portfolio</div>
         <div class="np-tagline">// Best for beginners</div>
         <div class="np-price-row">
-          <div class="np-price">₹99</div>
+          <div class="np-price">₹139</div>
           <div class="np-price-note">one-time</div>
         </div>
         <div class="np-del">⚡ Delivered within 24h</div>
@@ -1387,7 +1737,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 4vw
           <div class="np-feat"><div class="np-feat-dot">✓</div>Clean developer UI</div>
           <div class="np-feat"><div class="np-feat-dot">✓</div>Source code included</div>
         </div>
-        <a href="#order" class="np-order-btn default">Order Starter →</a>
+        <a href="submit-order.html" class="np-order-btn default">Order Starter →</a>
       </div>
     </div>
 
@@ -1412,7 +1762,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 4vw
           <div class="np-feat"><div class="np-feat-dot">✓</div>Clean developer UI</div>
           <div class="np-feat"><div class="np-feat-dot">✓</div>Source code included</div>
         </div>
-        <a href="#order" class="np-order-btn featured">Order Pro →</a>
+        <a href="submit-order.html" class="np-order-btn featured">Order Pro →</a>
       </div>
     </div>
 
@@ -1436,7 +1786,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 4vw
           <div class="np-feat"><div class="np-feat-dot">✓</div>Deployment ready (GitHub / Vercel)</div>
           <div class="np-feat"><div class="np-feat-dot">✓</div>1 free revision round</div>
         </div>
-        <a href="#order" class="np-order-btn default">Order Premium →</a>
+        <a href="submit-order.html" class="np-order-btn default">Order Premium →</a>
       </div>
     </div>
 
@@ -1456,7 +1806,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 4vw
       <thead>
         <tr>
           <th>Feature</th>
-          <th>Starter<br/><span class="cmp-price">₹99</span></th>
+          <th>Starter<br/><span class="cmp-price">₹139</span></th>
           <th class="featured-col">Pro Animated<span class="cmp-badge">Popular</span><br/><span class="cmp-price">₹249</span></th>
           <th>Premium<br/><span class="cmp-price">₹449</span></th>
         </tr>
@@ -1476,9 +1826,9 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 4vw
         <tr><td>Delivery Time</td><td>24 hours</td><td class="featured-col">24 hours</td><td>24 hours</td></tr>
         <tr class="price-row">
           <td></td>
-          <td><a href="#order" class="btn-ghost" style="padding:.5rem 1rem;font-size:.78rem;display:inline-block">Order Starter</a></td>
-          <td class="featured-col"><a href="#order" class="btn-green" style="padding:.5rem 1.2rem;font-size:.78rem;display:inline-block">Order Pro</a></td>
-          <td><a href="#order" class="btn-ghost" style="padding:.5rem 1rem;font-size:.78rem;display:inline-block">Order Premium</a></td>
+          <td><a href="submit-order.html" class="btn-ghost" style="padding:.5rem 1rem;font-size:.78rem;display:inline-block">Order Starter</a></td>
+          <td class="featured-col"><a href="submit-order.html" class="btn-green" style="padding:.5rem 1.2rem;font-size:.78rem;display:inline-block">Order Pro</a></td>
+          <td><a href="submit-order.html" class="btn-ghost" style="padding:.5rem 1rem;font-size:.78rem;display:inline-block">Order Premium</a></td>
         </tr>
       </tbody>
     </table>
@@ -1546,9 +1896,9 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 4vw
   <h2 class="sec-h rv">What Clients <span class="g">Say</span></h2>
   <div class="testi-scroll rv" id="testiScroll">
     <div class="t-card"><div class="t-stars">★★★★★</div><p class="t-quote">"My recruiter mentioned the portfolio in the first round. Placed at a Bangalore startup within 3 weeks of going live."</p><div class="t-sep"></div><div class="t-name">Rahul Kumar</div><div class="t-role">Final Year CSE · IIT Roorkee</div></div>
-    <div class="t-card"><div class="t-stars">★★★★★</div><p class="t-quote">"The animated portfolio at ₹199 is stunning. Got 3 freelance inquiries in the first week. Honestly shocked at this price."</p><div class="t-sep"></div><div class="t-name">Priya Sharma</div><div class="t-role">Freelance Developer · Pune</div></div>
+    <div class="t-card"><div class="t-stars">★★★★★</div><p class="t-quote">"The animated portfolio at ₹1139 is stunning. Got 3 freelance inquiries in the first week. Honestly shocked at this price."</p><div class="t-sep"></div><div class="t-name">Priya Sharma</div><div class="t-role">Freelance Developer · Pune</div></div>
     <div class="t-card"><div class="t-stars">★★★★★</div><p class="t-quote">"Ordered at 11pm. Portfolio in my inbox by 8am. Clean code, beautiful design. Recommended to my entire college batch."</p><div class="t-sep"></div><div class="t-name">Vikram Tiwari</div><div class="t-role">B.Tech Student · LPU</div></div>
-    <div class="t-card"><div class="t-stars">★★★★★</div><p class="t-quote">"The premium portfolio actually impressed my interviewer. Best ₹499 I've spent in 2025. Sujay is super responsive."</p><div class="t-sep"></div><div class="t-name">Arjun Mehta</div><div class="t-role">Full Stack Dev · Bangalore</div></div>
+    <div class="t-card"><div class="t-stars">★★★★★</div><p class="t-quote">"The premium portfolio actually impressed my interviewer. Best ₹4139 I've spent in 2025. Sujay is super responsive."</p><div class="t-sep"></div><div class="t-name">Arjun Mehta</div><div class="t-role">Full Stack Dev · Bangalore</div></div>
     <div class="t-card"><div class="t-stars">★★★★★</div><p class="t-quote">"As a design student I expected to be critical. I wasn't. Typography and layout choices are genuinely thoughtful."</p><div class="t-sep"></div><div class="t-name">Neha Kapoor</div><div class="t-role">UI/UX Student · Delhi</div></div>
     <div class="t-card"><div class="t-stars">★★★★★</div><p class="t-quote">"Clean, well-commented code I could actually learn from and modify myself. This is what good service looks like."</p><div class="t-sep"></div><div class="t-name">Sneha Chatterjee</div><div class="t-role">Backend Dev · Kolkata</div></div>
   </div>
@@ -1566,19 +1916,24 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 4vw
     <div class="rv">
       <div class="order-sidebar">
         <h3>Ready to stand<br/>out online?</h3>
-        <p>Fill in your details and receive your complete professional portfolio within 24 hours of payment. No fluff, no delays.</p>
+        <p>Fill in your details below for a quick order, or use our <a href="submit-order.html" style="color:var(--green);font-weight:700">full order wizard</a> for step-by-step guidance with add-ons and live pricing.</p>
       </div>
       <div class="guarantee-boxes">
         <div class="gbox"><span class="gbox-icon">⚡</span><div class="gbox-text"><strong>24-Hour Guarantee</strong> — Full refund if not delivered on time.</div></div>
         <div class="gbox"><span class="gbox-icon">🔒</span><div class="gbox-text"><strong>Secure UPI Payment</strong> — GPay, PhonePe, Paytm accepted.</div></div>
         <div class="gbox"><span class="gbox-icon">📦</span><div class="gbox-text"><strong>Full Source Code</strong> — You own it completely, forever.</div></div>
-        <div class="gbox"><span class="gbox-icon">🔄</span><div class="gbox-text"><strong>Free Revision</strong> — Animated & Premium plans include revisions.</div></div>
+        <div class="gbox"><span class="gbox-icon">🔄</span><div class="gbox-text"><strong>Free Revision</strong> — Animated &amp; Premium plans include revisions.</div></div>
+      </div>
+      <div style="margin-top:1.5rem;padding:1.25rem;background:var(--green-dim);border:1px solid rgba(0,232,122,.2);border-radius:var(--r-lg)">
+        <div style="font-family:var(--font-mono);font-size:.65rem;color:var(--green);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem">// Prefer a guided experience?</div>
+        <p style="font-size:.85rem;color:var(--text2);font-weight:300;margin-bottom:.85rem;line-height:1.65">Use our step-by-step order wizard — choose add-ons, see live pricing, and review before submitting.</p>
+        <a href="submit-order.html" class="btn-green" style="display:inline-flex;align-items:center;gap:.4rem;padding:.65rem 1.5rem;border-radius:var(--r);font-size:.82rem;font-weight:800;text-decoration:none;background:var(--green);color:#000">🧙 Full Order Wizard →</a>
       </div>
     </div>
     <div class="rv d1">
       <div class="order-form" id="orderFormWrap">
         <div class="form-head">
-          <span>New Order</span>
+          <span>Quick Order</span>
           <small>⚡ 24h delivery</small>
         </div>
         <div class="form-body">
@@ -1590,7 +1945,8 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 4vw
             <div class="form-group"><label>Select Plan *</label>
               <select id="o-plan">
                 <option value="" disabled selected>Choose a plan</option>
-                <option>Starter Portfolio — ₹99</option>
+                <option value="founding">⚡ Founding Offer — ₹49 (Limited: 2 spots left!)</option>
+                <option>Starter Portfolio — ₹139</option>
                 <option>Pro Animated Portfolio — ₹249</option>
                 <option>Premium Portfolio — ₹449</option>
               </select>
@@ -1609,7 +1965,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 4vw
           <div class="pay-note">UPI payment details (GPay/PhonePe/Paytm) sent to your WhatsApp/email within 30 min. Work begins on payment confirmation.</div>
         </div>
       </div>
-      <div class="success-panel" id="successPanel">
+      <div class="success-panel" id="successPanel" style="display:none">
         <div class="sp-icon">🎉</div>
         <div class="sp-title">ORDER RECEIVED</div>
         <p class="sp-text">You'll receive a UPI payment link on your WhatsApp or email within 30 minutes.<br/>Your portfolio will be delivered within 24 hours of payment confirmation.</p>
@@ -1617,6 +1973,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 4vw
     </div>
   </div>
 </section>
+
 
 <!-- FOOTER -->
 <footer>
@@ -1627,20 +1984,20 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 4vw
       <div class="f-socials">
         <a href="#" class="f-soc" title="GitHub"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.58v-2.03c-3.34.72-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 013-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.25 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg></a>
         <a href="#" class="f-soc" title="LinkedIn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45C23.2 24 24 23.23 24 22.28V1.72C24 .77 23.2 0 22.22 0z"/></svg></a>
-        <a href="/cdn-cgi/l/email-protection#bcd4d9d0d0d3fcccd3cec8dad3d0d5d3dad3cedbd992d8d9ca" class="f-soc" title="Email"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
+        <a href="/cdn-cgi/l/email-protection#bcd4d9d0d0d3fcccd3cec8dad3d0d5d3dad3cedbd1392d8d9ca" class="f-soc" title="Email"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
       </div>
     </div>
     <div class="footer-col">
       <div class="fc-title">Navigate</div>
-      <div class="fc-links"><a href="#home">Home</a><a href="#gallery">Gallery</a><a href="#examples">Real Examples</a><a href="#pricing-calc">Pricing</a><a href="#compare">Compare Plans</a><a href="#order">Order Now</a></div>
+      <div class="fc-links"><a href="index.html">Home</a><a href="#gallery">Gallery</a><a href="#examples">Examples</a><a href="#pricing-calc">Pricing</a><a href="#compare">Compare Plans</a><a href="submit-order.html">Order Now</a><a href="dashboard.html" style="color:var(--green)">My Dashboard</a></div>
     </div>
     <div class="footer-col">
       <div class="fc-title">Plans</div>
-      <div class="fc-links"><a href="#order">Starter — ₹99</a><a href="#order">Pro Animated — ₹249</a><a href="#order">Premium — ₹449</a><a href="#pricing-calc">View All Plans</a></div>
+      <div class="fc-links"><a href="submit-order.html">⚡ Founding — ₹49</a><a href="submit-order.html">Starter — ₹139</a><a href="submit-order.html">Pro Animated — ₹249</a><a href="submit-order.html">Premium — ₹449</a><a href="#pricing-calc">View All Plans</a></div>
     </div>
     <div class="footer-col">
-      <div class="fc-title">Contact</div>
-      <div class="fc-links"><a href="/cdn-cgi/l/email-protection#e78f828b8b88a79788959381888b8e888188958082c9838291">Email Us</a><a href="https://wa.me/919999999999" target="_blank">WhatsApp</a><a href="https://sujay-banarjee-portfolio.vercel.app/" target="_blank">Live Example ↗</a><a href="#faq">FAQ</a></div>
+      <div class="fc-title">Support</div>
+      <div class="fc-links"><a href="mailto:portfolioforge@gmail.com">Email Us</a><a href="https://wa.me/919999999999" target="_blank">WhatsApp</a><a href="dashboard.html">Track My Order</a><a href="https://sujay1234-hub.github.io/Sujay-Banarjee/" target="_blank">Live Demo ↗</a><a href="#faq">FAQ</a></div>
     </div>
   </div>
   <div class="footer-bottom">
@@ -1725,7 +2082,7 @@ function quizResult(){
   document.getElementById('quizBar').style.width='100%';
   let plan,desc;
   const q3=quizAnswers.q3;
-  if(q3==='fast'){plan='Starter Portfolio — ₹99';desc='Clean, responsive, professional. Everything you need to get started and get noticed, delivered in 24 hours.'}
+  if(q3==='fast'){plan='Starter Portfolio — ₹139';desc='Clean, responsive, professional. Everything you need to get started and get noticed, delivered in 24 hours.'}
   else if(q3==='animated'){plan='Pro Animated Portfolio — ₹249';desc='Scroll animations, interactive UI, and a design that shows personality. Perfect for standing out.'}
   else{plan='Premium Portfolio — ₹449';desc='3D animations, GitHub integration, advanced UI, multiple custom sections. Maximum impact for clients and recruiters.'}
   document.getElementById('quizPlan').textContent=plan;
@@ -1752,7 +2109,7 @@ function filterGallery(cat,btn){
 }
 
 /* ─── PRICING CALCULATOR ─── */
-let basePrice=99,addonTotal=0,baseName='Basic Portfolio';
+let basePrice=139,addonTotal=0,baseName='Basic Portfolio';
 function selectBase(el,price,name){
   document.querySelectorAll('.base-option').forEach(b=>b.classList.remove('sel'));
   el.classList.add('sel');basePrice=price;baseName=name;updateCalc();
@@ -1787,19 +2144,79 @@ function scrollTesti(dir){
   sc.scrollBy({left:dir*332,behavior:'smooth'});
 }
 
+/* ─── COUNTDOWN TIMER ─── */
+(function(){
+  // Set a 24h countdown from first visit, persisted in sessionStorage
+  const KEY='pf_offer_end';
+  let end=sessionStorage.getItem(KEY);
+  if(!end){
+    end=Date.now()+24*60*60*1000;
+    sessionStorage.setItem(KEY,end);
+  }
+  end=+end;
+  function tick(){
+    const diff=Math.max(0,end-Date.now());
+    const h=Math.floor(diff/3600000);
+    const m=Math.floor((diff%3600000)/60000);
+    const s=Math.floor((diff%60000)/1000);
+    const pad=n=>String(n).padStart(2,'0');
+    const hEl=document.getElementById('cdH');
+    const mEl=document.getElementById('cdM');
+    const sEl=document.getElementById('cdS');
+    if(hEl)hEl.textContent=pad(h);
+    if(mEl)mEl.textContent=pad(m);
+    if(sEl)sEl.textContent=pad(s);
+  }
+  tick();
+  setInterval(tick,1000);
+})();
+
 /* ─── ORDER FORM ─── */
 function placeOrder(){
-  const fields=[
-    document.getElementById('o-name').value.trim(),
-    document.getElementById('o-email').value.trim(),
-    document.getElementById('o-plan').value,
-    document.getElementById('o-skills').value.trim(),
-    document.getElementById('o-projects').value.trim(),
-    document.getElementById('o-phone').value.trim()
-  ];
-  if(fields.some(f=>!f)){alert('Please fill in all required fields.');return}
+  const name=document.getElementById('o-name').value.trim();
+  const email=document.getElementById('o-email').value.trim();
+  const plan=document.getElementById('o-plan').value;
+  const skills=document.getElementById('o-skills').value.trim();
+  const projects=document.getElementById('o-projects').value.trim();
+  const phone=document.getElementById('o-phone').value.trim();
+  if(!name||!email||!plan||!skills||!projects||!phone){
+    alert('Please fill in all required fields.');return;
+  }
+  const planPriceMap={'founding':49,'Starter Portfolio — ₹139':139,'Pro Animated Portfolio — ₹249':249,'Premium Portfolio — ₹449':449};
+  const planNameMap={'founding':'⚡ Founding Offer','Starter Portfolio — ₹139':'Starter Portfolio','Pro Animated Portfolio — ₹249':'Pro Animated Portfolio','Premium Portfolio — ₹449':'Premium Portfolio'};
+  const planIdMap={'founding':'founding','Starter Portfolio — ₹139':'starter','Pro Animated Portfolio — ₹249':'pro','Premium Portfolio — ₹449':'premium'};
+  const price=planPriceMap[plan]||99;
+  const orderId='PF-2026-'+Math.floor(1000+Math.random()*9000);
+  const orderData={
+    id:orderId,name,email,phone,
+    role:document.getElementById('o-role')?document.getElementById('o-role').value:'Developer',
+    plan:{id:planIdMap[plan]||'starter',name:planNameMap[plan]||plan,price},
+    addons:[],total:price,skills,projects,
+    notes:document.getElementById('o-notes')?document.getElementById('o-notes').value:'',
+    payment:'UPI (GPay / PhonePe / Paytm)',
+    placedAt:Date.now(),status:'Pending Payment',progress:10,
+    timeline:[
+      {label:'Order Received',done:true,time:new Date().toLocaleString()},
+      {label:'Payment Confirmed',done:false,time:''},
+      {label:'Work In Progress',done:false,time:''},
+      {label:'Preview Shared',done:false,time:''},
+      {label:'Final Delivery',done:false,time:''},
+    ],
+    messages:[{from:'admin',text:'Thanks for your order! Payment details will be shared within 30 minutes. 🚀',time:new Date().toLocaleString()}]
+  };
+  localStorage.setItem('pf_order',JSON.stringify(orderData));
   document.getElementById('orderFormWrap').style.display='none';
-  document.getElementById('successPanel').style.display='block';
+  const sp=document.getElementById('successPanel');
+  sp.style.display='block';
+  sp.innerHTML=`
+    <div class="sp-icon">🎉</div>
+    <div class="sp-title">ORDER RECEIVED!</div>
+    <p class="sp-text">Order ID: <strong>${orderId}</strong><br/>Payment details will be sent to <strong>${email}</strong> and <strong>${phone}</strong> within 30 minutes.<br/>Your portfolio will be delivered within 24 hours of payment.</p>
+    <div style="display:flex;flex-direction:column;gap:.75rem;margin-top:1.5rem;max-width:320px;margin-left:auto;margin-right:auto">
+      <a href="dashboard.html" style="background:var(--green);color:#000;padding:.85rem 1.5rem;border-radius:var(--r);font-weight:800;text-align:center;display:block;font-size:.9rem">📊 Track Your Order →</a>
+      <a href="https://wa.me/919999999999?text=Hi!+My+order+ID+is+${orderId}.+I+just+placed+an+order+for+${encodeURIComponent(planNameMap[plan]||plan)}." target="_blank" style="background:transparent;border:1px solid var(--border);color:var(--text2);padding:.8rem 1.5rem;border-radius:var(--r);font-weight:600;text-align:center;display:block;font-size:.88rem">💬 Message on WhatsApp</a>
+    </div>
+  `;
 }
 </script>
 </body>

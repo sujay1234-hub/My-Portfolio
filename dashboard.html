@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>My Dashboard — PortfolioForge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#0d0f14;--bg2:#12151c;--bg3:#181b24;--surface:#1e2230;--border:#252a38;
+  --green:#00e87a;--gdim:rgba(0,232,122,.12);--gglow:rgba(0,232,122,.25);
+  --blue:#00b8ff;--purple:#a855f7;--yellow:#ffd32a;--ydim:rgba(255,211,42,.1);
+  --red:#ff4757;--rdim:rgba(255,71,87,.1);
+  --text:#eef0f6;--text2:#9aa0b8;--text3:#5a6080;
+  --fd:'Bebas Neue',sans-serif;--fb:'Manrope',sans-serif;--fm:'Fira Code',monospace;
+  --r:8px;--rl:14px;--nav:260px;--top:60px;
+}
+[data-theme="light"]{--bg:#f0f2f8;--bg2:#e8eaf2;--surface:#fff;--border:#d8dce8;--text:#0d0f14;--text2:#4a5070;--text3:#8a90a8}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:14px;line-height:1.6;overflow-x:hidden}
+::selection{background:var(--green);color:#000}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--green);border-radius:2px}
+a{color:inherit;text-decoration:none}button{font-family:var(--fb);cursor:pointer}
+.layout{display:flex;min-height:100vh}
+/* SIDEBAR */
+.sb{width:var(--nav);flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);position:fixed;top:0;bottom:0;left:0;z-index:200;display:flex;flex-direction:column;transition:transform .3s}
+.sb-brand{height:var(--top);padding:0 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.sb-logo{font-family:var(--fd);font-size:1.45rem;letter-spacing:.06em}
+.sb-logo span{color:var(--green)}
+.sb-close{display:none;background:none;border:none;color:var(--text2);font-size:1rem;cursor:pointer}
+.sb-user{padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.75rem;flex-shrink:0}
+.sb-av{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--blue));display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:1.1rem;color:#000;flex-shrink:0}
+.sb-uname{font-size:.85rem;font-weight:700;color:var(--text);line-height:1.2}
+.sb-uemail{font-size:.65rem;color:var(--text3)}
+.sb-status{display:inline-flex;align-items:center;gap:.3rem;background:var(--gdim);border:1px solid rgba(0,232,122,.2);padding:.1rem .45rem;border-radius:100px;font-family:var(--fm);font-size:.52rem;color:var(--green);margin-top:.2rem;letter-spacing:.04em}
+.sb-status::before{content:'';width:5px;height:5px;border-radius:50%;background:currentColor;animation:blink 1.5s ease infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.sb-nav{flex:1;overflow-y:auto;padding:.5rem 0}
+.sb-sec{font-family:var(--fm);font-size:.52rem;color:var(--text3);letter-spacing:.14em;text-transform:uppercase;padding:.5rem 1.25rem .2rem;margin-top:.3rem}
+.sb-item{display:flex;align-items:center;gap:.7rem;padding:.65rem 1.25rem;font-size:.83rem;font-weight:600;color:var(--text2);cursor:pointer;border-left:2px solid transparent;transition:.15s}
+.sb-item:hover{background:var(--surface);color:var(--text)}
+.sb-item.active{background:var(--surface);color:var(--green);border-left-color:var(--green)}
+.sb-item .si{width:16px;text-align:center;font-size:.9rem;flex-shrink:0}
+.si-badge{margin-left:auto;font-family:var(--fm);font-size:.5rem;font-weight:800;padding:.1rem .4rem;border-radius:100px}
+.si-badge.g{background:var(--green);color:#000}.si-badge.r{background:var(--red);color:#fff}
+.sb-foot{padding:.85rem 1.25rem;border-top:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:space-between}
+.sf-links{display:flex;gap:.4rem}
+.sf-link{font-size:.7rem;color:var(--text3);padding:.2rem .5rem;border:1px solid var(--border);border-radius:var(--r);transition:.15s}
+.sf-link:hover{color:var(--green);border-color:var(--green)}
+.tgl{width:38px;height:20px;background:var(--border);border-radius:100px;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0}
+.tgl.on{background:var(--green)}.tgl::after{content:'';position:absolute;width:14px;height:14px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform .2s}
+.tgl.on::after{transform:translateX(18px)}
+/* MAIN */
+.main{margin-left:var(--nav);flex:1;display:flex;flex-direction:column;min-height:100vh}
+/* TOPBAR */
+.topbar{height:var(--top);padding:0 1.75rem;background:rgba(13,15,20,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:1rem;position:sticky;top:0;z-index:100;flex-shrink:0}
+[data-theme="light"] .topbar{background:rgba(240,242,248,.95)}
+.tb-l{display:flex;align-items:center;gap:.75rem}
+.ham{display:none;background:none;border:none;cursor:pointer;color:var(--text2);padding:.2rem}
+.ham svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.bc{font-family:var(--fm);font-size:.68rem;color:var(--text3);display:flex;align-items:center;gap:.3rem}
+.bc span{color:var(--text)}
+.tb-r{display:flex;align-items:center;gap:.5rem}
+.tb-btn{width:32px;height:32px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.78rem;transition:border-color .2s;position:relative}
+.tb-btn:hover{border-color:var(--green)}
+.ndot{position:absolute;top:5px;right:5px;width:6px;height:6px;border-radius:50%;background:var(--red);border:1.5px solid var(--bg2)}
+.tb-cta{background:var(--green);color:#000;padding:.38rem 1rem;border-radius:var(--r);font-size:.75rem;font-weight:800;letter-spacing:.04em;display:flex;align-items:center;gap:.3rem;transition:.15s}
+.tb-cta:hover{opacity:.85;transform:translateY(-1px)}
+/* PAGES */
+.page{display:none;padding:1.75rem;flex:1;animation:fadeUp .3s ease}
+.page.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.ph{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:1.75rem;flex-wrap:wrap;gap:1rem}
+.ph-title{font-family:var(--fd);font-size:1.85rem;letter-spacing:.04em;line-height:1;color:var(--text)}
+.ph-title span{color:var(--green)}
+.ph-sub{font-size:.78rem;color:var(--text3);margin-top:.2rem}
+.ph-actions{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
+@media(max-width:900px){.stats{grid-template-columns:repeat(2,1fr)}}
+.sc{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:1.1rem 1.25rem;position:relative;overflow:hidden;transition:transform .2s}
+.sc:hover{transform:translateY(-2px)}
+.sc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.sc.g::after{background:var(--green)}.sc.b::after{background:var(--blue)}.sc.y::after{background:var(--yellow)}.sc.r::after{background:var(--red)}
+.sc-icon{font-size:1.3rem;margin-bottom:.5rem}
+.sc-val{font-family:var(--fd);font-size:2rem;letter-spacing:.04em;line-height:1;margin-bottom:.15rem}
+.sc-val.g{color:var(--green)}.sc-val.b{color:var(--blue)}.sc-val.y{color:var(--yellow)}.sc-val.r{color:var(--red)}
+.sc-lbl{font-family:var(--fm);font-size:.56rem;color:var(--text3);letter-spacing:.1em;text-transform:uppercase}
+/* CARDS */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;margin-bottom:1.25rem}
+.card-h{padding:.85rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+.card-t{font-weight:700;font-size:.85rem;color:var(--text);display:flex;align-items:center;gap:.5rem}
+.card-b{padding:1.25rem}
+.card-a{font-size:.73rem;color:var(--green);cursor:pointer;font-weight:600}
+/* PROGRESS */
+.prog{background:var(--border);border-radius:4px;height:6px;overflow:hidden}
+.prog-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--green),var(--blue));transition:width 1s ease}
+/* TIMELINE */
+.tl{display:flex;align-items:flex-start;flex-wrap:wrap;row-gap:1.5rem}
+.tl-node{flex:1;min-width:80px;display:flex;flex-direction:column;align-items:center;gap:.35rem;position:relative}
+.tl-node:not(:last-child)::after{content:'';position:absolute;top:13px;left:calc(50% + 14px);right:calc(-50% + 14px);height:2px;background:var(--border);z-index:0}
+.tl-node.done:not(:last-child)::after{background:var(--green)}
+.tl-c{width:26px;height:26px;border-radius:50%;background:var(--bg);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.58rem;color:var(--text3);z-index:1;position:relative;transition:.3s}
+.tl-node.done .tl-c{background:var(--green);border-color:var(--green);color:#000;font-weight:800}
+.tl-node.cur .tl-c{background:var(--gdim);border-color:var(--green);color:var(--green);box-shadow:0 0 0 4px rgba(0,232,122,.15);animation:tlpulse 2s ease infinite}
+@keyframes tlpulse{0%,100%{box-shadow:0 0 0 4px rgba(0,232,122,.15)}50%{box-shadow:0 0 0 8px rgba(0,232,122,.06)}}
+.tl-lbl{font-size:.65rem;font-weight:600;color:var(--text3);text-align:center;line-height:1.3}
+.tl-node.done .tl-lbl{color:var(--text)}.tl-node.cur .tl-lbl{color:var(--green)}
+.tl-time{font-family:var(--fm);font-size:.52rem;color:var(--text3);text-align:center}
+/* BADGE */
+.badge{display:inline-flex;align-items:center;gap:.3rem;padding:.22rem .65rem;border-radius:100px;font-family:var(--fm);font-size:.58rem;font-weight:700;letter-spacing:.05em}
+.badge::before{content:'';width:5px;height:5px;border-radius:50%;background:currentColor}
+.badge.pending{background:var(--ydim);color:var(--yellow);border:1px solid rgba(255,211,42,.2)}
+.badge.active{background:var(--gdim);color:var(--green);border:1px solid rgba(0,232,122,.2)}
+.badge.complete{background:rgba(0,184,255,.1);color:var(--blue);border:1px solid rgba(0,184,255,.2)}
+.badge.revision{background:rgba(168,85,247,.1);color:var(--purple);border:1px solid rgba(168,85,247,.2)}
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:.35rem;padding:.5rem 1rem;border-radius:var(--r);font-size:.8rem;font-weight:700;border:none;cursor:pointer;transition:.15s;white-space:nowrap;font-family:var(--fb)}
+.btn-g{background:var(--green);color:#000}.btn-g:hover{box-shadow:0 0 20px var(--gglow);transform:translateY(-1px)}
+.btn-gh{background:transparent;border:1.5px solid var(--border);color:var(--text2)}.btn-gh:hover{border-color:var(--green);color:var(--green)}
+.btn-sm{padding:.35rem .75rem;font-size:.73rem}
+/* FORM */
+.fi{background:var(--bg);border:1.5px solid var(--border);border-radius:var(--r);padding:.6rem .85rem;color:var(--text);font-size:.83rem;outline:none;transition:border-color .2s,box-shadow .2s;width:100%;font-family:var(--fb)}
+.fi:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(0,232,122,.07)}
+.fi::placeholder{color:var(--text3)}
+.fi-label{font-family:var(--fm);font-size:.57rem;color:var(--text3);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.3rem;display:block}
+.fi-group{margin-bottom:.85rem}
+.fi-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+textarea.fi{resize:vertical;min-height:80px}
+/* MESSAGES */
+.msg-bubble{max-width:86%}
+.msg-bubble.out{align-self:flex-end}
+.msg-bubble-inner{padding:.6rem .9rem;border-radius:10px;font-size:.82rem;line-height:1.55}
+.msg-bubble.in .msg-bubble-inner{background:var(--bg3);color:var(--text);border-radius:4px 10px 10px 10px;border:1px solid var(--border)}
+.msg-bubble.out .msg-bubble-inner{background:var(--green);color:#000;border-radius:10px 4px 10px 10px}
+.msg-meta{font-family:var(--fm);font-size:.54rem;color:var(--text3);margin-top:.2rem;display:flex;align-items:center;gap:.3rem}
+.msg-bubble.out .msg-meta{justify-content:flex-end}
+/* MISC */
+.file-item{display:flex;align-items:center;gap:.75rem;padding:.75rem 0;border-bottom:1px solid var(--border)}
+.file-item:last-child{border:none;padding-bottom:0}
+.file-icon{width:36px;height:36px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.faq-item{border:1px solid var(--border);border-radius:var(--r);margin-bottom:.5rem;overflow:hidden}
+.faq-q{padding:.85rem 1.1rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:.85rem;font-weight:600;color:var(--text);transition:background .15s}
+.faq-q:hover{background:var(--bg2)}.faq-arrow{transition:transform .3s;font-size:.65rem;color:var(--text3)}
+.faq-item.open .faq-arrow{transform:rotate(180deg)}
+.faq-a{display:none;padding:.7rem 1.1rem 1rem;font-size:.82rem;color:var(--text2);font-weight:300;line-height:1.7;border-top:1px solid var(--border);background:var(--bg2)}
+.faq-item.open .faq-a{display:block}
+#toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--green);color:#000;padding:.6rem 1.5rem;border-radius:var(--r);font-size:.8rem;font-weight:800;z-index:9999;transition:transform .3s ease;white-space:nowrap;box-shadow:0 8px 24px rgba(0,232,122,.3);pointer-events:none}
+.sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:199}
+.sb-overlay.show{display:block}
+@media(max-width:900px){.sb{transform:translateX(-100%)}.sb.open{transform:translateX(0)}.sb-close{display:block}.main{margin-left:0}.ham{display:flex}.page{padding:1.1rem}.topbar{padding:0 1.1rem}}
+@media(max-width:640px){.stats{grid-template-columns:1fr 1fr}.fi-row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="sb-overlay" id="sbOverlay" onclick="closeSB()"></div>
+<div id="toast"></div>
+
+<aside class="sb" id="sidebar">
+  <div class="sb-brand">
+    <a href="index.html" class="sb-logo">Portfolio<span>Forge</span></a>
+    <button class="sb-close" onclick="closeSB()">✕</button>
+  </div>
+  <div class="sb-user">
+    <div class="sb-av" id="sbAv">?</div>
+    <div><div class="sb-uname" id="sbName">Loading…</div><div class="sb-uemail" id="sbEmail"></div><div class="sb-status" id="sbStatus">Active Order</div></div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-sec">Main</div>
+    <div class="sb-item active" onclick="nav('overview',this)"><span class="si">📊</span> Overview</div>
+    <div class="sb-item" onclick="nav('order',this)"><span class="si">📋</span> My Order <span class="si-badge r" id="sbOrdBadge">!</span></div>
+    <div class="sb-item" onclick="nav('messages',this)"><span class="si">💬</span> Messages <span class="si-badge g" id="sbMsgBadge">2</span></div>
+    <div class="sb-item" onclick="nav('files',this)"><span class="si">📁</span> Files & Deliverables</div>
+    <div class="sb-item" onclick="nav('revision',this)"><span class="si">🔄</span> Request Revision</div>
+    <div class="sb-sec">Account</div>
+    <div class="sb-item" onclick="nav('invoices',this)"><span class="si">🧾</span> Invoices & Payments</div>
+    <div class="sb-item" onclick="nav('profile',this)"><span class="si">👤</span> Profile Settings</div>
+    <div class="sb-item" onclick="nav('help',this)"><span class="si">❓</span> Help & FAQ</div>
+    <div class="sb-sec">Quick Links</div>
+    <div class="sb-item" onclick="window.open('submit-order.html')"><span class="si">➕</span> New Order</div>
+    <div class="sb-item" onclick="window.open('https://wa.me/919999999999','_blank')"><span class="si">📱</span> WhatsApp Support</div>
+    <div class="sb-item" onclick="window.location.href='index.html'"><span class="si">🏠</span> Back to Site</div>
+  </nav>
+  <div class="sb-foot">
+    <div class="sf-links"><a href="index.html" class="sf-link">Home</a><a href="submit-order.html" class="sf-link">Order</a></div>
+    <div class="tgl on" id="themeTgl" onclick="toggleTheme()" title="Dark/Light"></div>
+  </div>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <div class="tb-l">
+      <button class="ham" onclick="openSB()"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+      <div class="bc">Dashboard / <span id="bcTitle">Overview</span></div>
+    </div>
+    <div class="tb-r">
+      <div class="tb-btn" id="notifBtn" onclick="toggleNotif()" title="Notifications">🔔<div class="ndot" id="ndot"></div></div>
+      <a href="submit-order.html" class="tb-cta">+ New Order</a>
+    </div>
+  </div>
+
+  <!-- Notification dropdown -->
+  <div id="notifDD" style="display:none;position:fixed;top:62px;right:1rem;z-index:300;width:290px;background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);box-shadow:0 16px 40px rgba(0,0,0,.5);overflow:hidden">
+    <div style="padding:.75rem 1rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+      <span style="font-family:var(--fd);font-size:.95rem;letter-spacing:.04em">Notifications</span>
+      <span style="font-size:.68rem;color:var(--green);cursor:pointer;font-weight:600" onclick="clearNotifs()">Mark all read</span>
+    </div>
+    <div id="notifList"></div>
+  </div>
+
+  <!-- ── OVERVIEW ── -->
+  <div class="page active" id="page-overview">
+    <div class="ph">
+      <div><div class="ph-title">Welcome back, <span id="greetName">there</span> 👋</div><div class="ph-sub" id="greetDate"></div></div>
+      <div class="ph-actions"><button class="btn btn-gh btn-sm" onclick="nav('help',null)">❓ Help</button><a href="submit-order.html" class="btn btn-g btn-sm">+ New Order</a></div>
+    </div>
+    <div class="stats">
+      <div class="sc g"><div class="sc-icon">📋</div><div class="sc-val g" id="ov-status">—</div><div class="sc-lbl">Order Status</div></div>
+      <div class="sc b"><div class="sc-icon">⚡</div><div class="sc-val b" id="ov-prog">10%</div><div class="sc-lbl">Build Progress</div></div>
+      <div class="sc y"><div class="sc-icon">⏱</div><div class="sc-val" id="ov-eta">24h</div><div class="sc-lbl">ETA Remaining</div></div>
+      <div class="sc r"><div class="sc-icon">💰</div><div class="sc-val" id="ov-total">₹—</div><div class="sc-lbl">Order Total</div></div>
+    </div>
+    <!-- Order status card -->
+    <div class="card">
+      <div class="card-h">
+        <div><div style="font-family:var(--fm);font-size:.62rem;color:var(--text3);margin-bottom:.2rem" id="ov-oid">Order #—</div><div class="card-t" id="ov-plan">Your Portfolio</div></div>
+        <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap"><div id="ov-badge" class="badge pending">● Pending</div><button class="btn btn-gh btn-sm" onclick="nav('order',null)">Full Details →</button></div>
+      </div>
+      <div class="card-b">
+        <div style="margin-bottom:1.25rem">
+          <div style="display:flex;justify-content:space-between;margin-bottom:.4rem"><span style="font-family:var(--fm);font-size:.6rem;color:var(--text3);letter-spacing:.1em;text-transform:uppercase">Build Progress</span><span style="font-family:var(--fm);font-size:.7rem;color:var(--green);font-weight:700" id="ov-pct">10%</span></div>
+          <div class="prog"><div class="prog-fill" id="ov-bar" style="width:10%"></div></div>
+        </div>
+        <div class="tl" id="ov-tl"></div>
+        <div style="display:flex;gap:.6rem;margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--border);flex-wrap:wrap">
+          <button class="btn btn-g btn-sm" onclick="nav('messages',null)">💬 Message Builder</button>
+          <button class="btn btn-gh btn-sm" onclick="nav('revision',null)">🔄 Request Revision</button>
+          <button class="btn btn-gh btn-sm" onclick="nav('files',null)">📁 Files</button>
+          <a href="https://wa.me/919999999999" target="_blank" class="btn btn-gh btn-sm">📱 WhatsApp</a>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem">
+      <div class="card">
+        <div class="card-h"><div class="card-t">💬 Recent Messages</div><span class="card-a" onclick="nav('messages',null)">View all →</span></div>
+        <div class="card-b" id="ov-msgs" style="display:flex;flex-direction:column;gap:.65rem"></div>
+      </div>
+      <div class="card">
+        <div class="card-h"><div class="card-t">📅 Delivery Timeline</div></div>
+        <div class="card-b" id="ov-timeline-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ORDER DETAILS ── -->
+  <div class="page" id="page-order">
+    <div class="ph"><div><div class="ph-title">My <span>Order</span></div><div class="ph-sub">Complete details of your portfolio order</div></div><div class="ph-actions"><a href="https://wa.me/919999999999" target="_blank" class="btn btn-gh btn-sm">📱 Contact Builder</a></div></div>
+    <div style="display:grid;grid-template-columns:1fr 280px;gap:1.25rem;align-items:start">
+      <div>
+        <div class="card">
+          <div class="card-h"><div><div style="font-family:var(--fm);font-size:.62rem;color:var(--text3);margin-bottom:.2rem" id="od-oid">Order #—</div><div class="card-t" id="od-plan">Loading…</div></div><div id="od-badge" class="badge pending">● Pending</div></div>
+          <div class="card-b">
+            <div style="margin-bottom:1.25rem"><div style="display:flex;justify-content:space-between;margin-bottom:.4rem"><span style="font-family:var(--fm);font-size:.6rem;color:var(--text3);letter-spacing:.1em;text-transform:uppercase">Progress</span><span style="font-family:var(--fm);font-size:.7rem;color:var(--green);font-weight:700" id="od-pct">10%</span></div><div class="prog"><div class="prog-fill" id="od-bar" style="width:10%"></div></div></div>
+            <div class="tl" id="od-tl" style="margin-bottom:1.5rem"></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:.65rem" id="od-meta"></div>
+          </div>
+        </div>
+        <div class="card"><div class="card-h"><div class="card-t">📋 Order Summary</div></div><div class="card-b" id="od-summary"></div></div>
+      </div>
+      <div style="position:sticky;top:70px;display:flex;flex-direction:column;gap:1rem">
+        <div class="card"><div class="card-h"><div class="card-t">⚡ Actions</div></div><div class="card-b" style="display:flex;flex-direction:column;gap:.5rem">
+          <button class="btn btn-g" style="width:100%;justify-content:center" onclick="nav('messages',null)">💬 Message Builder</button>
+          <button class="btn btn-gh" style="width:100%;justify-content:center" onclick="nav('revision',null)">🔄 Revision Request</button>
+          <button class="btn btn-gh" style="width:100%;justify-content:center" onclick="nav('files',null)">📁 Files</button>
+          <a href="https://wa.me/919999999999" target="_blank" class="btn btn-gh" style="width:100%;justify-content:center">📱 WhatsApp</a>
+        </div></div>
+        <div class="card"><div class="card-h"><div class="card-t">🛡 Guarantees</div></div><div class="card-b" style="display:flex;flex-direction:column;gap:.65rem">
+          <div style="display:flex;gap:.6rem"><span>⚡</span><div><div style="font-size:.8rem;font-weight:700;color:var(--text)">24h Delivery</div><div style="font-size:.7rem;color:var(--text3)">Or full refund — no questions</div></div></div>
+          <div style="display:flex;gap:.6rem"><span>🔄</span><div><div style="font-size:.8rem;font-weight:700;color:var(--text)">Free Revision</div><div style="font-size:.7rem;color:var(--text3)">One complete round included</div></div></div>
+          <div style="display:flex;gap:.6rem"><span>📦</span><div><div style="font-size:.8rem;font-weight:700;color:var(--text)">Source Code</div><div style="font-size:.7rem;color:var(--text3)">You own it forever</div></div></div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MESSAGES ── -->
+  <div class="page" id="page-messages">
+    <div class="ph"><div><div class="ph-title">Messages</div><div class="ph-sub">Chat with your portfolio builder</div></div></div>
+    <div class="card" style="display:flex;flex-direction:column;height:calc(100vh - 185px)">
+      <div class="card-h" style="background:var(--bg2)"><div class="card-t">💬 Sujay (Builder) <span style="font-family:var(--fm);font-size:.55rem;color:var(--green);margin-left:.4rem">● Online</span></div><a href="https://wa.me/919999999999" target="_blank" style="font-size:.72rem;color:var(--green);font-weight:600">📱 WhatsApp →</a></div>
+      <div style="flex:1;overflow-y:auto;padding:1.25rem;display:flex;flex-direction:column;gap:.6rem" id="chatWrap"></div>
+      <div style="padding:.85rem 1.25rem;border-top:1px solid var(--border);display:flex;gap:.6rem">
+        <input class="fi" style="flex:1" id="chatInput" placeholder="Type a message…" onkeydown="if(event.key==='Enter')sendMsg()"/>
+        <button class="btn btn-g" onclick="sendMsg()">Send →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FILES ── -->
+  <div class="page" id="page-files">
+    <div class="ph"><div><div class="ph-title">Files & <span>Deliverables</span></div><div class="ph-sub">Source code, assets and deployment guides</div></div></div>
+    <div class="card" style="margin-bottom:1.25rem">
+      <div class="card-h"><div class="card-t">📁 Delivered Files</div></div>
+      <div class="card-b">
+        <div style="padding:.75rem;background:var(--ydim);border:1px solid rgba(255,211,42,.2);border-radius:var(--r);font-size:.8rem;color:var(--yellow);margin-bottom:1rem">⏳ Files will appear here after your portfolio is complete. Within 24h of payment confirmation.</div>
+        <div class="file-item"><div class="file-icon" style="background:rgba(0,184,255,.1)">📦</div><div style="flex:1"><div style="font-size:.83rem;font-weight:600;color:var(--text)">portfolio-source-code.zip</div><div style="font-size:.68rem;color:var(--text3)">Awaiting build completion</div></div><button class="btn btn-gh btn-sm" disabled style="opacity:.4">⬇ Download</button></div>
+        <div class="file-item"><div class="file-icon" style="background:rgba(0,232,122,.1)">📄</div><div style="flex:1"><div style="font-size:.83rem;font-weight:600;color:var(--text)">deployment-guide.pdf</div><div style="font-size:.68rem;color:var(--text3)">Awaiting delivery</div></div><button class="btn btn-gh btn-sm" disabled style="opacity:.4">⬇ Download</button></div>
+        <div class="file-item"><div class="file-icon" style="background:rgba(168,85,247,.1)">🎨</div><div style="flex:1"><div style="font-size:.83rem;font-weight:600;color:var(--text)">design-assets.zip</div><div style="font-size:.68rem;color:var(--text3)">Awaiting delivery</div></div><button class="btn btn-gh btn-sm" disabled style="opacity:.4">⬇ Download</button></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-h"><div class="card-t">📤 Upload Your Assets</div></div>
+      <div class="card-b">
+        <div id="uploadZone" style="border:2px dashed var(--border);border-radius:var(--r);padding:2.5rem;text-align:center;cursor:pointer;transition:border-color .2s" onclick="document.getElementById('fileIn').click()" ondragover="event.preventDefault();this.style.borderColor='var(--green)'" ondragleave="this.style.borderColor=''" ondrop="doDrop(event)">
+          <div style="font-size:2rem;margin-bottom:.5rem">📎</div>
+          <div style="font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.25rem">Drag & drop or click to upload</div>
+          <div style="font-size:.75rem;color:var(--text3)">Profile photo, resume PDF, project screenshots — max 10MB each</div>
+          <input type="file" id="fileIn" multiple style="display:none" onchange="handleFiles(this.files)"/>
+        </div>
+        <div id="uploadedList" style="margin-top:.75rem;display:flex;flex-direction:column;gap:.4rem"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── REVISION ── -->
+  <div class="page" id="page-revision">
+    <div class="ph"><div><div class="ph-title">Request <span>Revision</span></div><div class="ph-sub">Submit changes for your portfolio</div></div></div>
+    <div style="display:grid;grid-template-columns:1fr 300px;gap:1.25rem;align-items:start">
+      <div class="card">
+        <div class="card-h"><div class="card-t">🔄 New Revision Request</div></div>
+        <div class="card-b">
+          <div style="margin-bottom:1rem"><label class="fi-label">Category</label><div style="display:flex;gap:.5rem;flex-wrap:wrap" id="revCats">
+            <button class="btn btn-gh btn-sm" onclick="pickCat(this,'Design')">🎨 Design</button>
+            <button class="btn btn-gh btn-sm" onclick="pickCat(this,'Content')">📝 Content</button>
+            <button class="btn btn-gh btn-sm" onclick="pickCat(this,'Layout')">📐 Layout</button>
+            <button class="btn btn-gh btn-sm" onclick="pickCat(this,'Theme/Colors')">🌈 Theme</button>
+            <button class="btn btn-gh btn-sm" onclick="pickCat(this,'Animations')">✨ Animations</button>
+            <button class="btn btn-gh btn-sm" onclick="pickCat(this,'Add Section')">➕ Section</button>
+          </div></div>
+          <div class="fi-group"><label class="fi-label">Describe Request *</label><textarea class="fi" id="revText" placeholder="Be specific! E.g. 'Change hero background to dark navy, add glow on skill cards, update contact email to new@example.com'"></textarea></div>
+          <div class="fi-group"><label class="fi-label">Priority</label><select class="fi" id="revPri"><option>Normal — Include in next round</option><option>High — Please prioritise</option><option>Critical — Urgent / blocking delivery</option></select></div>
+          <button class="btn btn-g" style="width:100%;justify-content:center;padding:.8rem" onclick="submitRev()">Submit Revision Request →</button>
+          <div style="text-align:center;margin-top:.6rem;font-size:.75rem;color:var(--text3)"><strong style="color:var(--green)" id="revLeft">1</strong> free revision remaining</div>
+        </div>
+      </div>
+      <div class="card"><div class="card-h"><div class="card-t">📋 History</div></div><div class="card-b" id="revHist"><div style="text-align:center;padding:1.5rem;font-size:.82rem;color:var(--text3)">No revisions yet.<br/>Your first is free!</div></div></div>
+    </div>
+  </div>
+
+  <!-- ── INVOICES ── -->
+  <div class="page" id="page-invoices">
+    <div class="ph"><div><div class="ph-title">Invoices & <span>Payments</span></div><div class="ph-sub">Billing and payment details</div></div></div>
+    <div class="card" style="margin-bottom:1.25rem">
+      <div class="card-h"><div class="card-t">💳 Payment Summary</div></div>
+      <div class="card-b">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-bottom:1rem">
+          <div style="background:var(--bg2);border-radius:var(--r);padding:1rem;text-align:center;border:1px solid var(--border)"><div style="font-family:var(--fd);font-size:1.8rem;color:var(--yellow)" id="inv-total">₹—</div><div style="font-family:var(--fm);font-size:.55rem;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-top:.15rem">Total Due</div></div>
+          <div style="background:var(--bg2);border-radius:var(--r);padding:1rem;text-align:center;border:1px solid var(--border)"><div style="font-family:var(--fd);font-size:1.8rem;color:var(--green)">₹0</div><div style="font-family:var(--fm);font-size:.55rem;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-top:.15rem">Paid</div></div>
+          <div style="background:var(--bg2);border-radius:var(--r);padding:1rem;text-align:center;border:1px solid var(--border)"><div style="font-family:var(--fd);font-size:1.8rem;color:var(--yellow)" id="inv-bal">₹—</div><div style="font-family:var(--fm);font-size:.55rem;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-top:.15rem">Balance</div></div>
+        </div>
+        <div style="padding:.85rem;background:var(--ydim);border:1px solid rgba(255,211,42,.2);border-radius:var(--r);font-size:.8rem;color:var(--yellow)">⚠️ Payment details (UPI/Bank) will be shared on WhatsApp & Email within 30 minutes of order.</div>
+      </div>
+    </div>
+    <div class="card"><div class="card-h"><div class="card-t">🧾 Invoice</div></div><div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;min-width:480px"><thead><tr style="border-bottom:1px solid var(--border);background:var(--bg2)"><th style="font-family:var(--fm);font-size:.57rem;color:var(--text3);letter-spacing:.12em;text-transform:uppercase;padding:.6rem .9rem;text-align:left">Invoice</th><th style="font-family:var(--fm);font-size:.57rem;color:var(--text3);letter-spacing:.12em;text-transform:uppercase;padding:.6rem .9rem;text-align:left">Plan</th><th style="font-family:var(--fm);font-size:.57rem;color:var(--text3);letter-spacing:.12em;text-transform:uppercase;padding:.6rem .9rem;text-align:left">Amount</th><th style="font-family:var(--fm);font-size:.57rem;color:var(--text3);letter-spacing:.12em;text-transform:uppercase;padding:.6rem .9rem;text-align:left">Date</th><th style="font-family:var(--fm);font-size:.57rem;color:var(--text3);letter-spacing:.12em;text-transform:uppercase;padding:.6rem .9rem;text-align:left">Status</th></tr></thead><tbody id="invBody"></tbody></table></div></div>
+  </div>
+
+  <!-- ── PROFILE ── -->
+  <div class="page" id="page-profile">
+    <div class="ph"><div><div class="ph-title">Profile <span>Settings</span></div><div class="ph-sub">Manage your account information</div></div></div>
+    <div style="display:grid;grid-template-columns:250px 1fr;gap:1.25rem">
+      <div>
+        <div class="card" style="text-align:center;padding:1.5rem;margin-bottom:1rem">
+          <div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--blue));margin:0 auto .85rem;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:2.2rem;color:#000" id="profAv">?</div>
+          <div style="font-family:var(--fd);font-size:1.5rem;letter-spacing:.04em;color:var(--text);margin-bottom:.2rem" id="profName">—</div>
+          <div style="font-size:.78rem;color:var(--text3);margin-bottom:1rem" id="profRole">—</div>
+          <button class="btn btn-gh" style="width:100%;justify-content:center;font-size:.75rem">📷 Change Photo</button>
+        </div>
+        <div class="card"><div class="card-h"><div class="card-t">🔔 Notifications</div></div><div class="card-b" style="display:flex;flex-direction:column;gap:.5rem">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:.35rem 0;border-bottom:1px solid var(--border)"><span style="font-size:.82rem;color:var(--text2)">Email updates</span><div class="tgl on" onclick="this.classList.toggle('on')"></div></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:.35rem 0;border-bottom:1px solid var(--border)"><span style="font-size:.82rem;color:var(--text2)">WhatsApp alerts</span><div class="tgl on" onclick="this.classList.toggle('on')"></div></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:.35rem 0"><span style="font-size:.82rem;color:var(--text2)">Progress updates</span><div class="tgl on" onclick="this.classList.toggle('on')"></div></div>
+        </div></div>
+      </div>
+      <div class="card">
+        <div class="card-h" style="background:var(--bg2)"><div class="card-t">✏️ Edit Profile</div></div>
+        <div class="card-b">
+          <div class="fi-row"><div class="fi-group"><label class="fi-label">Full Name</label><input class="fi" id="pf-name" placeholder="Your name"/></div><div class="fi-group"><label class="fi-label">Email</label><input class="fi" id="pf-email" type="email"/></div></div>
+          <div class="fi-row"><div class="fi-group"><label class="fi-label">Phone</label><input class="fi" id="pf-phone"/></div><div class="fi-group"><label class="fi-label">Role</label><input class="fi" id="pf-role"/></div></div>
+          <div class="fi-row"><div class="fi-group"><label class="fi-label">GitHub URL</label><input class="fi" id="pf-gh" placeholder="github.com/username"/></div><div class="fi-group"><label class="fi-label">LinkedIn URL</label><input class="fi" id="pf-li" placeholder="linkedin.com/in/name"/></div></div>
+          <div class="fi-group"><label class="fi-label">Skills</label><input class="fi" id="pf-skills" placeholder="React, Node.js, Python…"/></div>
+          <div style="display:flex;justify-content:flex-end;gap:.5rem;padding-top:.75rem;border-top:1px solid var(--border)"><button class="btn btn-gh" onclick="loadProf()">Cancel</button><button class="btn btn-g" onclick="saveProf()">Save Changes →</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── HELP ── -->
+  <div class="page" id="page-help">
+    <div class="ph"><div><div class="ph-title">Help & <span>FAQ</span></div><div class="ph-sub">Support and answers to common questions</div></div></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:1.5rem;cursor:pointer;transition:transform .2s,border-color .2s" onclick="window.open('https://wa.me/919999999999','_blank')" onmouseover="this.style.transform='translateY(-3px)';this.style.borderColor='rgba(0,232,122,.35)'" onmouseout="this.style.transform='';this.style.borderColor=''">
+        <div style="font-size:1.75rem;margin-bottom:.65rem">📱</div><div style="font-size:.9rem;font-weight:700;color:var(--text);margin-bottom:.3rem">WhatsApp Support</div><div style="font-size:.78rem;color:var(--text2);font-weight:300">Fastest — chat directly with Sujay for instant help.</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:1.5rem;cursor:pointer;transition:transform .2s,border-color .2s" onclick="nav('messages',null)" onmouseover="this.style.transform='translateY(-3px)';this.style.borderColor='rgba(0,232,122,.35)'" onmouseout="this.style.transform='';this.style.borderColor=''">
+        <div style="font-size:1.75rem;margin-bottom:.65rem">💬</div><div style="font-size:.9rem;font-weight:700;color:var(--text);margin-bottom:.3rem">Dashboard Chat</div><div style="font-size:.78rem;color:var(--text2);font-weight:300">Send tracked messages through the dashboard.</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:1.5rem;cursor:pointer;transition:transform .2s,border-color .2s" onclick="window.location.href='mailto:portfolioforge@gmail.com'" onmouseover="this.style.transform='translateY(-3px)';this.style.borderColor='rgba(0,232,122,.35)'" onmouseout="this.style.transform='';this.style.borderColor=''">
+        <div style="font-size:1.75rem;margin-bottom:.65rem">📧</div><div style="font-size:.9rem;font-weight:700;color:var(--text);margin-bottom:.3rem">Email Support</div><div style="font-size:.78rem;color:var(--text2);font-weight:300">portfolioforge@gmail.com — reply within 2 hours.</div>
+      </div>
+    </div>
+    <div style="font-family:var(--fd);font-size:1.5rem;letter-spacing:.04em;margin-bottom:.85rem">Frequently Asked <span style="color:var(--green)">Questions</span></div>
+    <div class="faq-item"><div class="faq-q" onclick="tFaq(this)">When does work start on my portfolio? <span class="faq-arrow">▼</span></div><div class="faq-a">Work begins immediately after payment is confirmed. UPI/bank details are sent within 30 minutes of order. Once you pay, the build starts right away.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="tFaq(this)">How do I share my content? <span class="faq-arrow">▼</span></div><div class="faq-a">Upload files in the "Files" section (photo, resume PDF, screenshots) or send them on WhatsApp. The more you provide, the better we personalise your portfolio.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="tFaq(this)">What's included in the free revision? <span class="faq-arrow">▼</span></div><div class="faq-a">One complete revision round — design tweaks, content changes, layout, colors, animations, and more. Use the "Request Revision" page to submit clearly.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="tFaq(this)">How will I receive my portfolio? <span class="faq-arrow">▼</span></div><div class="faq-a">Full source code as a ZIP (downloadable from the Files section), a deployment guide PDF, and optionally a live hosted URL — all within 24 hours.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="tFaq(this)">Can I upgrade my plan? <span class="faq-arrow">▼</span></div><div class="faq-a">Yes! WhatsApp or message us and we'll upgrade your plan. You only pay the difference. Upgrades are done within the hour.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="tFaq(this)">What if I'm not satisfied? <span class="faq-arrow">▼</span></div><div class="faq-a">We include a free revision round. If you're still not happy we keep working until you are. Your satisfaction is our reputation.</div></div>
+  </div>
+
+</div><!-- /main -->
+</div><!-- /layout -->
+
+<script>
+let order=null,msgs=[],revCat='',revCount=0;
+
+function load(){
+  try{order=JSON.parse(localStorage.getItem('pf_order'))}catch(e){order=null}
+  if(!order){
+    document.getElementById('page-overview').innerHTML=`<div style="text-align:center;padding:4rem 2rem;max-width:480px;margin:0 auto">
+      <div style="font-size:3.5rem;margin-bottom:1rem;opacity:.5">📭</div>
+      <div style="font-family:var(--fd);font-size:2rem;letter-spacing:.04em;margin-bottom:.5rem">No Order Found</div>
+      <p style="font-size:.88rem;color:var(--text2);font-weight:300;line-height:1.7;margin-bottom:1.5rem">You haven't placed an order yet. Get your professional portfolio built in 24 hours — starting at just ₹49.</p>
+      <a href="submit-order.html" class="btn btn-g" style="width:100%;justify-content:center;padding:.9rem;font-size:.9rem">🚀 Place Your Order →</a>
+      <div style="margin-top:.75rem"><a href="index.html" class="btn btn-gh" style="width:100%;justify-content:center;padding:.85rem">← Back to Site</a></div>
+    </div>`;
+    document.getElementById('sbName').textContent='Guest';document.getElementById('sbEmail').textContent='No order placed';document.getElementById('sbAv').textContent='?';
+    return;
+  }
+  msgs=order.messages||[{from:'admin',text:'🎉 Order received! Payment details will be shared on WhatsApp/Email within 30 minutes. Work begins after confirmation.',time:new Date().toLocaleString()}];
+  populate();
+}
+
+function populate(){
+  const init=(order.name||'U').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+  document.getElementById('sbAv').textContent=init;
+  document.getElementById('sbName').textContent=order.name||'User';
+  document.getElementById('sbEmail').textContent=order.email||'';
+  document.getElementById('greetName').textContent=(order.name||'').split(' ')[0]||'there';
+  document.getElementById('greetDate').textContent=new Date().toLocaleDateString('en-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const msLeft=Math.max(0,(order.placedAt+86400000)-Date.now()),hLeft=Math.ceil(msLeft/3600000);
+  document.getElementById('ov-status').textContent=order.status||'Active';
+  document.getElementById('ov-prog').textContent=(order.progress||10)+'%';
+  document.getElementById('ov-eta').textContent=hLeft>0?hLeft+'h':'Soon';
+  document.getElementById('ov-total').textContent='₹'+(order.total||0);
+  setCard('ov');setCard('od');
+  setMeta();setSummary();renderMsgs();renderOvMsgs();renderTimeline();
+  // Invoices
+  const t='₹'+(order.total||0);
+  document.getElementById('inv-total').textContent=t;document.getElementById('inv-bal').textContent=t;
+  document.getElementById('invBody').innerHTML=`<tr><td style="padding:.65rem .9rem;font-family:var(--fm);font-size:.7rem;color:var(--text2)">INV-${(order.id||'').replace('PF-','')}</td><td style="padding:.65rem .9rem;font-size:.82rem;color:var(--text)">${order.plan?.name||'—'}</td><td style="padding:.65rem .9rem;font-size:.88rem;font-weight:700;color:var(--green)">₹${order.total||0}</td><td style="padding:.65rem .9rem;font-family:var(--fm);font-size:.65rem;color:var(--text3)">${new Date(order.placedAt).toLocaleDateString('en-IN')}</td><td style="padding:.65rem .9rem"><span style="display:inline-flex;align-items:center;gap:.25rem;padding:.15rem .5rem;border-radius:100px;background:var(--ydim);color:var(--yellow);border:1px solid rgba(255,211,42,.2);font-family:var(--fm);font-size:.55rem;font-weight:700">● Unpaid</span></td></tr>`;
+  loadProf();
+  document.getElementById('profAv').textContent=init;
+  document.getElementById('profName').textContent=order.name||'';
+  document.getElementById('profRole').textContent=order.role||'Developer';
+  // Order badge
+  document.getElementById('sbOrdBadge').style.display=order.status==='Pending Payment'?'':'none';
+}
+
+function setCard(p){
+  const o=document.getElementById(p+'-oid')||document.getElementById(p+'-id');
+  const pl=document.getElementById(p+'-plan');
+  const b=document.getElementById(p+'-badge');
+  const pct=document.getElementById(p+'-pct');
+  const bar=document.getElementById(p+'-bar');
+  const tl=document.getElementById(p+'-tl');
+  const prog=order.progress||10;
+  if(o)o.textContent='Order #'+(order.id||'—');
+  if(pl)pl.textContent=(order.plan?.name||'Portfolio')+' — ₹'+(order.plan?.price||order.total||0);
+  if(pct)pct.textContent=prog+'%';
+  if(bar)bar.style.width=prog+'%';
+  if(b){const sm={'Pending Payment':'pending','In Progress':'active','Preview Shared':'revision','Completed':'complete','Revision Requested':'revision'};b.className='badge '+(sm[order.status]||'pending');b.textContent='● '+(order.status||'Pending');}
+  if(tl&&order.timeline){
+    const ci=order.timeline.findIndex(t=>!t.done);
+    tl.innerHTML=order.timeline.map((t,i)=>`<div class="tl-node ${t.done?'done':i===ci?'cur':''}"><div class="tl-c">${t.done?'✓':(i+1)}</div><div class="tl-lbl">${t.label}</div><div class="tl-time">${t.done&&t.time?(t.time.split(',')[1]||'Done').trim():i===ci?'In progress…':''}</div></div>`).join('');
+  }
+}
+
+function setMeta(){
+  const el=document.getElementById('od-meta');if(!el)return;
+  const items=[['Role',order.role],['Skills',order.skills],['Theme',order.theme||'Dark — Green'],['Payment',order.payment],['Email',order.email],['Phone',order.phone]];
+  el.innerHTML=items.map(([k,v])=>`<div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:.7rem .9rem"><div style="font-family:var(--fm);font-size:.54rem;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.2rem">${k}</div><div style="font-size:.82rem;font-weight:600;color:var(--text);word-break:break-all">${v||'—'}</div></div>`).join('');
+}
+
+function setSummary(){
+  const el=document.getElementById('od-summary');if(!el)return;
+  const at=(order.addons||[]).reduce((s,a)=>s+a.price,0);
+  el.innerHTML=`<div style="display:flex;justify-content:space-between;padding:.4rem 0;border-bottom:1px solid var(--border)"><span style="font-size:.82rem;color:var(--text2)">Base Plan</span><span style="font-weight:700;color:var(--text)">₹${order.plan?.price||order.total}</span></div>${at?`<div style="display:flex;justify-content:space-between;padding:.4rem 0;border-bottom:1px solid var(--border)"><span style="font-size:.82rem;color:var(--text2)">Add-ons</span><span style="font-weight:700;color:var(--text)">+₹${at}</span></div>`:''}${(order.addons||[]).map(a=>`<div style="display:flex;justify-content:space-between;padding:.3rem 0 .3rem 1rem;border-bottom:1px solid var(--border)"><span style="font-size:.75rem;color:var(--text3)">• ${a.label}</span><span style="font-size:.75rem;color:var(--text3)">+₹${a.price}</span></div>`).join('')}<div style="display:flex;justify-content:space-between;padding:.6rem 0"><span style="font-size:.88rem;font-weight:700;color:var(--text)">Total</span><span style="font-family:var(--fd);font-size:1.6rem;color:var(--green);letter-spacing:.04em">₹${order.total}</span></div><div style="padding:.6rem;background:var(--ydim);border:1px solid rgba(255,211,42,.2);border-radius:var(--r);font-size:.75rem;color:var(--yellow)">💳 ${order.payment||'UPI'} · Details sent within 30 mins of order</div>`;
+}
+
+function renderMsgs(){
+  const w=document.getElementById('chatWrap');if(!w)return;
+  w.innerHTML=msgs.map(m=>`<div class="msg-bubble ${m.from==='admin'?'in':'out'}"><div class="msg-bubble-inner">${m.text}</div><div class="msg-meta">${m.from==='admin'?'Sujay (Builder)':'You'} · ${m.time}</div></div>`).join('');
+  setTimeout(()=>w.scrollTop=w.scrollHeight,50);
+}
+
+function renderOvMsgs(){
+  const el=document.getElementById('ov-msgs');if(!el)return;
+  el.innerHTML=msgs.slice(-3).map(m=>`<div style="display:flex;gap:.65rem;padding:.5rem 0;border-bottom:1px solid var(--border)"><div style="width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:.8rem;background:${m.from==='admin'?'linear-gradient(135deg,var(--green),var(--blue))':'var(--gdim)'};color:${m.from==='admin'?'#000':'var(--green)'}">${m.from==='admin'?'S':'Me'}</div><div style="flex:1"><div style="font-size:.75rem;font-weight:700;color:var(--text);margin-bottom:.1rem">${m.from==='admin'?'Sujay (Builder)':'You'}</div><div style="font-size:.78rem;color:var(--text2);font-weight:300">${m.text.length>70?m.text.slice(0,70)+'…':m.text}</div></div></div>`).join('')+'<div style="padding-top:.6rem"><button class="btn btn-gh btn-sm" style="width:100%;justify-content:center" onclick="nav(\'messages\',null)">Open Chat →</button></div>';
+}
+
+function renderTimeline(){
+  const el=document.getElementById('ov-timeline-list');if(!el||!order?.timeline)return;
+  el.innerHTML=order.timeline.map((t,i)=>{
+    const ci=order.timeline.findIndex(x=>!x.done);
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--border)${i===order.timeline.length-1?';border:none':''}"><span style="font-size:.8rem;color:${t.done?'var(--text)':'var(--text3)'}">${t.done?'✅':i===ci?'⏳':'⬜'} ${t.label}</span><span style="font-family:var(--fm);font-size:.6rem;color:${t.done?'var(--green)':'var(--text3)'}">${t.done?'Done':i===ci?'Now':'Upcoming'}</span></div>`;
+  }).join('');
+}
+
+function sendMsg(){
+  const i=document.getElementById('chatInput'),t=i.value.trim();if(!t)return;
+  msgs.push({from:'client',text:t,time:new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})});
+  if(order){order.messages=msgs;localStorage.setItem('pf_order',JSON.stringify(order));}
+  renderMsgs();renderOvMsgs();i.value='';
+  document.getElementById('sbMsgBadge').style.display='none';
+  const replies=['Got it! I\'ll incorporate that. 🚀','Thanks for the update! Will note it down.','Noted! Feel free to share assets on WhatsApp too.','Perfect — working on it now!'];
+  setTimeout(()=>{msgs.push({from:'admin',text:replies[Math.floor(Math.random()*replies.length)],time:new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})});if(order){order.messages=msgs;localStorage.setItem('pf_order',JSON.stringify(order));}renderMsgs();renderOvMsgs();},1800);
+}
+
+function handleFiles(files){
+  const l=document.getElementById('uploadedList');
+  Array.from(files).forEach(f=>{const d=document.createElement('div');d.className='file-item';d.innerHTML=`<div class="file-icon" style="background:var(--gdim)">📎</div><div style="flex:1"><div style="font-size:.82rem;font-weight:600;color:var(--text)">${f.name}</div><div style="font-size:.68rem;color:var(--text3)">${(f.size/1024).toFixed(0)} KB</div></div><span style="font-size:.72rem;color:var(--green);font-weight:700">✓ Ready</span>`;l.appendChild(d);});
+  toast('✓ '+files.length+' file(s) uploaded!');
+}
+function doDrop(e){e.preventDefault();handleFiles(e.dataTransfer.files);document.getElementById('uploadZone').style.borderColor='';}
+
+function pickCat(btn,cat){revCat=cat;document.querySelectorAll('#revCats button').forEach(b=>b.className='btn btn-gh btn-sm');btn.className='btn btn-g btn-sm';}
+
+function submitRev(){
+  const t=document.getElementById('revText').value.trim();if(!t){toast('⚠️ Please describe your revision');return;}
+  const h=document.getElementById('revHist');
+  const d=document.createElement('div');
+  d.style.cssText='padding:.85rem;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin-bottom:.5rem';
+  d.innerHTML=`<div style="display:flex;justify-content:space-between;margin-bottom:.35rem"><span style="font-size:.8rem;font-weight:700;color:var(--text)">${revCat||'General'} Revision</span><span style="font-family:var(--fm);font-size:.55rem;color:var(--text3)">${new Date().toLocaleString()}</span></div><div style="font-size:.78rem;color:var(--text2)">${t}</div><div style="margin-top:.4rem"><span style="display:inline-flex;align-items:center;gap:.25rem;padding:.15rem .5rem;border-radius:100px;background:var(--ydim);color:var(--yellow);border:1px solid rgba(255,211,42,.2);font-family:var(--fm);font-size:.55rem;font-weight:700">● Submitted</span></div>`;
+  if(h.querySelector('[style*="text-align:center"]'))h.innerHTML='';
+  h.prepend(d);document.getElementById('revText').value='';
+  revCount++;document.getElementById('revLeft').textContent=Math.max(0,1-revCount);
+  msgs.push({from:'client',text:'📋 Revision: '+(revCat||'General')+' — '+t,time:new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})});
+  if(order){order.messages=msgs;localStorage.setItem('pf_order',JSON.stringify(order));}
+  toast('✓ Revision submitted! We\'ll respond within 2 hours.');
+}
+
+function loadProf(){if(!order)return;['name','email','phone','role'].forEach(k=>{const el=document.getElementById('pf-'+k);if(el)el.value=order[k]||'';});document.getElementById('pf-gh').value=order.github||'';document.getElementById('pf-li').value=order.linkedin||'';document.getElementById('pf-skills').value=order.skills||'';}
+function saveProf(){if(!order)return;order.name=document.getElementById('pf-name').value;order.email=document.getElementById('pf-email').value;order.phone=document.getElementById('pf-phone').value;order.role=document.getElementById('pf-role').value;order.github=document.getElementById('pf-gh').value;order.linkedin=document.getElementById('pf-li').value;order.skills=document.getElementById('pf-skills').value;localStorage.setItem('pf_order',JSON.stringify(order));populate();toast('✓ Profile saved!');}
+
+function tFaq(btn){const i=btn.parentElement,w=i.classList.contains('open');document.querySelectorAll('.faq-item.open').forEach(x=>x.classList.remove('open'));if(!w)i.classList.add('open');}
+
+/* NAV */
+const titles={overview:'Overview',order:'My Order',messages:'Messages',files:'Files',revision:'Revision',invoices:'Invoices',profile:'Profile',help:'Help'};
+function nav(id,el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const pg=document.getElementById('page-'+id);if(pg)pg.classList.add('active');
+  document.querySelectorAll('.sb-item').forEach(n=>n.classList.remove('active'));
+  if(el)el.classList.add('active'); else{const found=document.querySelector(`.sb-item[onclick*="'${id}'"]`);if(found)found.classList.add('active');}
+  document.getElementById('bcTitle').textContent=titles[id]||id;
+  if(window.innerWidth<900)closeSB();
+  if(id==='messages')document.getElementById('sbMsgBadge').style.display='none';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function openSB(){document.getElementById('sidebar').classList.add('open');document.getElementById('sbOverlay').classList.add('show')}
+function closeSB(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sbOverlay').classList.remove('show')}
+function toggleTheme(){const d=document.documentElement;d.dataset.theme=d.dataset.theme==='dark'?'light':'dark';document.getElementById('themeTgl').classList.toggle('on',d.dataset.theme==='dark');}
+function toggleNotif(){const dd=document.getElementById('notifDD');const showing=dd.style.display!=='none';dd.style.display=showing?'none':'block';if(!showing)renderNotifs();}
+function renderNotifs(){
+  document.getElementById('notifList').innerHTML=[
+    {i:'🎉',t:'Order Received!',s:`Order ${order?.id||'—'} confirmed.`,ts:'Just now',u:true},
+    {i:'💬',t:'Message from Builder',s:'Payment details coming shortly! 🚀',ts:'2m ago',u:true},
+    {i:'⚡',t:'Build Starting Soon',s:'Work begins after payment confirmation.',ts:'5m ago',u:false}
+  ].map(n=>`<div style="display:flex;gap:.55rem;padding:.7rem 1rem;border-bottom:1px solid var(--border);cursor:pointer" onclick="this.querySelector('.nu')?.remove()"><span style="font-size:.9rem;flex-shrink:0">${n.i}</span><div style="flex:1"><div style="font-size:.78rem;font-weight:700;color:var(--text)">${n.t}</div><div style="font-size:.72rem;color:var(--text2)">${n.s}</div><div style="font-family:var(--fm);font-size:.52rem;color:var(--text3);margin-top:.1rem">${n.ts}</div></div>${n.u?'<div class="nu" style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0;margin-top:.35rem"></div>':''}</div>`).join('');
+}
+function clearNotifs(){document.getElementById('notifDD').innerHTML='<div style="padding:1.25rem;text-align:center;font-size:.78rem;color:var(--text3)">All caught up! ✓</div>';document.getElementById('ndot').style.display='none';}
+document.addEventListener('click',e=>{if(!e.target.closest('#notifBtn')&&!e.target.closest('#notifDD'))document.getElementById('notifDD').style.display='none';});
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.transform='translateX(-50%) translateY(0)';clearTimeout(t._t);t._t=setTimeout(()=>t.style.transform='translateX(-50%) translateY(80px)',2800);}
+
+load();
+</script>
+</body>
+</html>
