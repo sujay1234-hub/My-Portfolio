@@ -559,15 +559,32 @@ nav{position:fixed;top:0;left:0;right:0;z-index:400;display:flex;align-items:cen
         <!-- PAYMENT METHOD -->
         <div class="field-group" style="margin-bottom:1.25rem">
           <div class="field-label">Payment Method <span class="req">*</span></div>
-          <select class="field-select" id="f-payment">
+          <select class="field-select" id="f-payment" onchange="onPaymentChange(this.value)">
             <option value="" disabled selected>Choose payment method</option>
-            <option>UPI (GPay / PhonePe / Paytm)</option>
-            <option>Bank Transfer (NEFT/IMPS)</option>
-            <option>Razorpay (Card / Wallet)</option>
-            <option>Pay After Delivery (COD)</option>
+            <option value="cashfree">💳 Cashfree — Card / UPI / Wallet / NetBanking (Recommended)</option>
+            <option value="upi">📱 UPI Direct (GPay / PhonePe / Paytm)</option>
+            <option value="bank">🏦 Bank Transfer (NEFT/IMPS)</option>
           </select>
           <div class="field-error" id="e-payment">Please select a payment method</div>
-          <div class="field-hint">Payment details will be shared via WhatsApp / Email after order</div>
+          <div class="field-hint" id="payment-hint">Powered by Cashfree — India's most trusted payment gateway</div>
+        </div>
+
+        <!-- CASHFREE INFO BOX -->
+        <div id="cashfree-info" style="display:none;background:var(--green-dim);border:1px solid rgba(0,232,122,.25);border-radius:var(--r);padding:1rem 1.25rem;margin-bottom:1.25rem;font-size:.83rem;color:var(--text2);line-height:1.75">
+          <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.35rem"><span style="font-size:1rem">🔒</span><strong style="color:var(--text);font-size:.85rem">Secure Cashfree Checkout</strong></div>
+          You'll be redirected to Cashfree's secure checkout. Supports <strong style="color:var(--text)">UPI, Cards, NetBanking, Wallets</strong>. After payment, you'll return here automatically.
+        </div>
+
+        <!-- UPI DIRECT INFO BOX -->
+        <div id="upi-info" style="display:none;background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:1rem 1.25rem;margin-bottom:1.25rem;font-size:.83rem;color:var(--text2);line-height:1.75">
+          <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.35rem"><span style="font-size:1rem">📱</span><strong style="color:var(--text);font-size:.85rem">UPI Payment Instructions</strong></div>
+          After placing your order, we'll send our UPI ID to your WhatsApp/Email within 30 minutes. Send payment and share the screenshot to confirm.
+        </div>
+
+        <!-- BANK INFO BOX -->
+        <div id="bank-info" style="display:none;background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:1rem 1.25rem;margin-bottom:1.25rem;font-size:.83rem;color:var(--text2);line-height:1.75">
+          <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.35rem"><span style="font-size:1rem">🏦</span><strong style="color:var(--text);font-size:.85rem">Bank Transfer Instructions</strong></div>
+          Bank account details will be shared on WhatsApp/Email after order confirmation. Transfer the exact amount and share the UTR number with us.
         </div>
 
         <div class="terms-check" id="termsBox" onclick="toggleTerms()">
@@ -578,7 +595,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:400;display:flex;align-items:cen
         <div class="form-nav">
           <button class="btn-back" onclick="goStep(3)"><span>←</span> Back</button>
           <button class="btn-submit" id="submitBtn" onclick="submitOrder()">
-            Place Order &amp; Pay →
+            <span id="submitBtnText">Place Order &amp; Pay →</span>
           </button>
         </div>
       </div>
@@ -733,7 +750,7 @@ function validate4(){
   const payment=document.getElementById('f-payment').value;
   if(!payment){document.getElementById('e-payment').className='field-error show';document.getElementById('f-payment').className='field-select error';return false;}
   document.getElementById('e-payment').className='field-error';document.getElementById('f-payment').className='field-select';
-  if(!termsAccepted){document.getElementById('termsBox').style.borderColor='var(--red)';alert('Please accept the Terms of Service.');return false;}
+  if(!termsAccepted){document.getElementById('termsBox').style.borderColor='var(--red)';alert('Please accept the Terms of Service to continue.');return false;}
   return true;
 }
 
@@ -782,6 +799,20 @@ function updateSummary(){
   pillsRow.style.display=addons.length>0?'block':'none';
 }
 
+function onPaymentChange(val){
+  document.getElementById('cashfree-info').style.display = val==='cashfree'?'block':'none';
+  document.getElementById('upi-info').style.display      = val==='upi'?'block':'none';
+  document.getElementById('bank-info').style.display     = val==='bank'?'block':'none';
+  const hints = {
+    cashfree:'Powered by Cashfree — India\'s most trusted payment gateway',
+    upi:'We\'ll send UPI ID on WhatsApp / Email within 30 minutes',
+    bank:'Bank details will be shared after order confirmation'
+  };
+  document.getElementById('payment-hint').textContent = hints[val]||'';
+  const btn = document.getElementById('submitBtnText');
+  btn.textContent = val==='cashfree' ? 'Place Order & Pay via Cashfree →' : 'Place Order →';
+}
+
 function toggleTerms(){
   termsAccepted=!termsAccepted;
   document.getElementById('termsBox').classList.toggle('checked',termsAccepted);
@@ -804,79 +835,268 @@ function populateReview(){
   document.getElementById('rv-theme').textContent=document.getElementById('f-theme').value||'Not specified';
 }
 
-function submitOrder(){
-  if(!validate4())return;
-  // Generate order ID
-  const orderId='PF-2026-'+Math.floor(1000+Math.random()*9000);
-  document.getElementById('orderId').textContent='Order ID: '+orderId;
-  // Save to localStorage for dashboard
-  const orderData={
-    id:orderId,
-    name:document.getElementById('f-name').value,
-    email:document.getElementById('f-email').value,
-    phone:document.getElementById('f-phone').value,
-    role:document.getElementById('f-role').value,
-    plan:selectedPlan,
+/* ─────────────────────────────────────────────
+   BUILD ORDER DATA OBJECT
+───────────────────────────────────────────── */
+function buildOrderData(orderId){
+  return {
+    id: orderId,
+    name: document.getElementById('f-name').value,
+    email: document.getElementById('f-email').value,
+    phone: document.getElementById('f-phone').value,
+    role: document.getElementById('f-role').value,
+    plan: selectedPlan,
     addons,
-    total:selectedPlan.price+addons.reduce((s,a)=>s+a.price,0),
-    skills:document.getElementById('f-skills').value,
-    projects:document.getElementById('f-projects').value,
-    bio:document.getElementById('f-bio').value,
-    theme:document.getElementById('f-theme').value,
-    notes:document.getElementById('f-notes').value,
-    payment:document.getElementById('f-payment').value,
-    placedAt:Date.now(),
-    status:'Pending Payment',
-    progress:10,
-    paymentStatus:'unpaid',
-    adminNotes:'',deliveryUrl:'',
-    github:document.getElementById('f-github')?document.getElementById('f-github').value:'',
-    linkedin:document.getElementById('f-linkedin')?document.getElementById('f-linkedin').value:'',
-    timeline:[
+    total: selectedPlan.price + addons.reduce((s,a)=>s+a.price,0),
+    skills: document.getElementById('f-skills').value,
+    projects: document.getElementById('f-projects').value,
+    bio: (document.getElementById('f-bio')||{}).value||'',
+    theme: document.getElementById('f-theme').value,
+    notes: document.getElementById('f-notes').value,
+    payment: document.getElementById('f-payment').value,
+    placedAt: Date.now(),
+    status: 'Pending Payment',
+    progress: 10,
+    paymentStatus: 'unpaid',
+    adminNotes: '', deliveryUrl: '',
+    github: (document.getElementById('f-github')||{}).value||'',
+    linkedin: (document.getElementById('f-linkedin')||{}).value||'',
+    timeline: [
       {label:'Order Received',done:true,time:new Date().toLocaleString()},
       {label:'Payment Confirmed',done:false,time:''},
       {label:'Work In Progress',done:false,time:''},
       {label:'Preview Shared',done:false,time:''},
       {label:'Final Delivery',done:false,time:''},
     ],
-    messages:[
+    messages: [
       {from:'admin',text:'🎉 Order received! Payment details will be shared on WhatsApp/Email within 30 minutes. Work begins immediately after confirmation.',time:new Date().toLocaleString()}
     ]
   };
-  localStorage.setItem('pf_order',JSON.stringify(orderData));
-  // Hide form, show success
+}
+
+/* ─────────────────────────────────────────────
+   SHOW SUCCESS SCREEN
+───────────────────────────────────────────── */
+function showSuccessScreen(orderId, paymentMethod){
+  document.getElementById('orderId').textContent='Order ID: '+orderId;
   document.getElementById('step4').classList.remove('active');
   document.getElementById('successScreen').style.display='block';
   document.getElementById('orderSidebar').style.display='none';
+
+  // Update WhatsApp link with order info
+  const waMsg = encodeURIComponent('Hi! My Order ID is '+orderId+'. I just placed an order for '+selectedPlan.name+'. Payment method: '+paymentMethod);
+  document.querySelector('.success-btn-ghost[href*="wa.me"]').href='https://wa.me/919999999999?text='+waMsg;
+
   launchConfetti();
 }
 
+/* ─────────────────────────────────────────────
+   CASHFREE PAYMENT  (Production-ready flow)
+   
+   HOW THIS WORKS:
+   1. You create a Payment Session on your backend/serverless function
+      POST https://api.cashfree.com/pg/orders
+      → returns { payment_session_id, cf_order_id }
+   2. We redirect user to Cashfree checkout with that session ID
+   3. After payment, Cashfree redirects back to your return_url
+   4. On the return URL page, verify payment status server-side
+
+   For a static site without a backend, replace CASHFREE_BACKEND_URL
+   with your serverless function (Vercel/Netlify function, Firebase function, etc.)
+   
+   BACKEND EXAMPLE (Node.js / Vercel):
+   POST /api/create-cashfree-order
+   Body: { amount, orderId, customerName, customerEmail, customerPhone }
+   Returns: { payment_session_id }
+───────────────────────────────────────────── */
+// ⚙️  CONFIG — update CASHFREE_SERVER_URL if your server runs on a different host/port
+const CASHFREE_SERVER_URL  = 'http://localhost:5000';  // your server.js
+const CASHFREE_BACKEND_URL = CASHFREE_SERVER_URL + '/create-order';
+const CASHFREE_VERIFY_URL  = CASHFREE_SERVER_URL + '/verify-payment';
+const CASHFREE_MODE        = 'production'; // 'sandbox' for test keys, 'production' for live
+
+async function initiateCashfreePayment(orderId, total, orderData){
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  document.getElementById('submitBtnText').textContent = '⏳ Connecting to Cashfree...';
+
+  try {
+    // Step 1: Create order on your backend
+    const res = await fetch(CASHFREE_BACKEND_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        orderId,
+        amount: total,
+        currency: 'INR',
+        customerName: orderData.name,
+        customerEmail: orderData.email,
+        customerPhone: orderData.phone.replace(/[^0-9]/g,''),
+        returnUrl: window.location.href.split('?')[0] + '?order_id=' + orderId
+      })
+    });
+
+    if(!res.ok){
+      const errText = await res.text();
+      throw new Error('Backend error: ' + res.status + ' — ' + errText);
+    }
+
+    const data = await res.json();
+    if(!data.payment_session_id){
+      throw new Error('No payment_session_id returned from backend.');
+    }
+
+    document.getElementById('submitBtnText').textContent = '🔒 Redirecting to Cashfree...';
+
+    // Step 2: Load Cashfree SDK and open checkout
+    const cashfree = Cashfree({ mode: CASHFREE_MODE });
+    cashfree.checkout({
+      paymentSessionId: data.payment_session_id,
+      redirectTarget: '_self' // redirects entire page; use '_modal' for popup
+    });
+
+    // Step 3: Save pending order BEFORE redirect (user comes back to return_url)
+    orderData.cashfreeSessionId = data.payment_session_id;
+    orderData.cfOrderId = data.cf_order_id || '';
+    localStorage.setItem('pf_order', JSON.stringify(orderData));
+
+  } catch(err) {
+    console.error('Cashfree error:', err);
+    btn.disabled = false;
+    document.getElementById('submitBtnText').textContent = 'Place Order & Pay via Cashfree →';
+    showPaymentError(err.message);
+  }
+}
+
+/* ─────────────────────────────────────────────
+   HANDLE RETURN FROM CASHFREE HOSTED CHECKOUT
+   Cashfree redirects back with ?payment=success&order_id=X&cf_order_id=Y
+   We call GET /verify-payment/:cfOrderId to confirm server-side
+───────────────────────────────────────────── */
+async function checkCashfreeReturn(){
+  const params = new URLSearchParams(window.location.search);
+  if(params.get('payment') !== 'success') return;
+
+  const orderId     = params.get('order_id') || '';
+  const cfOrderId   = params.get('cf_order_id') || orderId;
+  const savedOrder  = JSON.parse(localStorage.getItem('pf_order')||'null');
+
+  // Clean up URL immediately so refresh doesn't re-trigger
+  window.history.replaceState({}, document.title, window.location.pathname);
+
+  // Show a "verifying" state
+  document.getElementById('formCard').style.display = 'none';
+  const sidebar = document.getElementById('orderSidebar');
+  if(sidebar) sidebar.style.display = 'none';
+  document.getElementById('successScreen').style.display = 'block';
+  document.getElementById('orderId').textContent = 'Verifying payment…';
+
+  // Server-side verify to confirm payment actually went through
+  try {
+    const vRes  = await fetch(CASHFREE_VERIFY_URL + '/' + cfOrderId);
+    const vData = await vRes.json();
+    const paid  = vData.order_status === 'PAID';
+
+    if(paid && savedOrder){
+      savedOrder.status        = 'Payment Confirmed';
+      savedOrder.paymentStatus = 'paid';
+      savedOrder.progress      = 30;
+      savedOrder.cfOrderId     = cfOrderId;
+      if(savedOrder.timeline && savedOrder.timeline[1]){
+        savedOrder.timeline[1].done = true;
+        savedOrder.timeline[1].time = new Date().toLocaleString();
+      }
+      localStorage.setItem('pf_order', JSON.stringify(savedOrder));
+      pushToAdminOrders(savedOrder);
+      document.getElementById('orderId').textContent = 'Order ID: ' + (savedOrder.id || orderId);
+      launchConfetti();
+    } else if(!paid){
+      // Payment pending or failed — warn but still show the order
+      document.getElementById('orderId').textContent = 'Order ID: ' + (savedOrder?.id || orderId);
+      showPaymentError('Payment status: ' + (vData.order_status || 'unknown') + '. If you were charged, please WhatsApp us with your Order ID.');
+    }
+  } catch(e){
+    // Verification failed (network) — optimistically mark as pending
+    if(savedOrder){
+      savedOrder.status = 'Payment Pending Verification';
+      localStorage.setItem('pf_order', JSON.stringify(savedOrder));
+      pushToAdminOrders(savedOrder);
+    }
+    document.getElementById('orderId').textContent = 'Order ID: ' + (savedOrder?.id || orderId);
+    launchConfetti();
+  }
+}
+
+function showPaymentError(msg){
+  const existing = document.getElementById('paymentErrorBanner');
+  if(existing) existing.remove();
+  const div = document.createElement('div');
+  div.id = 'paymentErrorBanner';
+  div.style.cssText = 'background:rgba(255,71,87,.12);border:1px solid rgba(255,71,87,.3);color:var(--red);border-radius:var(--r);padding:.85rem 1.1rem;font-size:.83rem;margin-bottom:1rem;line-height:1.6';
+  div.innerHTML = `⚠️ <strong>Payment Error:</strong> ${msg}<br><small style="opacity:.7">If you were charged, please contact us on WhatsApp with your Order ID.</small>`;
+  const step4 = document.getElementById('step4');
+  if(step4) step4.prepend(div);
+}
+
+/* ─────────────────────────────────────────────
+   PUSH ORDER TO ADMIN LIST
+───────────────────────────────────────────── */
+function pushToAdminOrders(orderData){
+  try {
+    const existing = JSON.parse(localStorage.getItem('pf_admin_orders')||'[]');
+    const idx = existing.findIndex(o=>o.id===orderData.id);
+    if(idx >= 0) existing[idx] = orderData;
+    else existing.unshift(orderData);
+    localStorage.setItem('pf_admin_orders', JSON.stringify(existing));
+  } catch(e){ console.warn('Admin order sync failed', e); }
+}
+
+/* ─────────────────────────────────────────────
+   MAIN SUBMIT HANDLER
+───────────────────────────────────────────── */
+async function submitOrder(){
+  if(!validate4()) return;
+
+  const orderId = 'PF-2026-' + Math.floor(1000+Math.random()*9000);
+  const total   = selectedPlan.price + addons.reduce((s,a)=>s+a.price,0);
+  const paymentMethod = document.getElementById('f-payment').value;
+  const orderData = buildOrderData(orderId);
+
+  // Save order first (always)
+  localStorage.setItem('pf_order', JSON.stringify(orderData));
+  pushToAdminOrders(orderData);
+
+  if(paymentMethod === 'cashfree'){
+    // Cashfree online payment flow
+    await initiateCashfreePayment(orderId, total, orderData);
+  } else {
+    // Manual payment (UPI / Bank) — show success immediately
+    showSuccessScreen(orderId, paymentMethod);
+  }
+}
+
+/* ─────────────────────────────────────────────
+   CONFETTI
+───────────────────────────────────────────── */
 function launchConfetti(){
   const wrap=document.getElementById('confettiWrap');
   const colors=['#00e87a','#00b8ff','#ffd32a','#ff4757','#ffffff'];
   for(let i=0;i<80;i++){
     const p=document.createElement('div');
     p.className='confetti-piece';
-    p.style.cssText=`
-      left:${Math.random()*100}%;
-      top:-20px;
-      background:${colors[Math.floor(Math.random()*colors.length)]};
-      width:${6+Math.random()*6}px;
-      height:${6+Math.random()*6}px;
-      border-radius:${Math.random()>.5?'50%':'2px'};
-      animation-duration:${2+Math.random()*2.5}s;
-      animation-delay:${Math.random()*.8}s;
-    `;
+    p.style.cssText=`left:${Math.random()*100}%;top:-20px;background:${colors[Math.floor(Math.random()*colors.length)]};width:${6+Math.random()*6}px;height:${6+Math.random()*6}px;border-radius:${Math.random()>.5?'50%':'2px'};animation-duration:${2+Math.random()*2.5}s;animation-delay:${Math.random()*.8}s;`;
     wrap.appendChild(p);
-    setTimeout(()=>p.remove(),(5000));
+    setTimeout(()=>p.remove(),5000);
   }
 }
 
-// Init
+// ── Init ──
 updateSummary();
-// Terms starts unchecked but show box checked visually for UX — user can toggle
-// Actually start unchecked:
-termsAccepted=false;
+termsAccepted = false;
+checkCashfreeReturn(); // Handle returning from Cashfree redirect
 </script>
+
+<!-- Cashfree JS SDK v3 (Production) -->
+<script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
 </body>
 </html>
