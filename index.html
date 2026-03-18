@@ -971,85 +971,147 @@ footer {
 /* ═══════════════════════════════════════════
    MOBILE-FIRST OPTIMIZATIONS
 ═══════════════════════════════════════════ */
-@media (max-width: 480px) {
-  /* Nav */
-  nav { padding: 0 4vw; height: 58px; }
-  .nav-logo { font-size: 1.25rem; }
-  .nav-cta { padding: .42rem 1rem; font-size: .75rem; }
 
-  /* Hero */
-  .hero { padding: 70px 5vw 2.5rem; min-height: 100svh; }
-  .hero-inner { gap: 2rem; }
-  h1.hero-headline { font-size: clamp(1.7rem, 8.5vw, 2.4rem); line-height: 1; }
-  .hero-sub { font-size: .85rem; margin-top: 1rem; line-height: 1.7; }
-  .hero-ctas { gap: .75rem; margin-top: 1.5rem; }
-  .btn-primary { padding: .8rem 1.6rem; font-size: .85rem; }
-  .btn-ghost { padding: .8rem 1.4rem; font-size: .85rem; }
-  .hero-mini-stats { gap: 1.2rem; margin-top: 1.25rem; }
-  .hms-num { font-size: .95rem; }
-  .hms-item { font-size: .72rem; }
-  .trust-row { gap: 1rem; margin-top: 1rem; }
+
+/* ═══════════════════════════════════════════
+   COMPREHENSIVE RESPONSIVE FIXES
+═══════════════════════════════════════════ */
+
+/* ── Hero: tighter headline on all screens ── */
+h1.hero-headline {
+  font-size: clamp(1.7rem, 5.5vw, 4.8rem);
+}
+
+/* ── Hero two-col: benefit cards hidden on mobile, show compact version ── */
+@media (max-width: 860px) {
+  .hero { padding: 72px 5vw 2.5rem; min-height: auto; }
+  .hero-inner { grid-template-columns: 1fr; gap: 1.75rem; }
+  h1.hero-headline { font-size: clamp(2rem, 9vw, 3.2rem); line-height: 1; }
+  .hero-sub { font-size: .88rem; margin-top: .9rem; max-width: 100%; }
+  .hero-ctas { margin-top: 1.25rem; gap: .75rem; }
+  .hero-right { display: none; } /* hide benefit cards on mobile — already repeated below hero */
+  .hero-mini-stats { margin-top: 1rem; gap: 1rem; }
+  .hms-num { font-size: 1rem; }
+  .hms-item { font-size: .74rem; }
+  .trust-row { margin-top: .85rem; gap: .75rem; }
   .trust-badge { font-size: .7rem; }
+}
 
-  /* Benefit cards on mobile — more compact */
-  .hero-benefit-card { padding: 1rem 1.2rem; gap: 1rem; }
-  .hb-icon { width: 38px; height: 38px; font-size: 1.1rem; }
-  .hb-title { font-size: .95rem; }
-  .hb-desc { font-size: .74rem; }
+/* ── Compact mobile benefit strip (shown only on mobile, below hero) ── */
+.mobile-benefit-strip {
+  display: none;
+}
+@media (max-width: 860px) {
+  .mobile-benefit-strip {
+    display: flex;
+    gap: .75rem;
+    padding: 1.25rem 5vw;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .mobile-benefit-strip::-webkit-scrollbar { display: none; }
+  .mob-bcard {
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: var(--r);
+    padding: .75rem 1rem;
+    min-width: 190px;
+    flex-shrink: 0;
+  }
+  .mob-bcard-icon { font-size: 1.1rem; flex-shrink: 0; }
+  .mob-bcard-text { font-size: .74rem; font-weight: 600; color: var(--text); line-height: 1.3; }
+  .mob-bcard-sub { font-size: .66rem; color: var(--text3); font-weight: 400; margin-top: .1rem; line-height: 1.4; }
+}
 
-  /* Eyebrow */
-  .hero-eyebrow { font-size: .6rem; padding: .28rem .85rem; margin-bottom: 1rem; }
+/* ── Nav Track Order button: keep it compact ── */
+#navTrackBtn {
+  font-size: .75rem !important;
+  padding: .4rem 1rem !important;
+  white-space: nowrap;
+}
+@media (max-width: 480px) {
+  #navTrackBtn { padding: .35rem .75rem !important; font-size: .7rem !important; }
+}
 
-  /* Sections */
-  .sec { padding: 3rem 5vw; }
-  .offer-sec { padding: 3rem 5vw; }
+/* ── Pricing grid: better mobile layout ── */
+@media (max-width: 680px) {
+  .pricing-grid {
+    grid-template-columns: 1fr !important;
+    max-width: 400px;
+    margin: 2rem auto 0;
+    gap: 1.25rem;
+  }
+  .pricing-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: .75rem;
+  }
+}
 
-  /* Offer */
-  .offer-grid { gap: 2rem; }
-  .offer-card-head { padding: 1.5rem 1.5rem 1.25rem; }
-  .offer-card-body { padding: 1.25rem 1.5rem; }
-  .offer-price-new { font-size: 3rem; }
-  .offer-price-old { font-size: 1.2rem; }
-  .cd-num { font-size: 1.6rem; min-width: 44px; padding: .35rem .55rem; }
-  .countdown-digits { gap: .4rem; }
-  .cd-sep { font-size: 1.4rem; }
+/* ── Offer section: tighter on mobile ── */
+@media (max-width: 680px) {
+  .offer-sec { padding: 2.5rem 5vw; }
+  .offer-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .offer-headline { font-size: clamp(1.6rem, 8vw, 2.4rem); }
+  .offer-card-head { padding: 1.4rem 1.4rem 1.2rem; }
+  .offer-card-body { padding: 1.2rem 1.4rem; }
+  .offer-price-new { font-size: 2.8rem; }
+  .offer-price-old { font-size: 1.1rem; }
+}
 
-  /* Examples grid */
-  .examples-grid { grid-template-columns: 1fr; gap: 1.25rem; margin-top: 2rem; }
+/* ── Examples grid: single col on mobile ── */
+@media (max-width: 640px) {
+  .examples-grid { grid-template-columns: 1fr; gap: 1.25rem; margin-top: 1.75rem; }
+  .examples-sec { padding: 2.5rem 5vw; }
+}
 
-  /* Pricing */
-  .pricing-grid { gap: 1rem; }
+/* ── Section headings: scale down tighter ── */
+@media (max-width: 480px) {
+  .sec-h { font-size: clamp(1.5rem, 7vw, 2rem) !important; }
+  .sec-sub { font-size: .82rem; }
+  .sec { padding: 2.5rem 5vw; }
+  .sec-tag { font-size: .62rem; }
+  h1.hero-headline { font-size: clamp(1.65rem, 9vw, 2.2rem); line-height: 1.02; }
+  .hero { padding: 68px 5vw 2rem; }
+  .btn-primary { padding: .8rem 1.6rem; font-size: .84rem; }
+  .btn-ghost { padding: .8rem 1.3rem; font-size: .82rem; }
+}
 
-  /* Footer */
+/* ── Footer: tighter on mobile ── */
+@media (max-width: 560px) {
+  .footer-grid { grid-template-columns: 1fr; gap: 1.75rem; }
   footer { padding: 2.5rem 5vw 2rem; }
-
-  /* Sticky bar */
-  #sticky-bar { padding: .7rem 4vw; }
-  .sticky-text { font-size: .8rem; }
-  .sticky-cta { padding: .42rem 1.1rem; font-size: .78rem; }
-
-  /* WA FAB */
-  .wa-fab { bottom: 76px; right: 1.25rem; width: 46px; height: 46px; }
-  .wa-fab svg { width: 22px; height: 22px; }
-
-  /* Ticker */
-  .ticker { padding: .6rem 0; }
-  .ticker-track span { font-size: .65rem; }
-
-  /* Mob menu */
-  .mob-menu a { font-size: .92rem; padding: .9rem 0; }
-
-  /* Sec headings */
-  .sec-h { font-size: clamp(1.6rem, 7.5vw, 2.2rem); }
-  .sec-sub { font-size: .85rem; }
-  .offer-headline { font-size: clamp(1.75rem, 8vw, 2.5rem); }
 }
 
+/* ── Sticky bar: one line on mobile ── */
+@media (max-width: 480px) {
+  #sticky-bar { flex-wrap: nowrap; padding: .65rem 4vw; }
+  .sticky-text { font-size: .75rem; }
+  .sticky-cta { padding: .38rem .9rem; font-size: .74rem; white-space: nowrap; }
+}
+
+/* ── WA fab: adjust for sticky bar ── */
+@media (max-width: 480px) {
+  .wa-fab { bottom: 72px; width: 44px; height: 44px; right: 1rem; }
+}
+
+/* ── Countdown: responsive digits ── */
 @media (max-width: 360px) {
-  h1.hero-headline { font-size: 1.55rem; }
-  .btn-primary, .btn-ghost { padding: .75rem 1.2rem; font-size: .8rem; }
-  .offer-price-new { font-size: 2.6rem; }
+  .cd-num { font-size: 1.4rem; min-width: 38px; padding: .3rem .45rem; }
+  .cd-sep { font-size: 1.2rem; }
+  .countdown-digits { gap: .3rem; }
 }
+
+/* ── General: prevent horizontal overflow ── */
+* { max-width: 100%; }
+img, svg { max-width: 100%; }
+section, footer, nav { overflow-x: hidden; }
+
 </style>
 </head>
 <body>
@@ -1071,9 +1133,9 @@ footer {
 <nav id="mainNav">
   <div class="nav-logo">Portfolio<span class="g">Forge</span></div>
   <div class="nav-links">
+    <a href="#pricing">Pricing</a>
     <a href="#offer">Offer</a>
     <a href="#examples">Examples</a>
-    <a href="#pricing">Pricing</a>
     <a href="submit-order.html">Order Now</a>
   </div>
   <div class="nav-actions">
@@ -1089,23 +1151,20 @@ footer {
 
 <!-- MOBILE MENU -->
 <nav class="mob-menu" id="mobMenu">
+  <a href="#pricing" onclick="closeMob()">Pricing</a>
   <a href="#offer" onclick="closeMob()">🔥 Limited Offer</a>
   <a href="#examples" onclick="closeMob()">Examples</a>
-  <a href="#pricing" onclick="closeMob()">Pricing</a>
   <a href="submit-order.html" style="color:var(--teal);font-weight:700;margin-top:.5rem">Get Started →</a>
   <a href="track-order.html" id="mobTrackBtn" style="display:none;color:var(--teal);font-weight:700;border:1px solid rgba(0,245,200,.3);border-radius:var(--r);padding:.6rem 1rem;text-align:center;margin-top:.5rem">📊 Track Your Order →</a>
 </nav>
 
 <!-- PAYMENT SUCCESS BANNER (shown only after confirmed payment) -->
-<div id="paySuccessBanner" style="display:none;position:fixed;top:58px;left:0;right:0;z-index:399;background:linear-gradient(90deg,rgba(0,245,200,.12),rgba(139,92,246,.08));border-bottom:1px solid rgba(0,245,200,.25);padding:.7rem 5vw;display:none;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap">
-  <div style="display:flex;align-items:center;gap:.75rem">
-    <span style="font-size:1.1rem">🎉</span>
-    <div>
-      <div style="font-size:.82rem;font-weight:700;color:var(--teal)">Payment Confirmed! Your portfolio is being built.</div>
-      <div style="font-family:var(--font-mono);font-size:.62rem;color:var(--text3)" id="bannerOrderId">Order in progress</div>
-    </div>
+<div id="paySuccessBanner" style="display:none;position:fixed;top:58px;left:0;right:0;z-index:399;background:rgba(0,245,200,.06);border-bottom:1px solid rgba(0,245,200,.18);backdrop-filter:blur(12px);padding:.5rem 5vw;align-items:center;justify-content:space-between;gap:.75rem;">
+  <div style="display:flex;align-items:center;gap:.6rem;min-width:0;">
+    <span style="font-size:.9rem;flex-shrink:0">🎉</span>
+    <span style="font-size:.78rem;font-weight:600;color:var(--teal);white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="bannerOrderId">Payment confirmed — portfolio in progress</span>
   </div>
-  <a href="track-order.html" style="display:inline-flex;align-items:center;gap:.4rem;background:var(--teal);color:#000;padding:.42rem 1.15rem;border-radius:var(--r);font-size:.78rem;font-weight:700;white-space:nowrap;flex-shrink:0">📊 Track Live →</a>
+  <a href="track-order.html" style="display:inline-flex;align-items:center;gap:.3rem;background:var(--teal);color:#000;padding:.32rem .9rem;border-radius:var(--r);font-size:.72rem;font-weight:700;white-space:nowrap;flex-shrink:0;">Track →</a>
 </div>
 
 <!-- STICKY BAR -->
@@ -1185,6 +1244,31 @@ footer {
   </div>
 </section>
 
+<!-- MOBILE BENEFIT STRIP (visible only < 860px) -->
+<div class="mobile-benefit-strip" aria-hidden="true">
+  <a href="submit-order.html" class="mob-bcard">
+    <div class="mob-bcard-icon">🎯</div>
+    <div>
+      <div class="mob-bcard-text">Get internships faster</div>
+      <div class="mob-bcard-sub">Stand out with a portfolio site</div>
+    </div>
+  </a>
+  <a href="submit-order.html" class="mob-bcard">
+    <div class="mob-bcard-icon">🏆</div>
+    <div>
+      <div class="mob-bcard-text">Stand out in placements</div>
+      <div class="mob-bcard-sub">Show projects live to recruiters</div>
+    </div>
+  </a>
+  <a href="submit-order.html" class="mob-bcard">
+    <div class="mob-bcard-icon">✨</div>
+    <div>
+      <div class="mob-bcard-text">Impress recruiters</div>
+      <div class="mob-bcard-sub">Professional presence = remembered</div>
+    </div>
+  </a>
+</div>
+
 <!-- TICKER -->
 <div class="ticker" aria-hidden="true">
   <div class="ticker-track">
@@ -1206,6 +1290,102 @@ footer {
     <span>100% Satisfaction</span><span class="sep"> ◆ </span>
   </div>
 </div>
+
+<!-- ═══ PRICING ═══ -->
+<section class="pricing-sec sec" id="pricing">
+  <div class="pricing-header rv">
+    <div>
+      <div class="sec-tag">01 — Pricing</div>
+      <h2 class="sec-h">Simple, <span class="g">Honest Pricing</span></h2>
+      <p class="sec-sub" style="margin-top:.6rem">One-time payment. No subscriptions. Source code always yours.</p>
+    </div>
+    <div class="delivery-badge">⚡ 24 Hour Delivery</div>
+  </div>
+
+  <div class="pricing-grid">
+
+    <!-- ₹49 — HERO (Limited Time) -->
+    <div class="pc pc-hero rv">
+      <div class="pc-badge-row">🔥 Limited Time Offer</div>
+      <div class="pc-body">
+        <div class="pc-icon">⚡</div>
+        <div class="pc-name">Starter</div>
+        <div class="pc-tagline">// Get online fast</div>
+        <div class="pc-price-row">
+          <div class="pc-currency">₹</div>
+          <div class="pc-amount">49</div>
+          <div class="pc-note">one-time</div>
+        </div>
+        <div class="pc-old-price">Was ₹99 — Save 50%</div>
+        <div class="pc-delivery">⚡ Delivered in 24h</div>
+        <div class="pc-divider"></div>
+        <div class="pc-features">
+          <div class="pc-feat"><div class="pc-feat-icon">✓</div>Single-page professional portfolio</div>
+          <div class="pc-feat"><div class="pc-feat-icon">✓</div>Hero, About, Skills &amp; Contact sections</div>
+          <div class="pc-feat"><div class="pc-feat-icon">✓</div>100% mobile-responsive design</div>
+          <div class="pc-feat"><div class="pc-feat-icon">✓</div>Full source code ownership</div>
+          <div class="pc-feat"><div class="pc-feat-icon">✓</div>Deployment guide included</div>
+        </div>
+        <a href="submit-order.html" class="pc-cta">Get Started for ₹49 →</a>
+      </div>
+    </div>
+
+    <!-- ₹179 — Best Value -->
+    <div class="pc pc-value rv d1">
+      <div class="pc-badge-row">⭐ Best Value</div>
+      <div class="pc-body">
+        <div class="pc-icon">🚀</div>
+        <div class="pc-name">Pro Animated</div>
+        <div class="pc-tagline">// For those who want to stand out</div>
+        <div class="pc-price-row">
+          <div class="pc-currency" style="color:var(--amber)">₹</div>
+          <div class="pc-amount" style="color:var(--amber)">179</div>
+          <div class="pc-note">one-time</div>
+        </div>
+        <div class="pc-old-price" style="opacity:.6">&nbsp;</div>
+        <div class="pc-delivery">⚡ Delivered in 24h</div>
+        <div class="pc-divider"></div>
+        <div class="pc-features">
+          <div class="pc-feat"><div class="pc-feat-icon">✓</div>Modern animated portfolio design</div>
+          <div class="pc-feat"><div class="pc-feat-icon">✓</div>Smooth scroll animations &amp; transitions</div>
+          <div class="pc-feat"><div class="pc-feat-icon">✓</div>Projects showcase with live links</div>
+          <div class="pc-feat"><div class="pc-feat-icon">✓</div>1 free revision round included</div>
+          <div class="pc-feat"><div class="pc-feat-icon">✓</div>Full source code + deployment ready</div>
+        </div>
+        <a href="submit-order.html" class="pc-cta">Get Best Value →</a>
+      </div>
+    </div>
+
+    <!-- ₹449 — Premium -->
+    <div class="pc pc-premium rv d2">
+      <div class="pc-badge-row">💎 Premium</div>
+      <div class="pc-body">
+        <div class="pc-icon">🌟</div>
+        <div class="pc-name">Premium</div>
+        <div class="pc-tagline">// Maximum impact</div>
+        <div class="pc-price-row">
+          <div class="pc-currency" style="color:#c4b5fd">₹</div>
+          <div class="pc-amount" style="color:#c4b5fd">449</div>
+          <div class="pc-note">one-time</div>
+        </div>
+        <div class="pc-old-price" style="opacity:.6">&nbsp;</div>
+        <div class="pc-delivery">⚡ Delivered in 24h</div>
+        <div class="pc-divider"></div>
+        <div class="pc-features">
+          <div class="pc-feat"><div class="pc-feat-icon">✓</div>Advanced portfolio with 3D animations</div>
+          <div class="pc-feat"><div class="pc-feat-icon">✓</div>GitHub integration &amp; live repo stats</div>
+          <div class="pc-feat"><div class="pc-feat-icon">✓</div>Multiple custom sections + blog-ready</div>
+          <div class="pc-feat"><div class="pc-feat-icon">✓</div>2 free revision rounds included</div>
+          <div class="pc-feat"><div class="pc-feat-icon">✓</div>Vercel / Netlify deployment assistance</div>
+        </div>
+        <a href="submit-order.html" class="pc-cta">Go Premium →</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="pricing-trust rv">🔒 Secure UPI · 💰 One-time only · 📦 Source code always included · ⚡ 24h or full refund</div>
+</section>
 
 <!-- ═══ LAUNCH OFFER ═══ -->
 <section class="offer-sec" id="offer">
@@ -1375,102 +1555,6 @@ footer {
   </div>
 </section>
 <style>@keyframes shimmer{from{opacity:.12}to{opacity:.45}}</style>
-
-<!-- ═══ PRICING ═══ -->
-<section class="pricing-sec sec" id="pricing">
-  <div class="pricing-header rv">
-    <div>
-      <div class="sec-tag">03 — Pricing</div>
-      <h2 class="sec-h">Simple, <span class="g">Honest Pricing</span></h2>
-      <p class="sec-sub" style="margin-top:.6rem">One-time payment. No subscriptions. Source code always yours.</p>
-    </div>
-    <div class="delivery-badge">⚡ 24 Hour Delivery</div>
-  </div>
-
-  <div class="pricing-grid">
-
-    <!-- ₹49 — HERO (Limited Time) -->
-    <div class="pc pc-hero rv">
-      <div class="pc-badge-row">🔥 Limited Time Offer</div>
-      <div class="pc-body">
-        <div class="pc-icon">⚡</div>
-        <div class="pc-name">Starter</div>
-        <div class="pc-tagline">// Get online fast</div>
-        <div class="pc-price-row">
-          <div class="pc-currency">₹</div>
-          <div class="pc-amount">49</div>
-          <div class="pc-note">one-time</div>
-        </div>
-        <div class="pc-old-price">Was ₹99 — Save 50%</div>
-        <div class="pc-delivery">⚡ Delivered in 24h</div>
-        <div class="pc-divider"></div>
-        <div class="pc-features">
-          <div class="pc-feat"><div class="pc-feat-icon">✓</div>Single-page professional portfolio</div>
-          <div class="pc-feat"><div class="pc-feat-icon">✓</div>Hero, About, Skills &amp; Contact sections</div>
-          <div class="pc-feat"><div class="pc-feat-icon">✓</div>100% mobile-responsive design</div>
-          <div class="pc-feat"><div class="pc-feat-icon">✓</div>Full source code ownership</div>
-          <div class="pc-feat"><div class="pc-feat-icon">✓</div>Deployment guide included</div>
-        </div>
-        <a href="submit-order.html" class="pc-cta">Get Started for ₹49 →</a>
-      </div>
-    </div>
-
-    <!-- ₹179 — Best Value -->
-    <div class="pc pc-value rv d1">
-      <div class="pc-badge-row">⭐ Best Value</div>
-      <div class="pc-body">
-        <div class="pc-icon">🚀</div>
-        <div class="pc-name">Pro Animated</div>
-        <div class="pc-tagline">// For those who want to stand out</div>
-        <div class="pc-price-row">
-          <div class="pc-currency" style="color:var(--amber)">₹</div>
-          <div class="pc-amount" style="color:var(--amber)">179</div>
-          <div class="pc-note">one-time</div>
-        </div>
-        <div class="pc-old-price" style="opacity:.6">&nbsp;</div>
-        <div class="pc-delivery">⚡ Delivered in 24h</div>
-        <div class="pc-divider"></div>
-        <div class="pc-features">
-          <div class="pc-feat"><div class="pc-feat-icon">✓</div>Modern animated portfolio design</div>
-          <div class="pc-feat"><div class="pc-feat-icon">✓</div>Smooth scroll animations &amp; transitions</div>
-          <div class="pc-feat"><div class="pc-feat-icon">✓</div>Projects showcase with live links</div>
-          <div class="pc-feat"><div class="pc-feat-icon">✓</div>1 free revision round included</div>
-          <div class="pc-feat"><div class="pc-feat-icon">✓</div>Full source code + deployment ready</div>
-        </div>
-        <a href="submit-order.html" class="pc-cta">Get Best Value →</a>
-      </div>
-    </div>
-
-    <!-- ₹449 — Premium -->
-    <div class="pc pc-premium rv d2">
-      <div class="pc-badge-row">💎 Premium</div>
-      <div class="pc-body">
-        <div class="pc-icon">🌟</div>
-        <div class="pc-name">Premium</div>
-        <div class="pc-tagline">// Maximum impact</div>
-        <div class="pc-price-row">
-          <div class="pc-currency" style="color:#c4b5fd">₹</div>
-          <div class="pc-amount" style="color:#c4b5fd">449</div>
-          <div class="pc-note">one-time</div>
-        </div>
-        <div class="pc-old-price" style="opacity:.6">&nbsp;</div>
-        <div class="pc-delivery">⚡ Delivered in 24h</div>
-        <div class="pc-divider"></div>
-        <div class="pc-features">
-          <div class="pc-feat"><div class="pc-feat-icon">✓</div>Advanced portfolio with 3D animations</div>
-          <div class="pc-feat"><div class="pc-feat-icon">✓</div>GitHub integration &amp; live repo stats</div>
-          <div class="pc-feat"><div class="pc-feat-icon">✓</div>Multiple custom sections + blog-ready</div>
-          <div class="pc-feat"><div class="pc-feat-icon">✓</div>2 free revision rounds included</div>
-          <div class="pc-feat"><div class="pc-feat-icon">✓</div>Vercel / Netlify deployment assistance</div>
-        </div>
-        <a href="submit-order.html" class="pc-cta">Go Premium →</a>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="pricing-trust rv">🔒 Secure UPI · 💰 One-time only · 📦 Source code always included · ⚡ 24h or full refund</div>
-</section>
 
 <!-- comparison removed -->
 
@@ -1642,9 +1726,9 @@ document.querySelectorAll('[data-count]').forEach(el => {
     if (banner) {
       banner.style.display = 'flex';
       const bannerOid = document.getElementById('bannerOrderId');
-      if (bannerOid) bannerOid.textContent = order.id ? ('Order ' + order.id + ' · In progress') : 'Order in progress';
+      if (bannerOid) bannerOid.textContent = order.id ? ('Order ' + order.id + ' · In progress') : 'Payment confirmed — portfolio in progress';
       const hero = document.querySelector('.hero');
-      if (hero) hero.style.paddingTop = '132px';
+      if (hero) hero.style.paddingTop = 'calc(80px + 36px)';
     }
   }
 })();

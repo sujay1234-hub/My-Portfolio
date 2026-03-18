@@ -6,597 +6,863 @@
 <title>Place Your Order — PortfolioForge</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
-/* ════════════════════════════════
-   TOKENS
-════════════════════════════════ */
-:root{
-  --bg:#060810; --bg2:#0a0d18; --bg3:#0f1220;
-  --surface:#131729; --surface2:#1a1f35;
-  --border:#1e2440; --border2:#252d4a;
-  --teal:#00f5c8; --teal-dim:rgba(0,245,200,.1); --teal-glow:rgba(0,245,200,.25);
-  --violet:#8b5cf6; --amber:#f59e0b;
-  --red:#ef4444; --red-dim:rgba(239,68,68,.1);
-  --text:#f0f2fa; --text2:#8892b8; --text3:#4a5278;
-  --font-d:'Syne',sans-serif; --font-b:'DM Sans',sans-serif; --font-m:'JetBrains Mono',monospace;
-  --r:8px; --r-lg:14px; --r-xl:20px;
-}
-[data-theme="light"]{
-  --bg:#f4f6fd; --bg2:#eceffe; --bg3:#fff;
-  --surface:#fff; --surface2:#f0f2fc;
-  --border:#d8ddf0; --border2:#c8cfe8;
-  --text:#0a0d1e; --text2:#4a527a; --text3:#8890b4;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:16px;line-height:1.6;overflow-x:hidden;transition:background .3s,color .3s;min-height:100vh}
-::selection{background:var(--teal);color:#000}
-::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--teal);border-radius:2px}
-a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
+/* ═══════════════════════════════════════════════════════
+   DESIGN TOKENS — Luxury Dark
+═══════════════════════════════════════════════════════ */
+:root {
+  --bg:      #05070f;
+  --bg2:     #080b16;
+  --surface: #0c0f1d;
+  --glass:   rgba(255,255,255,.03);
+  --glass2:  rgba(255,255,255,.055);
+  --border:  rgba(255,255,255,.07);
+  --border2: rgba(255,255,255,.12);
 
-/* ════════════════════════════════
-   CURSOR
-════════════════════════════════ */
-#dot{position:fixed;width:7px;height:7px;background:var(--teal);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
-#ring{position:fixed;width:30px;height:30px;border:1.5px solid var(--teal);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.35}
+  --teal:      #00f5c8;
+  --teal-d:    rgba(0,245,200,.08);
+  --teal-m:    rgba(0,245,200,.18);
+  --teal-glow: 0 0 40px rgba(0,245,200,.28);
+
+  --violet: #7c5cfc;
+  --amber:  #f59e0b;
+  --red:    #f04444;
+
+  --text:  #eef1fb;
+  --text2: #7a85aa;
+  --text3: #3d4566;
+
+  --fd: 'Syne', sans-serif;
+  --fb: 'DM Sans', sans-serif;
+  --fm: 'JetBrains Mono', monospace;
+
+  --r:   10px;
+  --rl:  16px;
+  --rxl: 22px;
+}
+
+/* Light mode */
+[data-theme="light"] {
+  --bg:      #f2f4fc;
+  --bg2:     #e8ecf8;
+  --surface: #ffffff;
+  --glass:   rgba(255,255,255,.6);
+  --glass2:  rgba(255,255,255,.8);
+  --border:  rgba(0,0,0,.07);
+  --border2: rgba(0,0,0,.13);
+  --text:    #0a0d1e;
+  --text2:   #4a5278;
+  --text3:   #8890b4;
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent }
+html { scroll-behavior:smooth }
+body {
+  background:var(--bg); color:var(--text);
+  font-family:var(--fb); font-size:16px; line-height:1.6;
+  overflow-x:hidden; min-height:100vh;
+  transition:background .3s,color .3s;
+}
+::selection { background:var(--teal); color:#000 }
+::-webkit-scrollbar { width:2px }
+::-webkit-scrollbar-thumb { background:var(--teal); border-radius:2px }
+a { color:inherit; text-decoration:none }
+
+/* ═══ NOISE OVERLAY ═══ */
+body::before {
+  content:'';
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity:.5;
+}
+
+/* ═══ CURSOR ═══ */
+#dot { position:fixed;width:6px;height:6px;background:var(--teal);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .06s }
+#ring { position:fixed;width:28px;height:28px;border:1px solid rgba(0,245,200,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%) }
 @media(hover:none){#dot,#ring{display:none}}
 
-/* ════════════════════════════════
-   NAV
-════════════════════════════════ */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:400;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 4vw;height:64px;
-  background:rgba(6,8,16,.9);backdrop-filter:blur(24px);
+/* ═══════════════════════════════════════════════════════
+   NAV — ultra-slim glass
+═══════════════════════════════════════════════════════ */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:500;
+  height:60px; padding:0 5vw;
+  display:flex; align-items:center; justify-content:space-between;
+  background:rgba(5,7,15,.82);
+  backdrop-filter:blur(32px) saturate(180%);
   border-bottom:1px solid var(--border);
 }
-[data-theme="light"] nav{background:rgba(244,246,253,.92)}
-.nav-logo{font-family:var(--font-d);font-size:1.45rem;font-weight:800;letter-spacing:-.03em;display:flex;align-items:center;gap:.3rem}
-.nav-logo .g{color:var(--teal)}
-.nav-back{display:flex;align-items:center;gap:.45rem;font-size:.8rem;font-weight:600;color:var(--text2);transition:color .2s}
-.nav-back:hover{color:var(--teal)}
-.nav-back svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
-.nav-right{display:flex;align-items:center;gap:.65rem}
-.theme-btn{width:34px;height:34px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.85rem;transition:border-color .2s}
-.theme-btn:hover{border-color:var(--teal)}
-.secure-badge{display:flex;align-items:center;gap:.35rem;font-family:var(--font-m);font-size:.62rem;color:var(--text3);letter-spacing:.06em}
-.secure-badge svg{width:11px;height:11px;fill:var(--teal)}
+[data-theme="light"] nav { background:rgba(242,244,252,.88) }
 
-/* ════════════════════════════════
-   HERO BAND (compact)
-════════════════════════════════ */
-.order-hero{
-  padding:82px 4vw 0;
-  position:relative;overflow:hidden;
+.nav-logo {
+  font-family:var(--fd); font-size:1.4rem; font-weight:800;
+  letter-spacing:-.04em; display:flex; align-items:center; gap:.25rem;
 }
-.order-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(0,245,200,.055) 0%,transparent 70%);pointer-events:none}
-.order-hero-inner{max-width:820px;margin:0 auto;text-align:center;padding:1.75rem 0 1.5rem}
-.order-eyebrow{
-  display:inline-flex;align-items:center;gap:.5rem;
-  background:var(--teal-dim);border:1px solid rgba(0,245,200,.2);
-  padding:.28rem .9rem;border-radius:100px;
-  font-family:var(--font-m);font-size:.65rem;color:var(--teal);letter-spacing:.08em;margin-bottom:1rem
-}
-.order-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--teal);animation:blink 1.4s ease infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
-.order-hero h1{font-family:var(--font-d);font-size:clamp(2rem,4vw,3.5rem);font-weight:800;letter-spacing:-.03em;line-height:.95;color:var(--text);margin-bottom:.6rem}
-.order-hero h1 .g{color:var(--teal)}
-.order-hero p{font-size:.9rem;color:var(--text2);font-weight:300;line-height:1.7;max-width:440px;margin:0 auto 1.5rem}
-.trust-strip{display:flex;align-items:center;justify-content:center;gap:1.75rem;flex-wrap:wrap}
-.ts-item{display:flex;align-items:center;gap:.35rem;font-size:.76rem;font-weight:500;color:var(--text3)}
-.ts-item .icon{font-size:.88rem}
+.nav-logo .g { color:var(--teal) }
 
-/* ════════════════════════════════
-   STEP PROGRESS — 2 STEPS
-════════════════════════════════ */
-.step-progress{max-width:440px;margin:1.5rem auto 0;padding:0 4vw}
-.step-track{display:flex;align-items:center;gap:0;position:relative}
-.step-node{display:flex;flex-direction:column;align-items:center;gap:.35rem;position:relative;z-index:1;flex:1}
-.step-circle{
-  width:36px;height:36px;border-radius:50%;
-  background:var(--surface);border:2px solid var(--border2);
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--font-m);font-size:.7rem;color:var(--text3);
-  transition:all .35s ease;
+.nav-back {
+  display:flex; align-items:center; gap:.5rem;
+  font-size:.78rem; font-weight:600; color:var(--text2);
+  padding:.35rem .85rem; border:1px solid var(--border2);
+  border-radius:100px; transition:all .2s;
 }
-.step-circle.done{background:var(--teal);border-color:var(--teal);color:#000;font-weight:700}
-.step-circle.active{background:var(--teal-dim);border-color:var(--teal);color:var(--teal);box-shadow:0 0 0 4px rgba(0,245,200,.12)}
-.step-label{font-family:var(--font-m);font-size:.58rem;color:var(--text3);letter-spacing:.06em;text-align:center;white-space:nowrap}
-.step-label.active{color:var(--teal)}
-.step-line{flex:1;height:2px;background:var(--border);transition:background .35s;margin:0 -1px;margin-bottom:1.1rem;z-index:0}
-.step-line.done{background:var(--teal)}
+.nav-back:hover { color:var(--teal); border-color:rgba(0,245,200,.35); background:var(--teal-d) }
+.nav-back svg { width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round }
 
-/* ════════════════════════════════
-   MAIN LAYOUT
-════════════════════════════════ */
-.order-main{max-width:1060px;margin:0 auto;padding:2.5rem 4vw 6rem;display:grid;grid-template-columns:1fr 340px;gap:2rem;align-items:start}
-@media(max-width:940px){.order-main{grid-template-columns:1fr}}
+.nav-right { display:flex; align-items:center; gap:.6rem }
 
-/* ════════════════════════════════
-   FORM CARD
-════════════════════════════════ */
-.form-card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r-xl);overflow:hidden;position:relative}
-.form-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),var(--violet),var(--teal))}
-.form-card-head{padding:1.5rem 1.75rem 1.25rem;border-bottom:1px solid var(--border)}
-.fch-tag{font-family:var(--font-m);font-size:.6rem;color:var(--teal);letter-spacing:.14em;text-transform:uppercase;margin-bottom:.3rem}
-.fch-title{font-family:var(--font-d);font-size:1.5rem;font-weight:800;letter-spacing:-.02em;color:var(--text);line-height:1}
-.fch-sub{font-size:.8rem;color:var(--text2);font-weight:300;margin-top:.2rem}
-.form-body{padding:1.75rem}
-.form-step{display:none;animation:stepIn .3s ease both}
-.form-step.active{display:block}
-@keyframes stepIn{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
-
-/* ════════════════════════════════
-   FIELDS
-════════════════════════════════ */
-.field-group{margin-bottom:1.1rem}
-.field-row{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-bottom:1.1rem}
-@media(max-width:540px){.field-row{grid-template-columns:1fr}}
-.field-label{
-  font-family:var(--font-m);font-size:.6rem;color:var(--text3);
-  letter-spacing:.12em;text-transform:uppercase;margin-bottom:.35rem;
-  display:flex;align-items:center;gap:.3rem
+.nav-track {
+  font-size:.74rem; font-weight:700; color:var(--text2);
+  display:flex; align-items:center; gap:.3rem;
+  padding:.35rem .85rem; border:1px solid var(--border);
+  border-radius:100px; transition:all .2s;
 }
-.field-label .req{color:var(--red);font-size:.68rem}
-.field-input,.field-select,.field-textarea{
-  width:100%;background:var(--bg);border:1.5px solid var(--border2);border-radius:var(--r);
-  padding:.7rem .95rem;color:var(--text);font-family:var(--font-b);font-size:.88rem;font-weight:400;
-  outline:none;transition:border-color .2s,box-shadow .2s;
-}
-.field-input:focus,.field-select:focus,.field-textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(0,245,200,.1)}
-.field-input.error,.field-select.error,.field-textarea.error{border-color:var(--red);box-shadow:0 0 0 3px rgba(239,68,68,.08)}
-.field-input::placeholder,.field-textarea::placeholder{color:var(--text3)}
-.field-select option{background:var(--bg2)}
-.field-textarea{resize:vertical;min-height:82px}
-.field-hint{font-size:.73rem;color:var(--text3);margin-top:.3rem;font-weight:300}
-.field-error{font-size:.72rem;color:var(--red);margin-top:.3rem;display:none}
-.field-error.show{display:block}
+.nav-track:hover { color:var(--teal); border-color:rgba(0,245,200,.35) }
 
-/* ════════════════════════════════
-   PLAN CARDS (inline in step 1)
-════════════════════════════════ */
-.plan-grid{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-bottom:1.25rem}
-@media(max-width:540px){.plan-grid{grid-template-columns:1fr}}
-.plan-option{
-  display:flex;align-items:center;gap:.85rem;padding:.85rem 1rem;
-  background:var(--bg);border:1.5px solid var(--border2);border-radius:var(--r);
-  cursor:pointer;transition:border-color .2s,background .2s;position:relative;
+.theme-btn {
+  width:34px; height:34px; border-radius:50%;
+  background:var(--glass); border:1px solid var(--border2);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; font-size:.85rem; transition:all .2s;
 }
-.plan-option:hover{border-color:rgba(0,245,200,.35);background:var(--teal-dim)}
-.plan-option.selected{border-color:var(--teal);background:var(--teal-dim)}
-.plan-option input{position:absolute;opacity:0;pointer-events:none}
-.plan-radio{width:16px;height:16px;border-radius:50%;border:2px solid var(--border2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:border-color .2s}
-.plan-option.selected .plan-radio{border-color:var(--teal)}
-.plan-radio::after{content:'';width:7px;height:7px;border-radius:50%;background:var(--teal);opacity:0;transition:opacity .2s}
-.plan-option.selected .plan-radio::after{opacity:1}
-.plan-info{flex:1;min-width:0}
-.plan-name{font-size:.85rem;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.plan-desc{font-size:.72rem;color:var(--text2);font-weight:300;margin-top:.06rem;line-height:1.4}
-.plan-option.selected .plan-name{color:var(--teal)}
-.plan-price{font-family:var(--font-d);font-size:1.35rem;font-weight:800;color:var(--teal);letter-spacing:-.01em;flex-shrink:0}
-.plan-badge{
-  position:absolute;top:-8px;right:10px;
-  background:var(--teal);color:#000;
-  font-family:var(--font-m);font-size:.52rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
-  padding:.13rem .48rem;border-radius:100px;
-}
-.plan-badge.red{background:var(--red);color:#fff}
+.theme-btn:hover { border-color:var(--teal); background:var(--teal-d) }
 
-/* ════════════════════════════════
-   ADDONS (compact grid)
-════════════════════════════════ */
-.addon-section{margin-bottom:1.25rem}
-.addon-section-title{font-family:var(--font-m);font-size:.62rem;color:var(--text3);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.55rem}
-.addon-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem}
-@media(max-width:600px){.addon-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:400px){.addon-grid{grid-template-columns:1fr}}
-.addon-toggle{
-  display:flex;flex-direction:column;align-items:center;gap:.35rem;
-  padding:.65rem .5rem;
-  background:var(--bg);border:1.5px solid var(--border2);border-radius:var(--r);
-  cursor:pointer;transition:border-color .2s,background .2s;text-align:center;
+/* ═══════════════════════════════════════════════════════
+   HERO — minimal, focused
+═══════════════════════════════════════════════════════ */
+.page-hero {
+  padding-top:100px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
 }
-.addon-toggle:hover{border-color:rgba(0,245,200,.3)}
-.addon-toggle.on{border-color:var(--teal);background:var(--teal-dim)}
-.addon-icon{font-size:1.15rem}
-.addon-label span{display:block;font-size:.74rem;font-weight:600;color:var(--text2);line-height:1.3}
-.addon-toggle.on .addon-label span{color:var(--text)}
-.addon-label small{font-size:.64rem;color:var(--text3)}
-.addon-price{font-family:var(--font-m);font-size:.68rem;color:var(--text3)}
-.addon-toggle.on .addon-price{color:var(--teal)}
-.addon-check{width:14px;height:14px;border-radius:3px;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;transition:.2s;color:transparent;font-size:.52rem}
-.addon-toggle.on .addon-check{background:var(--teal);border-color:var(--teal);color:#000}
-
-/* ════════════════════════════════
-   SECTION DIVIDER in form
-════════════════════════════════ */
-.form-section-title{
-  font-family:var(--font-m);font-size:.6rem;color:var(--teal);
-  letter-spacing:.14em;text-transform:uppercase;
-  margin:1.4rem 0 .9rem;padding-bottom:.55rem;border-bottom:1px solid var(--border);
-  display:flex;align-items:center;gap:.45rem;
+.page-hero::after {
+  content:'';
+  position:absolute; top:0; left:50%; transform:translateX(-50%);
+  width:600px; height:300px;
+  background:radial-gradient(ellipse at 50% 0%, rgba(0,245,200,.1) 0%, transparent 70%);
+  pointer-events:none;
 }
-.form-section-title::before{content:'//';opacity:.4}
+.hero-inner { max-width:600px; margin:0 auto; padding:2rem 5vw 0; position:relative; z-index:1 }
 
-/* ════════════════════════════════
-   PAYMENT SELECTOR (card style)
-════════════════════════════════ */
-.payment-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin-bottom:1rem}
-@media(max-width:540px){.payment-grid{grid-template-columns:1fr}}
-.pay-option{
-  display:flex;flex-direction:column;align-items:center;gap:.4rem;
-  padding:.85rem .6rem;
-  background:var(--bg);border:1.5px solid var(--border2);border-radius:var(--r);
-  cursor:pointer;transition:border-color .2s,background .2s;text-align:center;
+.hero-pill {
+  display:inline-flex; align-items:center; gap:.5rem;
+  background:var(--teal-d); border:1px solid var(--teal-m);
+  padding:.3rem 1rem; border-radius:100px;
+  font-family:var(--fm); font-size:.62rem; color:var(--teal);
+  letter-spacing:.1em; text-transform:uppercase; margin-bottom:1.25rem;
+}
+.hero-pill-dot {
+  width:5px; height:5px; border-radius:50%; background:var(--teal);
+  animation:pulse 1.5s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(.8)} }
+
+.hero-h1 {
+  font-family:var(--fd); font-size:clamp(2rem,5vw,3.2rem);
+  font-weight:800; letter-spacing:-.04em; line-height:1;
+  margin-bottom:.75rem; color:var(--text);
+}
+.hero-h1 em { font-style:normal; color:var(--teal) }
+
+.hero-sub {
+  font-size:.9rem; color:var(--text2); font-weight:300;
+  line-height:1.75; max-width:420px; margin:0 auto 1.75rem;
+}
+
+.trust-row {
+  display:flex; align-items:center; justify-content:center;
+  gap:1.5rem; flex-wrap:wrap; margin-bottom:2rem;
+}
+.trust-chip {
+  display:flex; align-items:center; gap:.4rem;
+  font-size:.73rem; font-weight:500; color:var(--text3);
+}
+.trust-chip .ic { font-size:.82rem }
+
+/* ═══ STEP PROGRESS ═══ */
+.step-bar {
+  max-width:360px; margin:0 auto;
+  display:flex; align-items:center;
+  padding:0 5vw 2rem;
+}
+.step-node { display:flex; flex-direction:column; align-items:center; gap:.35rem; flex:1 }
+.step-num {
+  width:38px; height:38px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--fm); font-size:.68rem; font-weight:600;
+  transition:all .4s cubic-bezier(.34,1.56,.64,1);
+  background:var(--glass); border:1.5px solid var(--border2); color:var(--text3);
+}
+.step-num.active {
+  background:var(--teal); border-color:var(--teal); color:#000; font-weight:800;
+  box-shadow:0 0 0 6px rgba(0,245,200,.12), var(--teal-glow);
+}
+.step-num.done {
+  background:rgba(0,245,200,.15); border-color:rgba(0,245,200,.4); color:var(--teal); font-weight:800;
+}
+.step-lbl { font-family:var(--fm); font-size:.55rem; color:var(--text3); letter-spacing:.06em; white-space:nowrap }
+.step-lbl.active { color:var(--teal) }
+.step-connector { flex:1; height:1px; background:var(--border2); margin-bottom:1.1rem; transition:background .4s }
+.step-connector.done { background:var(--teal) }
+
+/* ═══════════════════════════════════════════════════════
+   LAYOUT
+═══════════════════════════════════════════════════════ */
+.order-wrap {
+  max-width:1080px; margin:0 auto;
+  padding:1.5rem 5vw 8rem;
+  display:grid; grid-template-columns:1fr 320px; gap:1.75rem; align-items:start;
+  position:relative; z-index:1;
+}
+@media(max-width:900px) { .order-wrap { grid-template-columns:1fr } }
+
+/* ═══════════════════════════════════════════════════════
+   FORM CARD — glass morphism
+═══════════════════════════════════════════════════════ */
+.form-card {
+  background:var(--glass);
+  border:1px solid var(--border2);
+  border-radius:var(--rxl);
+  backdrop-filter:blur(24px);
+  overflow:hidden;
   position:relative;
 }
-.pay-option:hover{border-color:rgba(0,245,200,.35)}
-.pay-option.selected{border-color:var(--teal);background:var(--teal-dim)}
-.pay-option input{position:absolute;opacity:0;pointer-events:none}
-.pay-icon{font-size:1.3rem}
-.pay-label{font-size:.78rem;font-weight:700;color:var(--text2)}
-.pay-option.selected .pay-label{color:var(--teal)}
-.pay-sub{font-size:.65rem;color:var(--text3);line-height:1.4}
-.pay-option.selected .pay-sub{color:rgba(0,245,200,.6)}
-
-/* payment info box */
-.pay-info{
-  display:none;background:var(--bg);border:1px solid var(--border2);
-  border-radius:var(--r);padding:.85rem 1.1rem;margin-bottom:1rem;
-  font-size:.81rem;color:var(--text2);line-height:1.7;
+.form-card::before {
+  content:'';
+  position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg, transparent, var(--teal), rgba(124,92,252,.8), transparent);
 }
-.pay-info.show{display:block}
 
-/* Demo payment card */
-.pay-demo:hover{border-color:rgba(245,158,11,.5)!important;background:rgba(245,158,11,.08)!important}
-.pay-demo.selected{border-color:var(--amber)!important;background:rgba(245,158,11,.12)!important}
-.pay-demo.selected .pay-label{color:var(--amber)!important}
-.pay-info strong{color:var(--text)}
+.card-head {
+  padding:1.75rem 2rem 1.5rem;
+  border-bottom:1px solid var(--border);
+  background:linear-gradient(180deg, rgba(0,245,200,.04) 0%, transparent 100%);
+}
+.card-tag {
+  font-family:var(--fm); font-size:.58rem; color:var(--teal);
+  letter-spacing:.18em; text-transform:uppercase; margin-bottom:.4rem;
+  display:flex; align-items:center; gap:.5rem;
+}
+.card-tag::before { content:''; width:16px; height:1px; background:var(--teal); opacity:.5 }
+.card-title {
+  font-family:var(--fd); font-size:1.55rem; font-weight:800;
+  letter-spacing:-.03em; color:var(--text); line-height:1; margin-bottom:.3rem;
+}
+.card-sub { font-size:.82rem; color:var(--text2); font-weight:300 }
 
-/* ════════════════════════════════
-   TERMS
-════════════════════════════════ */
-.terms-check{display:flex;align-items:flex-start;gap:.7rem;padding:.9rem 1rem;background:var(--bg);border:1.5px solid var(--border2);border-radius:var(--r);cursor:pointer;margin-bottom:1.25rem;transition:border-color .2s}
-.terms-check.checked{border-color:var(--teal)}
-.terms-box{width:17px;height:17px;border-radius:4px;border:1.5px solid var(--border2);flex-shrink:0;margin-top:.12rem;display:flex;align-items:center;justify-content:center;font-size:.62rem;color:transparent;transition:.2s}
-.terms-check.checked .terms-box{background:var(--teal);border-color:var(--teal);color:#000}
-.terms-text{font-size:.8rem;color:var(--text2);line-height:1.6;font-weight:300}
-.terms-text a{color:var(--teal);text-decoration:underline}
+.form-body { padding:1.75rem 2rem }
+@media(max-width:600px) { .form-body { padding:1.25rem } .card-head { padding:1.25rem 1.25rem 1rem } }
 
-/* ════════════════════════════════
-   NAV BUTTONS
-════════════════════════════════ */
-.form-nav{display:flex;justify-content:space-between;align-items:center;padding-top:1rem;border-top:1px solid var(--border)}
-.btn-back{background:none;border:1.5px solid var(--border2);color:var(--text2);padding:.65rem 1.4rem;border-radius:var(--r);font-size:.84rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:.4rem;transition:border-color .2s,color .2s}
-.btn-back:hover{border-color:var(--teal);color:var(--teal)}
-.btn-next{background:var(--teal);color:#000;padding:.72rem 1.85rem;border-radius:var(--r);font-size:.86rem;font-weight:800;border:none;cursor:pointer;display:flex;align-items:center;gap:.45rem;transition:box-shadow .2s,transform .2s;letter-spacing:.02em}
-.btn-next:hover{box-shadow:0 0 28px var(--teal-glow);transform:translateY(-1px)}
-.btn-submit{background:var(--teal);color:#000;padding:.85rem 2.2rem;border-radius:var(--r);font-size:.92rem;font-weight:800;border:none;cursor:pointer;display:flex;align-items:center;gap:.45rem;transition:box-shadow .2s,transform .2s;letter-spacing:.02em;position:relative;overflow:hidden}
-.btn-submit::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.18) 0%,transparent 55%)}
-.btn-submit:hover{box-shadow:0 0 40px rgba(0,245,200,.45);transform:translateY(-2px)}
-.btn-submit:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+.form-step { display:none; animation:slideIn .35s cubic-bezier(.22,1,.36,1) }
+.form-step.active { display:block }
+@keyframes slideIn { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:none} }
 
-/* ════════════════════════════════
+/* ═══════════════════════════════════════════════════════
+   FIELDS — floating label style
+═══════════════════════════════════════════════════════ */
+.f-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem }
+@media(max-width:560px) { .f-row { grid-template-columns:1fr } }
+
+.f-group { margin-bottom:1rem; position:relative }
+
+.f-label {
+  display:flex; align-items:center; gap:.3rem;
+  font-size:.72rem; font-weight:600; color:var(--text2);
+  letter-spacing:.04em; text-transform:uppercase; margin-bottom:.45rem;
+}
+.f-label .req { color:var(--teal); font-size:.7rem }
+
+.f-input, .f-select, .f-textarea {
+  width:100%;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--border2);
+  border-radius:var(--r);
+  padding:.8rem 1rem;
+  color:var(--text); font-family:var(--fb); font-size:.88rem; font-weight:400;
+  outline:none;
+  transition:border-color .2s, box-shadow .2s, background .2s;
+  appearance:none;
+}
+.f-input:focus, .f-select:focus, .f-textarea:focus {
+  border-color:var(--teal);
+  box-shadow:0 0 0 3px rgba(0,245,200,.1), inset 0 0 0 1px rgba(0,245,200,.08);
+  background:rgba(0,245,200,.04);
+}
+.f-input::placeholder, .f-textarea::placeholder { color:var(--text3) }
+.f-input.err, .f-select.err, .f-textarea.err {
+  border-color:var(--red); box-shadow:0 0 0 3px rgba(240,68,68,.1)
+}
+.f-select option { background:var(--bg2) }
+.f-select { cursor:pointer; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%237a85aa' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 1rem center; padding-right:2.5rem }
+.f-textarea { resize:vertical; min-height:88px; line-height:1.6 }
+
+.f-hint { font-size:.7rem; color:var(--text3); margin-top:.35rem; font-weight:300 }
+.f-err { font-size:.7rem; color:var(--red); margin-top:.35rem; display:none }
+.f-err.show { display:block }
+
+/* SECTION TITLE */
+.sec-title {
+  font-family:var(--fm); font-size:.6rem; color:var(--teal);
+  letter-spacing:.2em; text-transform:uppercase;
+  padding-bottom:.65rem; margin:1.5rem 0 1rem;
+  border-bottom:1px solid var(--border);
+  display:flex; align-items:center; gap:.6rem;
+}
+.sec-title::before { content:'//'; opacity:.35 }
+
+/* ═══════════════════════════════════════════════════════
+   PLAN CARDS — premium feel
+═══════════════════════════════════════════════════════ */
+.plan-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:.75rem; margin-bottom:1.25rem }
+@media(max-width:500px) { .plan-grid { grid-template-columns:1fr } }
+
+.plan-card {
+  position:relative; cursor:pointer;
+  background:rgba(255,255,255,.03);
+  border:1.5px solid var(--border2);
+  border-radius:var(--rl);
+  padding:1.1rem 1.2rem;
+  display:flex; align-items:center; gap:.9rem;
+  transition:all .25s ease;
+  overflow:hidden;
+}
+.plan-card::before {
+  content:''; position:absolute; inset:0; opacity:0;
+  background:linear-gradient(135deg,rgba(0,245,200,.06),transparent);
+  transition:opacity .25s;
+}
+.plan-card:hover { border-color:rgba(0,245,200,.3); transform:translateY(-1px) }
+.plan-card:hover::before { opacity:1 }
+.plan-card.selected {
+  border-color:var(--teal);
+  background:rgba(0,245,200,.06);
+  box-shadow:0 0 0 1px var(--teal) inset, 0 8px 32px rgba(0,245,200,.1);
+}
+.plan-card.selected::before { opacity:1 }
+.plan-card input { position:absolute; opacity:0; pointer-events:none }
+
+.plan-radio {
+  width:18px; height:18px; border-radius:50%; flex-shrink:0;
+  border:2px solid var(--border2);
+  display:flex; align-items:center; justify-content:center;
+  transition:all .2s;
+}
+.plan-card.selected .plan-radio {
+  border-color:var(--teal); background:var(--teal);
+}
+.plan-card.selected .plan-radio::after { content:''; width:6px; height:6px; border-radius:50%; background:#000 }
+
+.plan-body { flex:1; min-width:0 }
+.plan-name { font-size:.88rem; font-weight:700; color:var(--text); margin-bottom:.12rem }
+.plan-card.selected .plan-name { color:var(--teal) }
+.plan-desc { font-size:.72rem; color:var(--text3); font-weight:300; line-height:1.4 }
+
+.plan-price {
+  font-family:var(--fd); font-size:1.5rem; font-weight:800;
+  color:var(--teal); letter-spacing:-.02em; flex-shrink:0;
+}
+
+.plan-badge {
+  position:absolute; top:-1px; right:12px;
+  font-family:var(--fm); font-size:.48rem; font-weight:800;
+  letter-spacing:.1em; text-transform:uppercase;
+  padding:.14rem .5rem; border-radius:0 0 6px 6px;
+}
+.plan-badge.hot { background:var(--red); color:#fff }
+.plan-badge.best { background:var(--teal); color:#000 }
+
+/* ═══ ADD-ONS ═══ */
+.addon-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:.6rem; margin-bottom:1.25rem }
+@media(max-width:480px) { .addon-grid { grid-template-columns:1fr 1fr } }
+
+.addon-card {
+  cursor:pointer; text-align:center;
+  background:rgba(255,255,255,.03);
+  border:1.5px solid var(--border);
+  border-radius:var(--rl); padding:.8rem .6rem;
+  transition:all .2s;
+  display:flex; flex-direction:column; align-items:center; gap:.3rem;
+}
+.addon-card:hover { border-color:var(--border2); background:var(--glass2) }
+.addon-card.on {
+  border-color:var(--teal); background:var(--teal-d);
+}
+.addon-icon { font-size:1.2rem }
+.addon-name { font-size:.73rem; font-weight:600; color:var(--text2); line-height:1.3 }
+.addon-card.on .addon-name { color:var(--text) }
+.addon-sub { font-size:.62rem; color:var(--text3) }
+.addon-price { font-family:var(--fm); font-size:.66rem; color:var(--text3); margin-top:.15rem }
+.addon-card.on .addon-price { color:var(--teal) }
+.addon-tick {
+  width:14px; height:14px; border-radius:3px;
+  border:1.5px solid var(--border2); font-size:.5rem;
+  display:flex; align-items:center; justify-content:center; color:transparent;
+  transition:all .15s;
+}
+.addon-card.on .addon-tick { background:var(--teal); border-color:var(--teal); color:#000 }
+
+/* ═══════════════════════════════════════════════════════
+   PAYMENT OPTIONS
+═══════════════════════════════════════════════════════ */
+.pay-grid { display:grid; grid-template-columns:1fr 1fr; gap:.65rem; margin-bottom:.85rem }
+
+.pay-card {
+  cursor:pointer; position:relative;
+  background:rgba(255,255,255,.03);
+  border:1.5px solid var(--border2);
+  border-radius:var(--rl); padding:.9rem .85rem;
+  display:flex; flex-direction:column; align-items:center; gap:.3rem; text-align:center;
+  transition:all .2s;
+}
+.pay-card:hover { border-color:rgba(0,245,200,.3); background:var(--teal-d) }
+.pay-card.selected { border-color:var(--teal); background:var(--teal-d); box-shadow:0 0 0 1px var(--teal) inset }
+.pay-card input { position:absolute; opacity:0; pointer-events:none }
+.pay-icon { font-size:1.4rem }
+.pay-name { font-size:.8rem; font-weight:700; color:var(--text2) }
+.pay-card.selected .pay-name { color:var(--teal) }
+.pay-sub { font-size:.64rem; color:var(--text3); line-height:1.4 }
+.pay-card.selected .pay-sub { color:rgba(0,245,200,.6) }
+
+.pay-card-demo {
+  border-color:rgba(245,158,11,.3) !important;
+  background:rgba(245,158,11,.04) !important;
+}
+.pay-card-demo:hover { border-color:rgba(245,158,11,.55) !important }
+.pay-card-demo.selected { border-color:var(--amber) !important; background:rgba(245,158,11,.1) !important; box-shadow:0 0 0 1px var(--amber) inset !important }
+.pay-card-demo .pay-name { color:var(--amber) }
+.pay-card-demo.selected .pay-name { color:var(--amber) }
+
+.pay-badge {
+  position:absolute; top:-1px; right:10px;
+  font-family:var(--fm); font-size:.44rem; font-weight:800;
+  letter-spacing:.1em; text-transform:uppercase;
+  padding:.14rem .45rem; border-radius:0 0 6px 6px;
+  background:var(--amber); color:#000;
+}
+
+.pay-info {
+  display:none;
+  background:rgba(255,255,255,.03); border:1px solid var(--border2);
+  border-radius:var(--r); padding:.9rem 1.1rem; margin-bottom:.85rem;
+  font-size:.81rem; color:var(--text2); line-height:1.7;
+}
+.pay-info.show { display:block }
+.pay-info strong { color:var(--text) }
+
+/* Demo outcome selector */
+.demo-box {
+  background:rgba(245,158,11,.06); border:1.5px dashed rgba(245,158,11,.35);
+  border-radius:var(--r); padding:.9rem 1.1rem; margin-bottom:.85rem;
+}
+.demo-box-title { font-size:.8rem; font-weight:700; color:var(--text); margin-bottom:.55rem; display:flex; align-items:center; gap:.5rem }
+.demo-outcomes { display:flex; gap:.6rem; flex-wrap:wrap }
+.demo-outcome {
+  display:flex; align-items:center; gap:.45rem;
+  padding:.5rem .9rem; border-radius:var(--r);
+  font-size:.8rem; font-weight:600; cursor:pointer;
+  transition:all .2s;
+}
+.demo-outcome.success { background:rgba(0,245,200,.08); border:1.5px solid rgba(0,245,200,.3); color:var(--teal) }
+.demo-outcome.fail    { background:rgba(240,68,68,.08);  border:1.5px solid rgba(240,68,68,.25);  color:var(--red) }
+.demo-outcome input   { accent-color:currentColor; width:13px; height:13px }
+.demo-note { font-size:.7rem; color:var(--text3); margin-top:.5rem }
+
+/* ═══ TERMS ═══ */
+.terms-wrap {
+  display:flex; align-items:flex-start; gap:.75rem;
+  padding:.9rem 1rem; border:1.5px solid var(--border2);
+  border-radius:var(--r); cursor:pointer; margin-bottom:1.4rem;
+  background:rgba(255,255,255,.02); transition:border-color .2s;
+}
+.terms-wrap:hover { border-color:var(--border2) }
+.terms-wrap.checked { border-color:rgba(0,245,200,.35); background:var(--teal-d) }
+.terms-box {
+  width:18px; height:18px; border-radius:4px; border:1.5px solid var(--border2);
+  flex-shrink:0; margin-top:.1rem;
+  display:flex; align-items:center; justify-content:center;
+  font-size:.6rem; color:transparent; transition:all .2s;
+}
+.terms-wrap.checked .terms-box { background:var(--teal); border-color:var(--teal); color:#000 }
+.terms-text { font-size:.8rem; color:var(--text2); line-height:1.6; font-weight:300 }
+.terms-text a { color:var(--teal); text-decoration:underline; text-underline-offset:2px }
+
+/* ═══ NAV BUTTONS ═══ */
+.form-nav {
+  display:flex; justify-content:space-between; align-items:center;
+  padding-top:1.1rem; border-top:1px solid var(--border);
+}
+.btn-back {
+  display:flex; align-items:center; gap:.4rem;
+  background:transparent; border:1.5px solid var(--border2);
+  color:var(--text2); padding:.7rem 1.4rem;
+  border-radius:100px; font-size:.82rem; font-weight:600;
+  cursor:pointer; transition:all .2s;
+}
+.btn-back:hover { border-color:var(--teal); color:var(--teal) }
+
+.btn-next, .btn-submit {
+  display:inline-flex; align-items:center; gap:.5rem;
+  background:var(--teal); color:#000;
+  padding:.78rem 2rem; border-radius:100px;
+  font-size:.88rem; font-weight:800; border:none; cursor:pointer;
+  letter-spacing:.01em; position:relative; overflow:hidden;
+  transition:box-shadow .25s, transform .2s;
+}
+.btn-next::before, .btn-submit::before {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.22) 0%,transparent 60%);
+}
+.btn-next:hover, .btn-submit:hover {
+  box-shadow:0 0 40px rgba(0,245,200,.45); transform:translateY(-1px)
+}
+.btn-submit:disabled { opacity:.45; cursor:not-allowed; transform:none; box-shadow:none }
+
+/* ═══ ERR BADGE ═══ */
+.pay-err { font-size:.71rem; color:var(--red); margin-bottom:.65rem; display:none }
+.pay-err.show { display:block }
+
+/* ═══════════════════════════════════════════════════════
    SIDEBAR
-════════════════════════════════ */
-.order-sidebar{display:flex;flex-direction:column;gap:1.1rem;position:sticky;top:78px}
-.sidebar-card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r-lg);overflow:hidden}
-.sc-head{padding:1rem 1.35rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.55rem}
-.sc-head-title{font-family:var(--font-d);font-size:1.05rem;font-weight:800;letter-spacing:-.01em;color:var(--text)}
-.sc-head-icon{font-size:1rem}
-.sc-body{padding:1.1rem 1.35rem}
-.summary-plan-name{font-size:.88rem;font-weight:700;color:var(--text);margin-bottom:.15rem}
-.summary-plan-price{font-family:var(--font-d);font-size:2.2rem;font-weight:800;color:var(--teal);letter-spacing:-.02em;line-height:1;margin-bottom:.5rem}
-.summary-plan-price small{font-size:.85rem;color:var(--text3);font-family:var(--font-b);font-weight:400}
-.summary-divider{height:1px;background:var(--border);margin:.7rem 0}
-.summary-line{display:flex;justify-content:space-between;align-items:center;font-size:.8rem;padding:.22rem 0}
-.summary-line .sl-key{color:var(--text2)}
-.summary-line .sl-val{font-weight:700;color:var(--text)}
-.summary-total-line{display:flex;justify-content:space-between;align-items:center;padding:.55rem 0;border-top:1px solid var(--border);margin-top:.35rem}
-.summary-total-line .sl-key{font-size:.82rem;font-weight:700;color:var(--text)}
-.summary-total-line .sl-val{font-family:var(--font-d);font-size:1.6rem;font-weight:800;color:var(--teal);letter-spacing:-.01em}
-.addon-pill{display:inline-flex;align-items:center;gap:.25rem;background:var(--teal-dim);border:1px solid rgba(0,245,200,.2);padding:.16rem .5rem;border-radius:100px;font-size:.67rem;color:var(--teal);margin:.12rem .1rem 0 0;font-weight:600}
-.trust-item{display:flex;align-items:flex-start;gap:.65rem;padding:.65rem 0;border-bottom:1px solid var(--border)}
-.trust-item:last-child{border:none;padding-bottom:0}
-.ti-icon{width:30px;height:30px;border-radius:50%;background:var(--teal-dim);border:1px solid rgba(0,245,200,.2);display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0}
-.ti-text strong{display:block;font-size:.8rem;font-weight:700;color:var(--text)}
-.ti-text span{font-size:.72rem;color:var(--text3);font-weight:300}
+═══════════════════════════════════════════════════════ */
+.sidebar { display:flex; flex-direction:column; gap:1.1rem; position:sticky; top:78px }
 
-/* ════════════════════════════════
-   SUCCESS STATE
-════════════════════════════════ */
-.success-screen{display:none;padding:3rem 2rem;text-align:center;animation:fadeUp .6s ease}
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
-.success-icon{width:70px;height:70px;border-radius:50%;background:var(--teal-dim);border:2px solid rgba(0,245,200,.3);margin:0 auto 1.4rem;display:flex;align-items:center;justify-content:center;font-size:1.9rem;animation:successPop .6s cubic-bezier(.34,1.56,.64,1) .2s both}
-@keyframes successPop{from{transform:scale(0)}to{transform:scale(1)}}
-.success-title{font-family:var(--font-d);font-size:2.4rem;font-weight:800;color:var(--teal);letter-spacing:-.02em;margin-bottom:.45rem}
-.success-sub{font-size:.88rem;color:var(--text2);line-height:1.75;max-width:360px;margin:0 auto 1.75rem;font-weight:300}
-.success-order-id{font-family:var(--font-m);font-size:.72rem;color:var(--text3);background:var(--bg);border:1px solid var(--border2);border-radius:var(--r);padding:.45rem .9rem;display:inline-block;margin-bottom:1.75rem;letter-spacing:.08em}
-.success-next{display:flex;flex-direction:column;gap:.55rem;margin-top:1.4rem}
-.success-btn-primary{background:var(--teal);color:#000;padding:.82rem 2rem;border-radius:var(--r);font-size:.86rem;font-weight:800;display:flex;align-items:center;justify-content:center;gap:.45rem;transition:transform .2s,box-shadow .2s;border:none;cursor:pointer}
-.success-btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 28px var(--teal-glow)}
-.success-btn-ghost{background:transparent;border:1.5px solid var(--border2);color:var(--text2);padding:.78rem 2rem;border-radius:var(--r);font-size:.83rem;font-weight:600;display:flex;align-items:center;justify-content:center;gap:.45rem;transition:border-color .2s,color .2s;cursor:pointer}
-.success-btn-ghost:hover{border-color:var(--teal);color:var(--teal)}
+.s-card {
+  background:var(--glass);
+  border:1px solid var(--border2);
+  border-radius:var(--rl);
+  backdrop-filter:blur(20px);
+  overflow:hidden;
+}
+.s-card-head {
+  padding:.9rem 1.3rem;
+  border-bottom:1px solid var(--border);
+  display:flex; align-items:center; gap:.55rem;
+  background:rgba(255,255,255,.02);
+}
+.s-card-ico { font-size:1rem }
+.s-card-title { font-family:var(--fd); font-size:1rem; font-weight:700; letter-spacing:-.01em; color:var(--text) }
+.s-card-body { padding:1.1rem 1.3rem }
 
-/* confetti */
-.confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:500;overflow:hidden}
-.confetti-piece{position:absolute;width:8px;height:8px;border-radius:1px;animation:confettiFall linear forwards}
-@keyframes confettiFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
-
-/* ═══ MOBILE — COMPREHENSIVE ═══ */
-@media(max-width:700px){
-  .order-hero { padding: 68px 4vw 0; }
-  .order-hero h1 { font-size: clamp(1.8rem, 8vw, 2.8rem); }
-  .order-hero p { font-size: .84rem; margin-bottom: 1.1rem; }
-  .order-hero-inner { padding: 1.25rem 0 1rem; }
-  .trust-strip { gap: 1rem; }
-  .ts-item { font-size: .72rem; }
-
-  .order-main { padding: 1.5rem 4vw 5rem; gap: 1.5rem; }
-  .form-body { padding: 1.1rem; }
-  .form-card-head { padding: 1.25rem 1.25rem 1rem; }
-  .fch-title { font-size: 1.25rem; }
-
-  .sc-body { padding: .85rem 1rem; }
-  .summary-plan-price { font-size: 1.8rem; }
-  .summary-total-line .sl-val { font-size: 1.3rem; }
-
-  /* Payment grid */
-  .payment-grid { grid-template-columns: 1fr; gap: .55rem; }
-  .pay-option { flex-direction: row; align-items: center; gap: .75rem; padding: .75rem 1rem; }
-  .pay-icon { font-size: 1.2rem; }
-
-  /* Plan cards */
-  .plan-grid { grid-template-columns: 1fr; }
-  .plan-option { padding: .8rem 1rem; }
-  .plan-price { font-size: 1.2rem; }
-
-  /* Addon grid */
-  .addon-grid { grid-template-columns: repeat(3,1fr); gap: .45rem; }
-  .addon-toggle { padding: .55rem .4rem; }
-  .addon-icon { font-size: 1rem; }
-  .addon-label span { font-size: .68rem; }
-  .addon-label small { font-size: .58rem; }
-  .addon-price { font-size: .62rem; }
-
-  /* Steps */
-  .step-progress { padding: 0 3vw; }
-  .step-circle { width: 30px; height: 30px; font-size: .62rem; }
-  .step-label { font-size: .52rem; }
-
-  /* Buttons */
-  .btn-next { padding: .68rem 1.5rem; font-size: .82rem; }
-  .btn-back { padding: .62rem 1.2rem; font-size: .8rem; }
-  .btn-submit { padding: .82rem 1.75rem; font-size: .88rem; }
-  .form-nav { padding-top: .85rem; gap: .5rem; }
-
-  /* Success screen */
-  .success-title { font-size: 1.8rem; }
-  .success-sub { font-size: .83rem; }
-  .success-btn-primary, .success-btn-ghost { padding: .78rem 1.5rem; font-size: .83rem; }
-
-  /* Sidebar order summary — show compact on mobile below form */
-  .order-sidebar { display: flex; flex-direction: row; flex-wrap: wrap; gap: .75rem; }
-  .sidebar-card { flex: 1; min-width: 240px; }
-  .sc-head { padding: .85rem 1rem; }
-  .sc-head-title { font-size: .9rem; }
+/* Summary */
+.sum-plan { font-size:.85rem; font-weight:700; color:var(--text); margin-bottom:.2rem }
+.sum-price {
+  font-family:var(--fd); font-size:2.4rem; font-weight:800;
+  color:var(--teal); letter-spacing:-.03em; line-height:1; margin-bottom:.6rem;
+}
+.sum-price small { font-size:.8rem; color:var(--text3); font-family:var(--fb); font-weight:300 }
+.sum-divider { height:1px; background:var(--border); margin:.65rem 0 }
+.sum-line { display:flex; justify-content:space-between; font-size:.8rem; padding:.2rem 0 }
+.sum-line .k { color:var(--text2) }
+.sum-line .v { font-weight:700; color:var(--text) }
+.sum-total { display:flex; justify-content:space-between; padding:.6rem 0 0; margin-top:.3rem; border-top:1px solid var(--border) }
+.sum-total .k { font-size:.82rem; font-weight:700; color:var(--text) }
+.sum-total .v { font-family:var(--fd); font-size:1.55rem; font-weight:800; color:var(--teal); letter-spacing:-.01em }
+.addon-pill {
+  display:inline-flex; align-items:center; gap:.2rem;
+  background:var(--teal-d); border:1px solid var(--teal-m);
+  padding:.15rem .5rem; border-radius:100px;
+  font-size:.65rem; color:var(--teal); font-weight:600;
+  margin:.1rem .08rem 0 0;
 }
 
-@media(max-width:480px){
-  .addon-grid { grid-template-columns: repeat(2,1fr); }
-  .plan-price { font-size: 1.1rem; }
-  .field-row { grid-template-columns: 1fr; }
+/* Guarantees */
+.g-item { display:flex; align-items:flex-start; gap:.65rem; padding:.65rem 0; border-bottom:1px solid var(--border) }
+.g-item:last-child { border:none; padding-bottom:0 }
+.g-ico {
+  width:32px; height:32px; border-radius:50%; flex-shrink:0;
+  background:var(--teal-d); border:1px solid var(--teal-m);
+  display:flex; align-items:center; justify-content:center; font-size:.85rem;
+}
+.g-text strong { display:block; font-size:.8rem; font-weight:700; color:var(--text); margin-bottom:.05rem }
+.g-text span { font-size:.71rem; color:var(--text3); font-weight:300 }
 
-  /* Nav */
-  nav { height: 56px; padding: 0 4vw; }
-  .nav-logo { font-size: 1.2rem; }
-  .nav-back span { display: none; } /* hide text, keep arrow */
-  .nav-back { gap: .3rem; font-size: .78rem; }
+/* Timeline */
+.tl-item { display:flex; gap:.7rem; padding:.55rem 0; position:relative }
+.tl-item:not(:last-child)::before {
+  content:''; position:absolute; left:9px; top:28px; bottom:-4px;
+  width:1px; background:linear-gradient(to bottom, var(--teal-m), transparent);
+}
+.tl-dot {
+  width:20px; height:20px; border-radius:50%; flex-shrink:0;
+  background:var(--teal-d); border:1.5px solid rgba(0,245,200,.3);
+  display:flex; align-items:center; justify-content:center;
+  font-size:.52rem; font-weight:800; color:var(--teal);
+}
+.tl-title { display:block; font-size:.8rem; font-weight:700; color:var(--text); margin-bottom:.05rem }
+.tl-sub { font-size:.7rem; color:var(--text3); font-weight:300 }
 
-  /* Demo payment grid 2-col on small phones */
-  .payment-grid { grid-template-columns: 1fr 1fr; }
-  .pay-option { flex-direction: column; padding: .75rem .5rem; gap: .35rem; text-align: center; }
-  .pay-sub { font-size: .6rem; }
+/* ═══════════════════════════════════════════════════════
+   SUCCESS SCREENS
+═══════════════════════════════════════════════════════ */
+.success-screen { display:none; padding:3.5rem 2rem; text-align:center; animation:fadeUp .6s ease }
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:none} }
+.success-ico {
+  width:76px; height:76px; border-radius:50%; margin:0 auto 1.5rem;
+  display:flex; align-items:center; justify-content:center; font-size:2rem;
+  animation:popIn .6s cubic-bezier(.34,1.56,.64,1) .1s both;
+}
+@keyframes popIn { from{transform:scale(0);opacity:0} to{transform:scale(1);opacity:1} }
+.success-h { font-family:var(--fd); font-size:2.2rem; font-weight:800; letter-spacing:-.03em; margin-bottom:.45rem }
+.success-p { font-size:.88rem; color:var(--text2); line-height:1.75; max-width:360px; margin:0 auto 1.5rem; font-weight:300 }
+.success-id {
+  font-family:var(--fm); font-size:.7rem; color:var(--text3);
+  background:var(--glass); border:1px solid var(--border2);
+  border-radius:100px; padding:.4rem 1.1rem; display:inline-block; margin-bottom:1.5rem;
+}
+.success-info {
+  border-radius:var(--r); padding:.85rem 1.1rem; margin-bottom:1.5rem;
+  font-size:.82rem; color:var(--text2); line-height:1.7; text-align:left;
+}
+.success-btns { display:flex; flex-direction:column; gap:.55rem }
+.btn-suc-p {
+  background:var(--teal); color:#000; padding:.85rem 2rem;
+  border-radius:100px; font-size:.88rem; font-weight:800;
+  display:flex; align-items:center; justify-content:center; gap:.45rem;
+  transition:transform .2s,box-shadow .2s; border:none; cursor:pointer;
+}
+.btn-suc-p:hover { transform:translateY(-2px); box-shadow:0 0 28px rgba(0,245,200,.4) }
+.btn-suc-g {
+  background:transparent; border:1.5px solid var(--border2); color:var(--text2);
+  padding:.78rem 2rem; border-radius:100px; font-size:.83rem; font-weight:600;
+  display:flex; align-items:center; justify-content:center; gap:.4rem;
+  transition:all .2s; cursor:pointer;
+}
+.btn-suc-g:hover { border-color:var(--teal); color:var(--teal) }
 
-  /* countdown */
-  .cd-num { font-size: 1.5rem; min-width: 40px; }
-  .cd-sep { font-size: 1.2rem; }
+/* Confetti */
+.confetti-wrap { position:fixed; inset:0; pointer-events:none; z-index:500; overflow:hidden }
+.confetti-piece { position:absolute; border-radius:1px; animation:confettiFall linear forwards }
+@keyframes confettiFall { 0%{transform:translateY(-20px) rotate(0);opacity:1} 100%{transform:translateY(110vh) rotate(720deg);opacity:0} }
+
+/* ═══ MOBILE ═══ */
+@media(max-width:700px) {
+  .page-hero { padding-top:80px }
+  .hero-h1 { font-size:clamp(1.8rem,8vw,2.6rem) }
+  .order-wrap { padding:1rem 4vw 6rem; gap:1.25rem }
+  .trust-row { gap:1rem }
+  .trust-chip { font-size:.7rem }
+  .plan-grid { grid-template-columns:1fr }
+  .pay-grid { grid-template-columns:1fr 1fr }
+  .sidebar { flex-direction:row; flex-wrap:wrap }
+  .s-card { flex:1; min-width:240px }
+  .form-nav { gap:.5rem }
+}
+@media(max-width:420px) {
+  .pay-grid { grid-template-columns:1fr }
+  .addon-grid { grid-template-columns:1fr 1fr }
+  nav { height:54px }
+  .hero-inner { padding-top:1.5rem }
 }
 </style>
 </head>
 <body>
 
-<div id="dot"></div><div id="ring"></div>
+<div id="dot"></div>
+<div id="ring"></div>
 <div id="confettiWrap" class="confetti-wrap"></div>
 
-<!-- NAV -->
+<!-- ═══ NAV ═══ -->
 <nav>
   <a href="index.html" class="nav-logo">Portfolio<span class="g">Forge</span></a>
   <a href="index.html" class="nav-back">
     <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-    Back to home
+    <span>Back</span>
   </a>
   <div class="nav-right">
-    <a href="track-order.html" style="font-size:.76rem;font-weight:700;color:var(--text2);display:flex;align-items:center;gap:.3rem;transition:color .2s,border-color .2s;padding:.38rem .72rem;border:1px solid var(--border2);border-radius:6px" onmouseover="this.style.color='var(--teal)';this.style.borderColor='var(--teal)'" onmouseout="this.style.color='var(--text2)';this.style.borderColor='var(--border2)'">📊Track Order</a>
-    <div class="secure-badge">
-      <svg viewBox="0 0 24 24"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z"/></svg>
-      Secure
-    </div>
+    <a href="track-order.html" class="nav-track">📊 Track Order</a>
     <button class="theme-btn" id="themeBtn">🌙</button>
   </div>
 </nav>
 
-<!-- HERO BAND -->
-<div class="order-hero">
-  <div class="order-hero-inner">
-    <div class="order-eyebrow">2-Step Fast Order · Under 2 Minutes</div>
-    <h1>Get Your <span class="g">Portfolio</span></h1>
-    <p>Fill in two quick steps and we'll start building your portfolio. Delivered in <strong>24 hours</strong>, guaranteed.</p>
-    <div class="trust-strip">
-      <div class="ts-item"><span class="icon">⚡</span> 24h Delivery</div>
-      <div class="ts-item"><span class="icon">🔒</span> Secure Payment</div>
-      <div class="ts-item"><span class="icon">🔄</span> Free Revision</div>
-      <div class="ts-item"><span class="icon">📦</span> Source Code</div>
+<!-- ═══ HERO ═══ -->
+<div class="page-hero">
+  <div class="hero-inner">
+    <div class="hero-pill"><div class="hero-pill-dot"></div>Any Field · Any Background · 2 Min</div>
+    <h1 class="hero-h1">Get Your <em>Portfolio Built</em></h1>
+    <p class="hero-sub">CS, Design, MBA, Arts — every student and professional deserves a standout portfolio. Fill in two steps and we start building. Done in <strong style="color:var(--text);font-weight:600">24 hours.</strong></p>
+    <div class="trust-row">
+      <div class="trust-chip"><span class="ic">⚡</span> 24h Delivery</div>
+      <div class="trust-chip"><span class="ic">🔒</span> Secure Pay</div>
+      <div class="trust-chip"><span class="ic">🔄</span> Free Revision</div>
+      <div class="trust-chip"><span class="ic">📦</span> Source Code</div>
     </div>
   </div>
 
-  <!-- STEP PROGRESS — 2 STEPS -->
-  <div class="step-progress">
-    <div class="step-track">
-      <div class="step-node">
-        <div class="step-circle active" id="sc1">01</div>
-        <div class="step-label active" id="sl1">Info & Plan</div>
-      </div>
-      <div class="step-line" id="sline1"></div>
-      <div class="step-node">
-        <div class="step-circle" id="sc2">02</div>
-        <div class="step-label" id="sl2">Details & Pay</div>
-      </div>
+  <!-- STEP BAR -->
+  <div class="step-bar">
+    <div class="step-node">
+      <div class="step-num active" id="sc1">01</div>
+      <div class="step-lbl active" id="sl1">Info & Plan</div>
+    </div>
+    <div class="step-connector" id="sline1"></div>
+    <div class="step-node">
+      <div class="step-num" id="sc2">02</div>
+      <div class="step-lbl" id="sl2">Details & Pay</div>
     </div>
   </div>
 </div>
 
-<!-- MAIN LAYOUT -->
-<div class="order-main">
+<!-- ═══ MAIN LAYOUT ═══ -->
+<div class="order-wrap">
 
   <!-- FORM CARD -->
   <div class="form-card" id="formCard">
-    <div class="form-card-head">
-      <div class="fch-tag" id="stepTag">// step 1 of 2</div>
-      <div class="fch-title" id="stepTitle">Your Info & Plan</div>
-      <div class="fch-sub" id="stepSub">Tell us who you are and pick your plan — takes under a minute.</div>
+    <div class="card-head">
+      <div class="card-tag" id="stepTag">step 1 of 2</div>
+      <div class="card-title" id="stepTitle">Your Info &amp; Plan</div>
+      <div class="card-sub" id="stepSub">Tell us who you are and pick your plan — takes under a minute.</div>
     </div>
     <div class="form-body">
 
-      <!-- ══════ STEP 1: INFO + PLAN ══════ -->
+      <!-- ══ STEP 1 ══ -->
       <div class="form-step active" id="step1">
 
-        <!-- Personal Info -->
-        <div class="field-row">
-          <div class="field-group">
-            <div class="field-label">Full Name <span class="req">*</span></div>
-            <input class="field-input" id="f-name" type="text" placeholder="Sujay Banarjee" autocomplete="name"/>
-            <div class="field-error" id="e-name">Please enter your full name</div>
+        <div class="f-row">
+          <div class="f-group">
+            <div class="f-label">Full Name <span class="req">*</span></div>
+            <input class="f-input" id="f-name" type="text" placeholder="e.g. Rahul Sharma" autocomplete="name"/>
+            <div class="f-err" id="e-name">Please enter your full name</div>
           </div>
-          <div class="field-group">
-            <div class="field-label">Email Address <span class="req">*</span></div>
-            <input class="field-input" id="f-email" type="email" placeholder="you@example.com" autocomplete="email"/>
-            <div class="field-error" id="e-email">Please enter a valid email</div>
-          </div>
-        </div>
-        <div class="field-row">
-          <div class="field-group">
-            <div class="field-label">Phone / WhatsApp <span class="req">*</span></div>
-            <input class="field-input" id="f-phone" type="tel" placeholder="+91 96128 71060" autocomplete="tel"/>
-            <div class="field-error" id="e-phone">Please enter your phone number</div>
-          </div>
-          <div class="field-group">
-            <div class="field-label">Profession / Role <span class="req">*</span></div>
-            <select class="field-select" id="f-role">
-              <option value="" disabled selected>Select your role</option>
-              <option>Frontend Developer</option>
-              <option>Full Stack Developer</option>
-              <option>Backend Developer</option>
-              <option>Mobile App Developer</option>
-              <option>Data Scientist / ML Engineer</option>
-              <option>UI/UX Designer</option>
-              <option>DevOps / Cloud Engineer</option>
-              <option>Freelancer / Consultant</option>
-              <option>Student / Fresher</option>
-              <option>Other</option>
-            </select>
-            <div class="field-error" id="e-role">Please select your role</div>
-          </div>
-        </div>
-        <div class="field-row">
-          <div class="field-group">
-            <div class="field-label">GitHub / Portfolio URL</div>
-            <input class="field-input" id="f-github" type="url" placeholder="github.com/yourusername"/>
-            <div class="field-hint">Optional — we'll link your projects</div>
-          </div>
-          <div class="field-group">
-            <div class="field-label">LinkedIn URL</div>
-            <input class="field-input" id="f-linkedin" type="url" placeholder="linkedin.com/in/yourname"/>
-            <div class="field-hint">Optional — helps us tailor your style</div>
+          <div class="f-group">
+            <div class="f-label">Email Address <span class="req">*</span></div>
+            <input class="f-input" id="f-email" type="email" placeholder="you@example.com" autocomplete="email"/>
+            <div class="f-err" id="e-email">Please enter a valid email</div>
           </div>
         </div>
 
-        <!-- Plan Selection -->
-        <div class="form-section-title">Choose Your Plan</div>
+        <div class="f-row">
+          <div class="f-group">
+            <div class="f-label">Phone / WhatsApp <span class="req">*</span></div>
+            <input class="f-input" id="f-phone" type="tel" placeholder="e.g. +91 98765 43210" autocomplete="tel"/>
+            <div class="f-err" id="e-phone">Please enter your phone number</div>
+          </div>
+          <div class="f-group">
+            <div class="f-label">Your Field / Role <span class="req">*</span></div>
+            <select class="f-select" id="f-role">
+              <option value="" disabled selected>What best describes you?</option>
+              <optgroup label="── Students">
+                <option>CS / IT Student</option>
+                <option>Engineering Student (Non-CS)</option>
+                <option>MBA / Management Student</option>
+                <option>Design / Fine Arts Student</option>
+                <option>Commerce / Finance Student</option>
+                <option>Medical / Pharmacy Student</option>
+                <option>Law Student</option>
+                <option>Arts / Humanities Student</option>
+                <option>Science Student</option>
+                <option>Architecture Student</option>
+                <option>Other Student / Fresher</option>
+              </optgroup>
+              <optgroup label="── Professionals">
+                <option>Software Developer</option>
+                <option>UI/UX Designer</option>
+                <option>Data Scientist / Analyst</option>
+                <option>Marketing / Content Professional</option>
+                <option>Photographer / Videographer</option>
+                <option>Writer / Blogger / Journalist</option>
+                <option>Freelancer / Consultant</option>
+                <option>Entrepreneur / Startup Founder</option>
+                <option>Teacher / Educator / Trainer</option>
+                <option>Other Professional</option>
+              </optgroup>
+            </select>
+            <div class="f-err" id="e-role">Please select your field</div>
+          </div>
+        </div>
+
+        <div class="f-row">
+          <div class="f-group">
+            <div class="f-label">GitHub / Behance / Drive URL</div>
+            <input class="f-input" id="f-github" type="url" placeholder="e.g. github.com/rahulsharma"/>
+            <div class="f-hint">Optional — GitHub, Behance, Google Drive, Dribbble…</div>
+          </div>
+          <div class="f-group">
+            <div class="f-label">LinkedIn URL</div>
+            <input class="f-input" id="f-linkedin" type="url" placeholder="e.g. linkedin.com/in/rahulsharma"/>
+            <div class="f-hint">Optional — helps us tailor your style</div>
+          </div>
+        </div>
+
+        <!-- PLANS -->
+        <div class="sec-title">Choose Your Plan</div>
         <div class="plan-grid">
-          <label class="plan-option selected" id="plan-founding" onclick="selectPlan(this,'⚡ Founding Offer',49,'founding')">
+          <label class="plan-card selected" id="plan-founding" onclick="selectPlan(this,'⚡ Founding Offer',49,'founding')">
             <input type="radio" name="plan" value="founding" checked/>
             <div class="plan-radio"></div>
-            <div class="plan-info">
+            <div class="plan-body">
               <div class="plan-name">⚡ Founding Offer</div>
               <div class="plan-desc">Core sections · 24h delivery</div>
             </div>
             <div class="plan-price">₹49</div>
-            <div class="plan-badge red">2 LEFT</div>
+            <div class="plan-badge hot">2 LEFT</div>
           </label>
-          <label class="plan-option" id="plan-pro" onclick="selectPlan(this,'Pro Animated',179,'pro')">
+          <label class="plan-card" id="plan-pro" onclick="selectPlan(this,'Pro Animated',179,'pro')">
             <input type="radio" name="plan" value="pro"/>
             <div class="plan-radio"></div>
-            <div class="plan-info">
+            <div class="plan-body">
               <div class="plan-name">Pro Animated</div>
               <div class="plan-desc">Animations · GSAP · Best value</div>
             </div>
             <div class="plan-price">₹179</div>
-            <div class="plan-badge">VALUE</div>
+            <div class="plan-badge best">VALUE</div>
           </label>
-          <label class="plan-option" id="plan-premium" onclick="selectPlan(this,'Premium Portfolio',449,'premium')">
+          <label class="plan-card" id="plan-premium" onclick="selectPlan(this,'Premium Portfolio',449,'premium')">
             <input type="radio" name="plan" value="premium"/>
             <div class="plan-radio"></div>
-            <div class="plan-info">
+            <div class="plan-body">
               <div class="plan-name">Premium</div>
-              <div class="plan-desc">3D · GitHub · Full custom</div>
+              <div class="plan-desc">3D · GitHub stats · Full custom</div>
             </div>
             <div class="plan-price">₹449</div>
           </label>
         </div>
 
-        <!-- Add-ons -->
-        <div class="addon-section">
-          <div class="addon-section-title">// Optional Add-ons</div>
-          <div class="addon-grid">
-            <div class="addon-toggle" onclick="toggleAddon(this,49,'Custom Domain')" data-price="49">
-              <span class="addon-icon">🌐</span>
-              <div class="addon-label"><span>Domain Setup</span><small>Config + deploy</small></div>
-              <div class="addon-price">+₹49</div>
-              <div class="addon-check">✓</div>
-            </div>
-            <div class="addon-toggle" onclick="toggleAddon(this,79,'Blog Section')" data-price="79">
-              <span class="addon-icon">📝</span>
-              <div class="addon-label"><span>Blog Section</span><small>Write & publish</small></div>
-              <div class="addon-price">+₹79</div>
-              <div class="addon-check">✓</div>
-            </div>
-            <div class="addon-toggle" onclick="toggleAddon(this,59,'Contact Form')" data-price="59">
-              <span class="addon-icon">📬</span>
-              <div class="addon-label"><span>Contact Form</span><small>Email backend</small></div>
-              <div class="addon-price">+₹59</div>
-              <div class="addon-check">✓</div>
-            </div>
-            <div class="addon-toggle" onclick="toggleAddon(this,99,'SEO Package')" data-price="99">
-              <span class="addon-icon">🔍</span>
-              <div class="addon-label"><span>SEO Package</span><small>Meta + sitemap</small></div>
-              <div class="addon-price">+₹99</div>
-              <div class="addon-check">✓</div>
-            </div>
-            <div class="addon-toggle" onclick="toggleAddon(this,149,'Analytics')" data-price="149">
-              <span class="addon-icon">📊</span>
-              <div class="addon-label"><span>Analytics</span><small>Visitor tracking</small></div>
-              <div class="addon-price">+₹149</div>
-              <div class="addon-check">✓</div>
-            </div>
-            <div class="addon-toggle" onclick="toggleAddon(this,199,'Dark/Light Mode')" data-price="199">
-              <span class="addon-icon">🌓</span>
-              <div class="addon-label"><span>Dark/Light</span><small>Theme switcher</small></div>
-              <div class="addon-price">+₹199</div>
-              <div class="addon-check">✓</div>
-            </div>
+        <!-- ADD-ONS -->
+        <div class="sec-title">Optional Add-ons</div>
+        <div class="addon-grid">
+          <div class="addon-card" onclick="toggleAddon(this,49,'Custom Domain')">
+            <div class="addon-icon">🌐</div>
+            <div class="addon-name">Domain Setup</div>
+            <div class="addon-sub">Config + deploy</div>
+            <div class="addon-price">+₹49</div>
+            <div class="addon-tick">✓</div>
+          </div>
+          <div class="addon-card" onclick="toggleAddon(this,79,'Blog Section')">
+            <div class="addon-icon">📝</div>
+            <div class="addon-name">Blog Section</div>
+            <div class="addon-sub">Write &amp; publish</div>
+            <div class="addon-price">+₹79</div>
+            <div class="addon-tick">✓</div>
+          </div>
+          <div class="addon-card" onclick="toggleAddon(this,59,'Contact Form')">
+            <div class="addon-icon">📬</div>
+            <div class="addon-name">Contact Form</div>
+            <div class="addon-sub">Email backend</div>
+            <div class="addon-price">+₹59</div>
+            <div class="addon-tick">✓</div>
+          </div>
+          <div class="addon-card" onclick="toggleAddon(this,99,'SEO Package')">
+            <div class="addon-icon">🔍</div>
+            <div class="addon-name">SEO Package</div>
+            <div class="addon-sub">Meta + sitemap</div>
+            <div class="addon-price">+₹99</div>
+            <div class="addon-tick">✓</div>
+          </div>
+          <div class="addon-card" onclick="toggleAddon(this,149,'Analytics')">
+            <div class="addon-icon">📊</div>
+            <div class="addon-name">Analytics</div>
+            <div class="addon-sub">Visitor tracking</div>
+            <div class="addon-price">+₹149</div>
+            <div class="addon-tick">✓</div>
+          </div>
+          <div class="addon-card" onclick="toggleAddon(this,199,'Dark/Light Mode')">
+            <div class="addon-icon">🌓</div>
+            <div class="addon-name">Dark/Light</div>
+            <div class="addon-sub">Theme switcher</div>
+            <div class="addon-price">+₹199</div>
+            <div class="addon-tick">✓</div>
           </div>
         </div>
 
@@ -606,30 +872,31 @@ nav{
         </div>
       </div>
 
-      <!-- ══════ STEP 2: DETAILS + PAY ══════ -->
+      <!-- ══ STEP 2 ══ -->
       <div class="form-step" id="step2">
 
-        <!-- Portfolio Details -->
-        <div class="field-group">
-          <div class="field-label">Your Skills / Technologies <span class="req">*</span></div>
-          <input class="field-input" id="f-skills" type="text" placeholder="React, Node.js, Python, Tailwind, MongoDB…"/>
-          <div class="field-hint">Separate with commas — we'll display them beautifully</div>
-          <div class="field-error" id="e-skills">Please list at least 1 skill</div>
+        <div class="f-group">
+          <div class="f-label">Your Skills / Strengths <span class="req">*</span></div>
+          <input class="f-input" id="f-skills" type="text" placeholder="e.g. Python, Excel, Photoshop, Public Speaking, Financial Analysis…"/>
+          <div class="f-hint">Separate with commas — tech skills, soft skills, tools, languages — anything you're good at</div>
+          <div class="f-err" id="e-skills">Please list at least one skill or strength</div>
         </div>
-        <div class="field-group">
-          <div class="field-label">Top Projects (name + 1-line desc) <span class="req">*</span></div>
-          <textarea class="field-textarea" id="f-projects" placeholder="1. E-Commerce App — Full-stack React + Node store&#10;2. Portfolio Generator — Auto-generates from GitHub&#10;3. Chat App — Real-time with socket.io"></textarea>
-          <div class="field-error" id="e-projects">Please describe at least 1 project</div>
+
+        <div class="f-group">
+          <div class="f-label">Your Top Work / Projects / Achievements <span class="req">*</span></div>
+          <textarea class="f-textarea" id="f-projects" placeholder="1. Final Year Project — Built a smart attendance system&#10;2. Marketing Campaign — Led a social media campaign reaching 10K+ people&#10;3. Design Work — Created brand identity for a local NGO&#10;(Add projects, internships, competitions, certifications, achievements)"></textarea>
+          <div class="f-err" id="e-projects">Please describe at least one project or achievement</div>
         </div>
-        <div class="field-row">
-          <div class="field-group">
-            <div class="field-label">Brief Bio / About Me</div>
-            <textarea class="field-textarea" id="f-bio" placeholder="I'm a full-stack dev at LPU, passionate about clean code…" style="min-height:68px"></textarea>
-            <div class="field-hint">Optional — goes in your About section</div>
+
+        <div class="f-row">
+          <div class="f-group">
+            <div class="f-label">Brief Bio / About Yourself</div>
+            <textarea class="f-textarea" id="f-bio" placeholder="e.g. I'm a 3rd year B.Tech student at Delhi University, passionate about design and problem-solving…" style="min-height:74px"></textarea>
+            <div class="f-hint">Optional — 2-3 sentences about who you are and your goals</div>
           </div>
-          <div class="field-group">
-            <div class="field-label">Preferred Color Theme</div>
-            <select class="field-select" id="f-theme">
+          <div class="f-group">
+            <div class="f-label">Preferred Color Theme</div>
+            <select class="f-select" id="f-theme">
               <option value="" disabled selected>Choose a theme</option>
               <option>Dark — Black &amp; Green</option>
               <option>Dark — Black &amp; Blue</option>
@@ -638,146 +905,145 @@ nav{
               <option>Light — White &amp; Blue</option>
               <option>Custom — I'll describe below</option>
             </select>
-            <div class="field-group" style="margin-top:.65rem;margin-bottom:0">
-              <div class="field-label">Any Special Requests</div>
-              <textarea class="field-textarea" id="f-notes" placeholder="Reference sites, specific sections, animation style…" style="min-height:54px"></textarea>
+            <div class="f-group" style="margin-top:.75rem;margin-bottom:0">
+              <div class="f-label">Special Requests</div>
+              <textarea class="f-textarea" id="f-notes" placeholder="e.g. I want a clean minimal look, add a Certifications section, reference: awwwards.com…" style="min-height:60px"></textarea>
             </div>
           </div>
         </div>
 
-        <!-- Payment -->
-        <div class="form-section-title">Payment Method</div>
+        <!-- PAYMENT -->
+        <div class="sec-title">Payment Method</div>
 
-        <!-- DEMO BANNER -->
-        <div style="background:rgba(245,158,11,.08);border:1.5px dashed rgba(245,158,11,.4);border-radius:var(--r);padding:.7rem 1rem;margin-bottom:.85rem;display:flex;align-items:center;gap:.65rem;font-size:.8rem;color:var(--amber)">
-          <span style="font-size:1.1rem;flex-shrink:0">🧪</span>
-          <div><strong style="color:var(--text)">Test Mode Available</strong> — Select "Demo Test" below to simulate a real payment without any charges. Toggle success/failure to test both flows.</div>
+        <div style="background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);border-radius:var(--r);padding:.75rem 1rem;margin-bottom:1rem;display:flex;align-items:flex-start;gap:.65rem;font-size:.8rem;color:var(--amber)">
+          <span style="font-size:1rem;flex-shrink:0;margin-top:.05rem">🧪</span>
+          <div><strong style="color:var(--text)">Test Mode Available</strong> — Select "Demo Test" to simulate a real payment without any charge.</div>
         </div>
 
-        <div class="payment-grid" style="grid-template-columns:repeat(2,1fr)">
-          <label class="pay-option" onclick="selectPayment(this,'cashfree')">
+        <div class="pay-grid">
+          <label class="pay-card" onclick="selectPayment(this,'cashfree')">
             <input type="radio" name="payment" value="cashfree"/>
             <div class="pay-icon">💳</div>
-            <div class="pay-label">Cashfree</div>
+            <div class="pay-name">Cashfree</div>
             <div class="pay-sub">Card · UPI · Wallets · NetBanking</div>
           </label>
-          <label class="pay-option" onclick="selectPayment(this,'upi')">
+          <label class="pay-card" onclick="selectPayment(this,'upi')">
             <input type="radio" name="payment" value="upi"/>
             <div class="pay-icon">📱</div>
-            <div class="pay-label">UPI Direct</div>
+            <div class="pay-name">UPI Direct</div>
             <div class="pay-sub">GPay · PhonePe · Paytm</div>
           </label>
-          <label class="pay-option" onclick="selectPayment(this,'bank')">
+          <label class="pay-card" onclick="selectPayment(this,'bank')">
             <input type="radio" name="payment" value="bank"/>
             <div class="pay-icon">🏦</div>
-            <div class="pay-label">Bank Transfer</div>
+            <div class="pay-name">Bank Transfer</div>
             <div class="pay-sub">NEFT · IMPS</div>
           </label>
-          <label class="pay-option pay-demo" onclick="selectPayment(this,'demo')" id="demoPayOption" style="position:relative;border-color:rgba(245,158,11,.5);background:rgba(245,158,11,.06)">
+          <label class="pay-card pay-card-demo" onclick="selectPayment(this,'demo')">
             <input type="radio" name="payment" value="demo"/>
             <div class="pay-icon">🧪</div>
-            <div class="pay-label" style="color:var(--amber)">Demo Test</div>
-            <div class="pay-sub">Simulate payment — no charge</div>
-            <div style="position:absolute;top:-8px;right:8px;background:var(--amber);color:#000;font-family:var(--font-m);font-size:.5rem;font-weight:800;padding:.13rem .48rem;border-radius:100px;letter-spacing:.08em;text-transform:uppercase">TEST</div>
+            <div class="pay-name">Demo Test</div>
+            <div class="pay-sub">Simulate — no charge</div>
+            <div class="pay-badge">TEST</div>
           </label>
         </div>
-        <div class="field-error" id="e-payment" style="margin-bottom:.75rem">Please select a payment method</div>
+
+        <div class="pay-err" id="e-payment">Please select a payment method</div>
 
         <div id="pay-info-cashfree" class="pay-info">
-          <strong>🔒 Secure Cashfree Checkout</strong> — You'll be redirected to Cashfree. Supports UPI, Cards, NetBanking, Wallets. Returns here automatically after payment.
+          <strong>🔒 Secure Cashfree Checkout</strong> — Redirected to Cashfree. Supports UPI, Cards, NetBanking, Wallets. Returns here after payment.
         </div>
         <div id="pay-info-upi" class="pay-info">
-          <strong>📱 UPI Payment</strong> — We'll send our UPI ID on WhatsApp/Email within <strong>30 minutes</strong>. Send payment and share the screenshot to confirm.
+          <strong>📱 UPI Payment</strong> — We'll send our UPI ID on WhatsApp/Email within <strong>30 minutes</strong>. Send payment and share screenshot.
         </div>
         <div id="pay-info-bank" class="pay-info">
-          <strong>🏦 Bank Transfer</strong> — Bank details shared on WhatsApp/Email after order confirmation. Send the exact amount and share the UTR with us.
+          <strong>🏦 Bank Transfer</strong> — Bank details shared after order confirmation. Send exact amount and share the UTR with us.
+        </div>
+        <div id="pay-info-demo" class="pay-info" style="padding:0;border:none;background:none">
+          <div class="demo-box">
+            <div class="demo-box-title">
+              🧪 Demo Test Payment
+              <span style="font-family:var(--fm);font-size:.52rem;background:rgba(245,158,11,.15);color:var(--amber);padding:.1rem .5rem;border-radius:100px">NO REAL CHARGE</span>
+            </div>
+            <div style="font-size:.78rem;color:var(--text2);margin-bottom:.6rem">Choose which outcome to simulate:</div>
+            <div class="demo-outcomes">
+              <label class="demo-outcome success" id="demoSuccessLabel">
+                <input type="radio" name="demoOutcome" value="success" checked/> ✅ Payment Success
+              </label>
+              <label class="demo-outcome fail" id="demoFailLabel">
+                <input type="radio" name="demoOutcome" value="failure"/> ❌ Payment Failed
+              </label>
+            </div>
+            <div class="demo-note">⚡ Simulates the full Cashfree return flow — tests both success and failure screens.</div>
+          </div>
         </div>
 
-        <!-- DEMO PAYMENT SIMULATOR -->
-        <div id="pay-info-demo" class="pay-info" style="border-color:rgba(245,158,11,.3)">
-          <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem">
-            <span style="font-size:1rem">🧪</span>
-            <strong style="color:var(--text)">Demo Test Payment</strong>
-            <span style="font-family:var(--font-m);font-size:.55rem;background:rgba(245,158,11,.15);color:var(--amber);padding:.1rem .45rem;border-radius:100px;letter-spacing:.06em">NO REAL CHARGE</span>
-          </div>
-          <div style="margin-bottom:.75rem;font-size:.8rem;color:var(--text2)">Choose which outcome to simulate:</div>
-          <div style="display:flex;gap:.6rem;flex-wrap:wrap">
-            <label style="display:flex;align-items:center;gap:.5rem;padding:.55rem .9rem;background:rgba(0,245,200,.08);border:1.5px solid rgba(0,245,200,.3);border-radius:var(--r);cursor:pointer;font-size:.82rem;font-weight:600;color:var(--teal);transition:all .2s" id="demoSuccessLabel">
-              <input type="radio" name="demoOutcome" value="success" checked style="accent-color:var(--teal);width:14px;height:14px"/> ✅ Payment Success
-            </label>
-            <label style="display:flex;align-items:center;gap:.5rem;padding:.55rem .9rem;background:rgba(239,68,68,.08);border:1.5px solid rgba(239,68,68,.25);border-radius:var(--r);cursor:pointer;font-size:.82rem;font-weight:600;color:var(--red);transition:all .2s" id="demoFailLabel">
-              <input type="radio" name="demoOutcome" value="failure" style="accent-color:var(--red);width:14px;height:14px"/> ❌ Payment Failed
-            </label>
-          </div>
-          <div style="margin-top:.65rem;font-size:.74rem;color:var(--t3)">⚡ Simulates the full Cashfree return flow — success shows live tracker, failure shows retry screen.</div>
-        </div>
-
-        <div class="terms-check" id="termsBox" onclick="toggleTerms()">
+        <div class="terms-wrap" id="termsBox" onclick="toggleTerms()">
           <div class="terms-box" id="termsCheckbox">✓</div>
           <div class="terms-text">I agree to the <a href="#">Terms of Service</a> and understand that work begins after payment confirmation. Delivery within 24 hours of payment.</div>
         </div>
 
         <div class="form-nav">
           <button class="btn-back" onclick="goStep(1)"><span>←</span> Back</button>
-          <button class="btn-submit" id="submitBtn" onclick="submitOrder()">
+          <button class="btn-submit" id="submitBtn" onclick="handleOrderSubmit()">
             <span id="submitBtnText">Place Order →</span>
           </button>
         </div>
       </div>
 
-      <!-- SUCCESS STATE — payment-aware -->
+      <!-- ══ SUCCESS STATE ══ -->
       <div class="success-screen" id="successScreen">
 
-        <!-- PAID STATE -->
+        <!-- PAID -->
         <div id="ss-paid" style="display:none">
-          <div class="success-icon" style="background:rgba(0,245,200,.12);border-color:rgba(0,245,200,.35)">🎉</div>
-          <div class="success-title" style="color:var(--teal)">Payment Confirmed!</div>
-          <p class="success-sub">Your payment went through successfully. We've started working on your portfolio — delivery in <strong>24 hours</strong>.</p>
-          <div class="success-order-id" id="orderId">Order ID: PF-2026-XXXX</div>
-          <div style="background:var(--teal-dim);border:1px solid rgba(0,245,200,.25);border-radius:var(--r);padding:.85rem 1.1rem;margin-bottom:1.5rem;font-size:.83rem;color:var(--text2);text-align:left;line-height:1.7">
-            ✅ <strong style="color:var(--text)">What happens next:</strong> Your portfolio build starts now. You'll get a preview in ~12h and final delivery within 24h. Track live below.
+          <div class="success-ico" style="background:rgba(0,245,200,.12);border:2px solid rgba(0,245,200,.35)">🎉</div>
+          <div class="success-h" style="color:var(--teal)">Payment Confirmed!</div>
+          <p class="success-p">Your payment went through. We've started building your portfolio — delivery in <strong style="color:var(--text)">24 hours</strong>.</p>
+          <div class="success-id" id="orderId">Order ID: PF-2026-XXXX</div>
+          <div class="success-info" style="background:var(--teal-d);border:1px solid var(--teal-m)">
+            ✅ <strong style="color:var(--text)">What happens next:</strong> Build starts now. Preview in ~12h, final delivery within 24h. Track live below.
           </div>
-          <div class="success-next">
-            <a href="track-order.html" class="success-btn-primary">📊 Track Your Order Live →</a>
-            <a href="https://wa.me/919999999999" target="_blank" class="success-btn-ghost">💬 WhatsApp Us</a>
+          <div class="success-btns">
+            <a href="track-order.html" class="btn-suc-p">📊 Track Your Order Live →</a>
+            <a href="https://wa.me/919999999999" target="_blank" class="btn-suc-g">💬 WhatsApp Us</a>
           </div>
         </div>
 
-        <!-- PENDING / MANUAL PAYMENT STATE -->
+        <!-- PENDING -->
         <div id="ss-pending" style="display:none">
-          <div class="success-icon" style="background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.3)">📋</div>
-          <div class="success-title" style="color:var(--amber)">Order Received!</div>
-          <p class="success-sub">Your order is confirmed. We'll send payment details to your WhatsApp/Email within <strong>30 minutes</strong>. Work starts after payment.</p>
-          <div class="success-order-id" id="orderId2">Order ID: PF-2026-XXXX</div>
-          <div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:var(--r);padding:.85rem 1.1rem;margin-bottom:1.5rem;font-size:.83rem;color:var(--text2);text-align:left;line-height:1.7">
+          <div class="success-ico" style="background:rgba(245,158,11,.1);border:2px solid rgba(245,158,11,.3)">📋</div>
+          <div class="success-h" style="color:var(--amber)">Order Received!</div>
+          <p class="success-p">Your order is confirmed. We'll send payment details to your WhatsApp/Email within <strong style="color:var(--text)">30 minutes</strong>. Work starts after payment.</p>
+          <div class="success-id" id="orderId2">Order ID: PF-2026-XXXX</div>
+          <div class="success-info" style="background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.2)">
             ⏳ <strong style="color:var(--text)">Awaiting payment:</strong> Complete payment to unlock your live order tracker and start your build.
           </div>
-          <div class="success-next">
-            <a href="https://wa.me/919999999999" target="_blank" class="success-btn-primary">💬 Send Payment on WhatsApp →</a>
-            <a href="index.html" class="success-btn-ghost">← Back to Home</a>
+          <div class="success-btns">
+            <a href="https://wa.me/919999999999" target="_blank" class="btn-suc-p">💬 Send Payment on WhatsApp →</a>
+            <a href="index.html" class="btn-suc-g">← Back to Home</a>
           </div>
         </div>
 
-        <!-- FAILED STATE -->
+        <!-- FAILED -->
         <div id="ss-failed" style="display:none">
-          <div class="success-icon" style="background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.3)">❌</div>
-          <div class="success-title" style="color:var(--red)">Payment Failed</div>
-          <p class="success-sub">Your payment could not be processed. No amount was charged. Please try again or contact us on WhatsApp.</p>
-          <div class="success-order-id" id="orderId3">Order ID: PF-2026-XXXX</div>
-          <div class="success-next">
-            <button class="success-btn-primary" onclick="retryPayment()" style="background:var(--red);border:none;cursor:pointer">🔄 Try Again</button>
-            <a href="https://wa.me/919999999999" target="_blank" class="success-btn-ghost">💬 Contact Support</a>
-            <a href="index.html" class="success-btn-ghost">← Back to Home</a>
+          <div class="success-ico" style="background:rgba(240,68,68,.1);border:2px solid rgba(240,68,68,.3)">❌</div>
+          <div class="success-h" style="color:var(--red)">Payment Failed</div>
+          <p class="success-p">Your payment could not be processed. No amount was charged. Please try again or contact us.</p>
+          <div class="success-id" id="orderId3">Order ID: PF-2026-XXXX</div>
+          <div class="success-btns">
+            <button class="btn-suc-p" onclick="retryPayment()" style="background:var(--red);border:none;cursor:pointer">🔄 Try Again</button>
+            <a href="https://wa.me/919999999999" target="_blank" class="btn-suc-g">💬 Contact Support</a>
+            <a href="index.html" class="btn-suc-g">← Back to Home</a>
           </div>
         </div>
 
-        <!-- VERIFYING STATE (shown briefly while checking) -->
+        <!-- VERIFYING -->
         <div id="ss-verifying">
-          <div class="success-icon" style="background:var(--teal-dim);border-color:rgba(0,245,200,.2)">⏳</div>
-          <div class="success-title">Verifying Payment…</div>
-          <p class="success-sub">Please wait a moment while we confirm your payment with Cashfree.</p>
-          <div style="width:160px;height:3px;background:var(--border);border-radius:2px;margin:.5rem auto 0;overflow:hidden">
-            <div style="height:100%;background:var(--teal);border-radius:2px;animation:verifySlide 1.5s ease-in-out infinite"></div>
+          <div class="success-ico" style="background:var(--teal-d);border:2px solid rgba(0,245,200,.2)">⏳</div>
+          <div class="success-h">Verifying Payment…</div>
+          <p class="success-p">Please wait while we confirm your payment with Cashfree.</p>
+          <div style="width:160px;height:2px;background:var(--border);border-radius:2px;margin:.75rem auto 0;overflow:hidden">
+            <div style="height:100%;background:var(--teal);animation:verifySlide 1.5s ease-in-out infinite"></div>
           </div>
         </div>
         <style>@keyframes verifySlide{0%{width:0;margin-left:0}50%{width:100%;margin-left:0}100%{width:0;margin-left:100%}}</style>
@@ -786,60 +1052,45 @@ nav{
     </div>
   </div>
 
-  <!-- SIDEBAR -->
-  <div class="order-sidebar" id="orderSidebar">
+  <!-- ═══ SIDEBAR ═══ -->
+  <div class="sidebar" id="orderSidebar">
 
     <!-- ORDER SUMMARY -->
-    <div class="sidebar-card">
-      <div class="sc-head"><span class="sc-head-icon">🧾</span><div class="sc-head-title">Order Summary</div></div>
-      <div class="sc-body">
-        <div class="summary-plan-name" id="sum-plan-name">⚡ Founding Offer</div>
-        <div class="summary-plan-price">₹<span id="sum-plan-price">49</span><small> one-time</small></div>
-        <div id="sum-addons-wrap" style="margin-bottom:.45rem;display:none">
-          <div style="font-family:var(--font-m);font-size:.58rem;color:var(--text3);letter-spacing:.1em;margin-bottom:.3rem;text-transform:uppercase">Add-ons</div>
+    <div class="s-card">
+      <div class="s-card-head"><span class="s-card-ico">🧾</span><div class="s-card-title">Order Summary</div></div>
+      <div class="s-card-body">
+        <div class="sum-plan" id="sum-plan-name">⚡ Founding Offer</div>
+        <div class="sum-price">₹<span id="sum-plan-price">49</span><small> one-time</small></div>
+        <div id="sum-addons-wrap" style="margin-bottom:.5rem;display:none">
+          <div style="font-family:var(--fm);font-size:.56rem;color:var(--text3);letter-spacing:.1em;margin-bottom:.3rem;text-transform:uppercase">Add-ons</div>
           <div id="sum-addon-pills"></div>
         </div>
-        <div class="summary-divider"></div>
-        <div class="summary-line"><div class="sl-key">Base Plan</div><div class="sl-val">₹<span id="sum-base">49</span></div></div>
-        <div class="summary-line" id="sum-addon-line" style="display:none"><div class="sl-key">Add-ons</div><div class="sl-val">+₹<span id="sum-addon-amt">0</span></div></div>
-        <div class="summary-total-line"><div class="sl-key">Total</div><div class="sl-val">₹<span id="sum-total">49</span></div></div>
+        <div class="sum-divider"></div>
+        <div class="sum-line"><span class="k">Base Plan</span><span class="v">₹<span id="sum-base">49</span></span></div>
+        <div class="sum-line" id="sum-addon-line" style="display:none"><span class="k">Add-ons</span><span class="v">+₹<span id="sum-addon-amt">0</span></span></div>
+        <div class="sum-total"><span class="k">Total</span><span class="v">₹<span id="sum-total">49</span></span></div>
       </div>
     </div>
 
-    <!-- TRUST -->
-    <div class="sidebar-card">
-      <div class="sc-head"><span class="sc-head-icon">🛡️</span><div class="sc-head-title">Guarantees</div></div>
-      <div class="sc-body">
-        <div class="trust-item"><div class="ti-icon">⚡</div><div class="ti-text"><strong>24h Delivery</strong><span>Delivered in 24h or full refund</span></div></div>
-        <div class="trust-item"><div class="ti-icon">🔄</div><div class="ti-text"><strong>Free Revision</strong><span>One full revision round included</span></div></div>
-        <div class="trust-item"><div class="ti-icon">📦</div><div class="ti-text"><strong>Source Code</strong><span>Full code + deployment guide</span></div></div>
-        <div class="trust-item"><div class="ti-icon">💬</div><div class="ti-text"><strong>WhatsApp Support</strong><span>Direct chat throughout</span></div></div>
+    <!-- GUARANTEES -->
+    <div class="s-card">
+      <div class="s-card-head"><span class="s-card-ico">🛡️</span><div class="s-card-title">Guarantees</div></div>
+      <div class="s-card-body">
+        <div class="g-item"><div class="g-ico">⚡</div><div class="g-text"><strong>24h Delivery</strong><span>Delivered in 24h or full refund</span></div></div>
+        <div class="g-item"><div class="g-ico">🔄</div><div class="g-text"><strong>Free Revision</strong><span>One full revision round included</span></div></div>
+        <div class="g-item"><div class="g-ico">📦</div><div class="g-text"><strong>Source Code</strong><span>Full code + deployment guide</span></div></div>
+        <div class="g-item"><div class="g-ico">💬</div><div class="g-text"><strong>WhatsApp Support</strong><span>Direct chat throughout</span></div></div>
       </div>
     </div>
 
     <!-- WHAT HAPPENS NEXT -->
-    <div class="sidebar-card">
-      <div class="sc-head"><span class="sc-head-icon">📅</span><div class="sc-head-title">What Happens Next</div></div>
-      <div class="sc-body">
-        <div class="tl-item" style="display:flex;gap:.65rem;padding:.55rem 0;position:relative">
-          <div style="position:absolute;left:9px;top:26px;bottom:-6px;width:1px;background:var(--border)"></div>
-          <div style="width:19px;height:19px;border-radius:50%;background:var(--teal-dim);border:1.5px solid rgba(0,245,200,.3);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.52rem;color:var(--teal)">1</div>
-          <div><strong style="display:block;font-size:.8rem;font-weight:700;color:var(--text)">Order Confirmed</strong><span style="font-size:.71rem;color:var(--text3)">WhatsApp ping in ~30 mins</span></div>
-        </div>
-        <div class="tl-item" style="display:flex;gap:.65rem;padding:.55rem 0;position:relative">
-          <div style="position:absolute;left:9px;top:26px;bottom:-6px;width:1px;background:var(--border)"></div>
-          <div style="width:19px;height:19px;border-radius:50%;background:var(--teal-dim);border:1.5px solid rgba(0,245,200,.3);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.52rem;color:var(--teal)">2</div>
-          <div><strong style="display:block;font-size:.8rem;font-weight:700;color:var(--text)">Payment</strong><span style="font-size:.71rem;color:var(--text3)">UPI / bank details shared</span></div>
-        </div>
-        <div class="tl-item" style="display:flex;gap:.65rem;padding:.55rem 0;position:relative">
-          <div style="position:absolute;left:9px;top:26px;bottom:-6px;width:1px;background:var(--border)"></div>
-          <div style="width:19px;height:19px;border-radius:50%;background:var(--teal-dim);border:1.5px solid rgba(0,245,200,.3);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.52rem;color:var(--teal)">3</div>
-          <div><strong style="display:block;font-size:.8rem;font-weight:700;color:var(--text)">Building Starts</strong><span style="font-size:.71rem;color:var(--text3)">Work begins after payment</span></div>
-        </div>
-        <div style="display:flex;gap:.65rem;padding:.55rem 0">
-          <div style="width:19px;height:19px;border-radius:50%;background:var(--teal-dim);border:1.5px solid rgba(0,245,200,.3);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.58rem;color:var(--teal)">✓</div>
-          <div><strong style="display:block;font-size:.8rem;font-weight:700;color:var(--text)">Final Delivery</strong><span style="font-size:.71rem;color:var(--text3)">Source code + live URL in 24h</span></div>
-        </div>
+    <div class="s-card">
+      <div class="s-card-head"><span class="s-card-ico">📅</span><div class="s-card-title">What Happens Next</div></div>
+      <div class="s-card-body">
+        <div class="tl-item"><div class="tl-dot">1</div><div><span class="tl-title">Order Confirmed</span><span class="tl-sub">WhatsApp ping in ~30 mins</span></div></div>
+        <div class="tl-item"><div class="tl-dot">2</div><div><span class="tl-title">Payment</span><span class="tl-sub">UPI / bank details shared</span></div></div>
+        <div class="tl-item"><div class="tl-dot">3</div><div><span class="tl-title">Building Starts</span><span class="tl-sub">Work begins after payment</span></div></div>
+        <div class="tl-item"><div class="tl-dot">✓</div><div><span class="tl-title">Final Delivery</span><span class="tl-sub">Source code + live URL in 24h</span></div></div>
       </div>
     </div>
 
@@ -847,594 +1098,529 @@ nav{
 </div>
 
 <script type="module">
-/* ── FIREBASE INIT (for order saving to Firestore) ── */
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, doc, setDoc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+/* ════════════════════════════════════════════════════════
+   FIREBASE v10 MODULE — PortfolioForge Order Writer
+   setDoc with explicit order ID so admin can read it.
+   signInAnonymously satisfies Firestore security rules.
+   window.handleOrderSubmit = alias for window.submitOrder.
+════════════════════════════════════════════════════════ */
+import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-const _fbApp = initializeApp({
-  apiKey: "AIzaSyA5p0Rf5lb_8AKoeW9WlAjb6EHmwP1xbTY",
-  authDomain: "portfolio-forge-73765.firebaseapp.com",
-  projectId: "portfolio-forge-73765",
-  storageBucket: "portfolio-forge-73765.firebasestorage.app",
-  messagingSenderId: "50141160465",
-  appId: "1:50141160465:web:5fcb8b96278d71def7fdb0"
-}, 'submit-app');
-const _db = getFirestore(_fbApp);
-const order = {
-  name: nameInput.value,
-  email: emailInput.value,
-  plan: selectedPlan,
-  date: new Date().toISOString()
+const _cfg = {
+  apiKey:"AIzaSyA5p0Rf5lb_8AKoeW9WlAjb6EHmwP1xbTY",
+  authDomain:"portfolio-forge-73765.firebaseapp.com",
+  projectId:"portfolio-forge-73765",
+  storageBucket:"portfolio-forge-73765.firebasestorage.app",
+  messagingSenderId:"50141160465",
+  appId:"1:50141160465:web:5fcb8b96278d71def7fdb0"
 };
+const _app  = getApps().find(a=>a.name==='pf-order') || initializeApp(_cfg,'pf-order');
+const _db   = getFirestore(_app);
+const _auth = getAuth(_app);
 
-let orders = JSON.parse(localStorage.getItem("orders")) || [];
-orders.push(order);
-localStorage.setItem("orders", JSON.stringify(orders));
-/* ── Save order to Firestore (called from main script via window) ── */
+signInAnonymously(_auth)
+  .then(()=>console.log('[PF Firebase] ✅ Anonymous auth OK'))
+  .catch(e=>console.warn('[PF Firebase] ⚠️ Anon auth failed:',e.message));
+
 window._saveOrderToFirestore = async function(orderData) {
   try {
     const { id, ...data } = orderData;
-    data.createdAt = serverTimestamp();
-    data.updatedAt = serverTimestamp();
-    data.source = 'web-form';
+    console.log("[FIRESTORE] Attempting to save order →", id);
+    console.log("[FIRESTORE] Data:", JSON.stringify(data, null, 2));
+
     await setDoc(doc(_db, 'orders', id), data);
-    console.log('✅ Order saved to Firestore:', id);
-  } catch(e) {
-    console.warn('⚠️ Firestore save failed (order still in localStorage):', e.message);
+
+    console.log("[FIRESTORE] SAVE SUCCESS →", id);
+  } catch (err) {
+    console.error("[FIRESTORE] SAVE FAILED →", err.code, err.message);
+    console.error("[FIRESTORE] Full error:", err);
   }
 };
 
-/* ── Update existing order in Firestore ── */
 window._updateOrderInFirestore = async function(orderData) {
   try {
     const { id, ...data } = orderData;
+    if(!id){console.error('[PF Firebase] ❌ No order ID');return;}
     data.updatedAt = serverTimestamp();
-    await setDoc(doc(_db, 'orders', id), data, { merge: true });
-    console.log('✅ Order updated in Firestore:', id);
-  } catch(e) {
-    console.warn('⚠️ Firestore update failed:', e.message);
-  }
+    await setDoc(doc(_db,'orders',id), data, {merge:true});
+    console.log('[PF Firebase] ✅ Updated:',id,'|',orderData.paymentStatus);
+  } catch(e){console.error('[PF Firebase] ❌ Update failed:',e.code,e.message);}
 };
+
+/* alias — set after plain script registers submitOrder */
+function attachAlias(){
+  if(typeof window.submitOrder==='function'){
+    window.handleOrderSubmit=window.submitOrder;
+    console.log('[PF Firebase] ✅ handleOrderSubmit aliased to submitOrder');
+  } else {setTimeout(attachAlias,100);}
+}
+attachAlias();
+console.log('[PF Firebase] ✅ Module loaded');
 </script>
 
 <script>
+/* ════════════════════════════════════════════════════════
+   PORTFOLIOFORGE — MAIN JS
+   All functions exposed on window.* for onclick handlers
+════════════════════════════════════════════════════════ */
+
 /* ── CURSOR ── */
-const dot=document.getElementById('dot'),ring=document.getElementById('ring');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px'});
-(function animR(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animR)})();
+(function(){
+  var dot=document.getElementById('dot'), ring=document.getElementById('ring');
+  var mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',function(e){
+    mx=e.clientX; my=e.clientY;
+    if(dot){dot.style.left=mx+'px';dot.style.top=my+'px';}
+  });
+  (function anim(){
+    rx+=(mx-rx)*.1; ry+=(my-ry)*.1;
+    if(ring){ring.style.left=rx+'px';ring.style.top=ry+'px';}
+    requestAnimationFrame(anim);
+  })();
+})();
 
 /* ── THEME ── */
-document.getElementById('themeBtn').addEventListener('click',()=>{
-  const d=document.documentElement;
-  d.dataset.theme=d.dataset.theme==='dark'?'light':'dark';
-  document.getElementById('themeBtn').textContent=d.dataset.theme==='dark'?'🌙':'☀️';
-});
+(function(){
+  var btn=document.getElementById('themeBtn');
+  if(!btn) return;
+  btn.addEventListener('click',function(){
+    var d=document.documentElement;
+    d.dataset.theme=d.dataset.theme==='dark'?'light':'dark';
+    btn.textContent=d.dataset.theme==='dark'?'🌙':'☀️';
+  });
+})();
 
-/* ── STATE ── */
-let currentStep=1;
-let selectedPlan={name:'⚡ Founding Offer',price:49,id:'founding'};
-let addons=[];
-let termsAccepted=false;
-let selectedPayment='';
+/* ════════════════════════════════════════════════════════
+   STATE
+════════════════════════════════════════════════════════ */
+var currentStep    = 1;
+var selectedPlan   = {name:'⚡ Founding Offer', price:49, id:'founding'};
+var addons         = [];
+var termsAccepted  = false;
+var selectedPayment= '';
 
-const stepData=[
-  {tag:'// step 1 of 2',title:'Your Info & Plan',sub:'Tell us who you are and pick your plan — takes under a minute.'},
-  {tag:'// step 2 of 2',title:'Portfolio Details & Payment',sub:'What should we build? And how would you like to pay?'},
+var STEP_DATA = [
+  {tag:'// step 1 of 2', title:'Your Info & Plan',          sub:'Tell us who you are and pick your plan — takes under a minute.'},
+  {tag:'// step 2 of 2', title:'Portfolio Details & Payment',sub:'What should we build? And how would you like to pay?'}
 ];
 
-/* ── STEP UI ── */
-function updateStepUI(n){
-  document.getElementById('stepTag').textContent=stepData[n-1].tag;
-  document.getElementById('stepTitle').textContent=stepData[n-1].title;
-  document.getElementById('stepSub').textContent=stepData[n-1].sub;
-  [1,2].forEach(i=>{
-    const sc=document.getElementById('sc'+i);
-    const sl=document.getElementById('sl'+i);
-    sc.className='step-circle'+(i<n?' done':i===n?' active':'');
-    sl.className='step-label'+(i===n?' active':'');
-    sc.textContent=i<n?'✓':'0'+i;
+/* ════════════════════════════════════════════════════════
+   STEP UI
+════════════════════════════════════════════════════════ */
+function updateStepUI(n) {
+  var d = STEP_DATA[n-1];
+  var tag=document.getElementById('stepTag'), ttl=document.getElementById('stepTitle'), sub=document.getElementById('stepSub');
+  if(tag) tag.textContent = d.tag;
+  if(ttl) ttl.textContent = d.title;
+  if(sub) sub.textContent = d.sub;
+  [1,2].forEach(function(i){
+    var sc=document.getElementById('sc'+i), sl=document.getElementById('sl'+i);
+    if(!sc||!sl) return;
+    sc.className = 'step-circle'+(i<n?' done':i===n?' active':'');
+    sl.className = 'step-label'+(i===n?' active':'');
+    sc.textContent = i<n ? '✓' : '0'+i;
   });
-  const line=document.getElementById('sline1');
-  if(line) line.className='step-line'+(n>1?' done':'');
+  var ln=document.getElementById('sline1');
+  if(ln) ln.className = 'step-line'+(n>1?' done':'');
 }
 
-/* ── VALIDATION ── */
-function validate1(){
-  let ok=true;
-  const checks=[
-    ['f-name','e-name',v=>v.trim().length>0,'field-input'],
-    ['f-email','e-email',v=>v.includes('@'),'field-input'],
-    ['f-phone','e-phone',v=>v.trim().length>0,'field-input'],
-  ];
-  checks.forEach(([fid,eid,test,cls])=>{
-    const el=document.getElementById(fid);
-    const err=document.getElementById(eid);
-    if(!test(el.value)){
-      el.className=cls+' error';err.className='field-error show';ok=false;
-    } else {
-      el.className=cls;err.className='field-error';
-    }
+/* ════════════════════════════════════════════════════════
+   VALIDATION
+════════════════════════════════════════════════════════ */
+function validate1() {
+  var ok = true;
+  [['f-name','e-name',function(v){return v.trim().length>0;},'f-input'],
+   ['f-email','e-email',function(v){return v.includes('@')&&v.includes('.');},'f-input'],
+   ['f-phone','e-phone',function(v){return v.trim().length>=6;},'f-input']
+  ].forEach(function(c){
+    var el=document.getElementById(c[0]), er=document.getElementById(c[1]);
+    if(!el||!er) return;
+    if(!c[2](el.value)){el.className=c[3]+' err';er.className='f-err show';ok=false;}
+    else{el.className=c[3];er.className='f-err';}
   });
-  const role=document.getElementById('f-role');
-  const roleErr=document.getElementById('e-role');
-  if(!role.value){role.className='field-select error';roleErr.className='field-error show';ok=false;}
-  else{role.className='field-select';roleErr.className='field-error';}
+  var role=document.getElementById('f-role'), roleErr=document.getElementById('e-role');
+  if(role&&roleErr){
+    if(!role.value){role.className='f-select err';roleErr.className='field-error show';ok=false;}
+    else{role.className='f-select';roleErr.className='field-error';}
+  }
   return ok;
 }
 
-function validate2(){
-  let ok=true;
-  const skills=document.getElementById('f-skills');
-  const projects=document.getElementById('f-projects');
-  const skillsErr=document.getElementById('e-skills');
-  const projErr=document.getElementById('e-projects');
-  const payErr=document.getElementById('e-payment');
-
-  if(!skills.value.trim()){
-    skills.className='field-input error';skillsErr.className='field-error show';ok=false;
-  } else {skills.className='field-input';skillsErr.className='field-error';}
-
-  if(!projects.value.trim()){
-    projects.className='field-textarea error';projErr.className='field-error show';ok=false;
-  } else {projects.className='field-textarea';projErr.className='field-error';}
-
-  if(!selectedPayment){
-    payErr.className='field-error show';ok=false;
-  } else {payErr.className='field-error';}
-
+function validate2() {
+  var ok = true;
+  var skills=document.getElementById('f-skills'), skillsErr=document.getElementById('e-skills');
+  var projs=document.getElementById('f-projects'), projsErr=document.getElementById('e-projects');
+  var payErr=document.getElementById('e-payment');
+  if(skills&&skillsErr){
+    if(!skills.value.trim()){skills.className='f-input err';skillsErr.className='f-err show';ok=false;}
+    else{skills.className='f-input';skillsErr.className='f-err';}
+  }
+  if(projs&&projsErr){
+    if(!projs.value.trim()){projs.className='f-textarea err';projsErr.className='f-err show';ok=false;}
+    else{projs.className='f-textarea';projsErr.className='f-err';}
+  }
+  if(payErr){
+    if(!selectedPayment){payErr.className='f-err show';ok=false;}
+    else{payErr.className='f-err';}
+  }
   if(!termsAccepted){
-    document.getElementById('termsBox').style.borderColor='var(--red)';
+    var tb=document.getElementById('termsBox');
+    if(tb) tb.style.borderColor='var(--red)';
     if(ok) alert('Please accept the Terms of Service to continue.');
     ok=false;
   }
   return ok;
 }
 
-/* ── NAVIGATION ── */
-function goStep(n){
-  if(n>currentStep && currentStep===1 && !validate1()) return;
-  document.getElementById('step'+currentStep).classList.remove('active');
-  document.getElementById('step'+n).classList.add('active');
-  currentStep=n;
+/* ════════════════════════════════════════════════════════
+   NAVIGATION
+════════════════════════════════════════════════════════ */
+function goStep(n) {
+  if(n > currentStep && currentStep===1 && !validate1()) return;
+  var cur=document.getElementById('step'+currentStep);
+  var nxt=document.getElementById('step'+n);
+  if(cur) cur.classList.remove('active');
+  if(nxt) nxt.classList.add('active');
+  currentStep = n;
   updateStepUI(n);
-  window.scrollTo({top:0,behavior:'smooth'});
+  window.scrollTo({top:0, behavior:'smooth'});
 }
 
-/* ── PLAN SELECT ── */
-function selectPlan(el,name,price,id){
-  document.querySelectorAll('.plan-option').forEach(p=>p.classList.remove('selected'));
+/* ════════════════════════════════════════════════════════
+   PLAN / ADDON / PAYMENT SELECTION
+════════════════════════════════════════════════════════ */
+function selectPlan(el, name, price, id) {
+  document.querySelectorAll('.plan-card').forEach(function(p){p.classList.remove('selected');});
   el.classList.add('selected');
-  selectedPlan={name,price,id};
+  selectedPlan = {name:name, price:price, id:id};
   updateSummary();
 }
 
-/* ── ADDON TOGGLE ── */
-function toggleAddon(el,price,label){
+function toggleAddon(el, price, label) {
   el.classList.toggle('on');
-  if(el.classList.contains('on')) addons.push({price,label});
-  else addons=addons.filter(a=>a.label!==label);
+  if(el.classList.contains('on')) addons.push({price:price, label:label});
+  else addons = addons.filter(function(a){return a.label!==label;});
   updateSummary();
 }
 
-/* ── PAYMENT SELECT ── */
 function selectPayment(el, val) {
-  document.querySelectorAll('.pay-option').forEach(p => p.classList.remove('selected'));
+  document.querySelectorAll('.pay-card').forEach(function(p){p.classList.remove('selected');});
   el.classList.add('selected');
   selectedPayment = val;
-  ['cashfree','upi','bank','demo'].forEach(v => {
-    const el = document.getElementById('pay-info-'+v);
-    if (el) el.className = 'pay-info' + (v === val ? ' show' : '');
+  ['cashfree','upi','bank','demo'].forEach(function(v){
+    var pi=document.getElementById('pay-info-'+v);
+    if(pi) pi.className = 'pay-info'+(v===val?' show':'');
   });
-  const btn = document.getElementById('submitBtnText');
-  if (val === 'cashfree') btn.textContent = 'Place Order & Pay via Cashfree →';
-  else if (val === 'demo') btn.textContent = '🧪 Run Demo Payment →';
-  else btn.textContent = 'Place Order →';
+  var btn=document.getElementById('submitBtnText');
+  if(!btn) return;
+  if(val==='cashfree')      btn.textContent='Place Order & Pay via Cashfree →';
+  else if(val==='demo')     btn.textContent='🧪 Run Demo Payment →';
+  else                      btn.textContent='Place Order →';
 }
 
-/* ── TERMS ── */
-function toggleTerms(){
-  termsAccepted=!termsAccepted;
-  const box=document.getElementById('termsBox');
-  const cb=document.getElementById('termsCheckbox');
-  box.classList.toggle('checked',termsAccepted);
-  cb.style.color=termsAccepted?'#000':'transparent';
-  box.style.borderColor=termsAccepted?'var(--teal)':'';
+function toggleTerms() {
+  termsAccepted = !termsAccepted;
+  var box=document.getElementById('termsBox'), cb=document.getElementById('termsCheckbox');
+  if(box){box.classList.toggle('checked',termsAccepted); box.style.borderColor=termsAccepted?'var(--teal)':'';}
+  if(cb)  cb.style.color = termsAccepted?'#000':'transparent';
 }
 
-/* ── SUMMARY ── */
-function updateSummary(){
-  const addonTotal=addons.reduce((s,a)=>s+a.price,0);
-  const total=selectedPlan.price+addonTotal;
-  document.getElementById('sum-plan-name').textContent=selectedPlan.name;
-  document.getElementById('sum-plan-price').textContent=total;
-  document.getElementById('sum-base').textContent=selectedPlan.price;
-  document.getElementById('sum-addon-amt').textContent=addonTotal;
-  document.getElementById('sum-total').textContent=total;
-  document.getElementById('sum-addon-line').style.display=addonTotal>0?'flex':'none';
-  const pillWrap=document.getElementById('sum-addon-pills');
-  const pillsRow=document.getElementById('sum-addons-wrap');
-  pillWrap.innerHTML=addons.map(a=>`<span class="addon-pill">${a.label} +₹${a.price}</span>`).join('');
-  pillsRow.style.display=addons.length>0?'block':'none';
+/* ════════════════════════════════════════════════════════
+   ORDER SUMMARY
+════════════════════════════════════════════════════════ */
+function updateSummary() {
+  var at = addons.reduce(function(s,a){return s+a.price;},0);
+  var total = selectedPlan.price + at;
+  function set(id,v){var el=document.getElementById(id);if(el)el.textContent=v;}
+  set('sum-plan-name', selectedPlan.name);
+  set('sum-plan-price', total);
+  set('sum-base', selectedPlan.price);
+  set('sum-addon-amt', at);
+  set('sum-total', total);
+  var al=document.getElementById('sum-addon-line'); if(al) al.style.display=at>0?'flex':'none';
+  var pw=document.getElementById('sum-addon-pills');
+  var pr=document.getElementById('sum-addons-wrap');
+  if(pw) pw.innerHTML=addons.map(function(a){return '<span class="addon-pill">'+a.label+' +₹'+a.price+'</span>';}).join('');
+  if(pr) pr.style.display=addons.length>0?'block':'none';
 }
 
-/* ── BUILD ORDER DATA ── */
-function buildOrderData(orderId){
-  const total=selectedPlan.price+addons.reduce((s,a)=>s+a.price,0);
+/* ════════════════════════════════════════════════════════
+   BUILD ORDER DATA OBJECT
+════════════════════════════════════════════════════════ */
+function buildOrderData(orderId) {
+  function gv(id){var el=document.getElementById(id);return el?el.value.trim():'';}
+  var total = selectedPlan.price + addons.reduce(function(s,a){return s+a.price;},0);
   return {
-    id:orderId,
-    name:document.getElementById('f-name').value,
-    email:document.getElementById('f-email').value,
-    phone:document.getElementById('f-phone').value,
-    role:document.getElementById('f-role').value,
-    github:document.getElementById('f-github').value,
-    linkedin:document.getElementById('f-linkedin').value,
-    plan:selectedPlan,
-    addons,
-    total,
-    skills:document.getElementById('f-skills').value,
-    projects:document.getElementById('f-projects').value,
-    bio:document.getElementById('f-bio').value,
-    theme:document.getElementById('f-theme').value,
-    notes:document.getElementById('f-notes').value,
-    payment:selectedPayment,
-    placedAt:Date.now(),
-    status:'Pending Payment',
-    progress:10,
+    id:       orderId,
+    name:     gv('f-name'),
+    email:    gv('f-email'),
+    phone:    gv('f-phone'),
+    role:     gv('f-role'),
+    github:   gv('f-github'),
+    linkedin: gv('f-linkedin'),
+    plan:     selectedPlan,
+    addons:   addons.slice(),
+    total:    total,
+    skills:   gv('f-skills'),
+    projects: gv('f-projects'),
+    bio:      gv('f-bio'),
+    theme:    gv('f-theme'),
+    notes:    gv('f-notes'),
+    payment:  selectedPayment,
+    placedAt: Date.now(),
+    status:   'Pending Payment',
+    paymentStatus: 'unpaid',
+    progress: 10,
     timeline:[
-      {label:'Order Received',done:true,time:new Date().toLocaleString()},
-      {label:'Payment Confirmed',done:false,time:''},
-      {label:'Work In Progress',done:false,time:''},
-      {label:'Preview Shared',done:false,time:''},
-      {label:'Final Delivery',done:false,time:''},
+      {label:'Order Received',    done:true,  time:new Date().toLocaleString()},
+      {label:'Payment Confirmed', done:false, time:''},
+      {label:'Work In Progress',  done:false, time:''},
+      {label:'Preview Shared',    done:false, time:''},
+      {label:'Final Delivery',    done:false, time:''}
     ],
-    messages:[{from:'admin',text:'Thanks for your order! Payment details will be shared within 30 minutes. 🚀',time:new Date().toLocaleString()}]
+    messages:[{from:'admin', text:'Thanks for your order! We will confirm within 30 minutes. 🚀', time:new Date().toLocaleString()}]
   };
 }
 
-/* ── PUSH TO FIRESTORE + localStorage fallback ── */
-function pushToAdminOrders(orderData){
-  // Keep localStorage as local cache
-  try{
-    const existing=JSON.parse(localStorage.getItem('pf_admin_orders')||'[]');
-    const idx=existing.findIndex(o=>o.id===orderData.id);
+/* ════════════════════════════════════════════════════════
+   PUSH ORDER TO ADMIN (localStorage + Firestore)
+   Uses polling — no async/await needed in plain script
+════════════════════════════════════════════════════════ */
+function pushToAdminOrders(orderData) {
+  /* Always write to localStorage first — instant fallback */
+  try {
+    var existing = JSON.parse(localStorage.getItem('pf_admin_orders')||'[]');
+    var idx = existing.findIndex(function(o){return o.id===orderData.id;});
     if(idx>=0) existing[idx]=orderData; else existing.unshift(orderData);
-    localStorage.setItem('pf_admin_orders',JSON.stringify(existing));
-  }catch(e){}
-  // Also push to Firestore (real admin panel source of truth)
-  if(window._saveOrderToFirestore) window._saveOrderToFirestore(orderData).catch(()=>{});
-  if(window._updateOrderInFirestore) window._updateOrderInFirestore(orderData).catch(()=>{});
+    localStorage.setItem('pf_admin_orders', JSON.stringify(existing));
+  } catch(e){}
+
+  /* Poll every 300ms until Firebase module registers its functions (max 10s) */
+  var attempts = 0;
+  function tryFirestore() {
+    if(window._updateOrderInFirestore) {
+      window._updateOrderInFirestore(orderData);
+      console.log('[PF] Queued Firestore update for:', orderData.id);
+      return;
+    }
+    if(window._saveOrderToFirestore) {
+      window._saveOrderToFirestore(orderData);
+      console.log('[PF] Queued Firestore save for:', orderData.id);
+      return;
+    }
+    attempts++;
+    if(attempts < 34) { /* 34 × 300ms = ~10s */
+      setTimeout(tryFirestore, 300);
+    } else {
+      console.warn('[PF] Firebase not available after 10s — order saved to localStorage only:', orderData.id);
+    }
+  }
+  tryFirestore();
 }
 
-/* ── SHOW SUCCESS SCREEN (payment-aware) ── */
+/* ════════════════════════════════════════════════════════
+   SUCCESS / FAIL SCREENS
+════════════════════════════════════════════════════════ */
 function showSuccessScreen(orderId, payState) {
-  // payState: 'paid' | 'pending' | 'failed'
-  document.getElementById('formCard').style.display = 'none';
-  const sidebar = document.getElementById('orderSidebar');
-  if (sidebar) sidebar.style.display = 'none';
-  const sp = document.getElementById('successScreen');
-  sp.style.display = 'block';
-
-  // Hide all states first
-  ['ss-paid','ss-pending','ss-failed','ss-verifying'].forEach(id => {
-    document.getElementById(id).style.display = 'none';
+  var fc=document.getElementById('formCard');
+  var sb=document.getElementById('orderSidebar');
+  var sp=document.getElementById('successScreen');
+  if(fc) fc.style.display='none';
+  if(sb) sb.style.display='none';
+  if(sp) sp.style.display='block';
+  ['ss-paid','ss-pending','ss-failed','ss-verifying'].forEach(function(id){
+    var el=document.getElementById(id); if(el) el.style.display='none';
   });
-
-  if (payState === 'paid') {
-    document.getElementById('ss-paid').style.display = 'block';
-    document.getElementById('orderId').textContent = 'Order ID: ' + orderId;
+  if(payState==='paid'){
+    var el=document.getElementById('ss-paid'); if(el) el.style.display='block';
+    var oi=document.getElementById('orderId'); if(oi) oi.textContent='Order ID: '+orderId;
     launchConfetti();
-    localStorage.setItem('pf_payment_status', 'paid');
-  } else if (payState === 'failed') {
-    document.getElementById('ss-failed').style.display = 'block';
-    document.getElementById('orderId3').textContent = 'Order ID: ' + orderId;
-    localStorage.setItem('pf_payment_status', 'failed');
+    localStorage.setItem('pf_payment_status','paid');
+  } else if(payState==='failed'){
+    var el=document.getElementById('ss-failed'); if(el) el.style.display='block';
+    var oi=document.getElementById('orderId3'); if(oi) oi.textContent='Order ID: '+orderId;
+    localStorage.setItem('pf_payment_status','failed');
   } else {
-    // pending / manual payment
-    document.getElementById('ss-pending').style.display = 'block';
-    document.getElementById('orderId2').textContent = 'Order ID: ' + orderId;
-    localStorage.setItem('pf_payment_status', 'pending');
+    var el=document.getElementById('ss-pending'); if(el) el.style.display='block';
+    var oi=document.getElementById('orderId2'); if(oi) oi.textContent='Order ID: '+orderId;
+    localStorage.setItem('pf_payment_status','pending');
   }
 }
 
 function retryPayment() {
-  document.getElementById('successScreen').style.display = 'none';
-  document.getElementById('formCard').style.display = 'block';
-  const sidebar = document.getElementById('orderSidebar');
-  if (sidebar) sidebar.style.display = 'flex';
+  var ss=document.getElementById('successScreen');
+  var fc=document.getElementById('formCard');
+  var sb=document.getElementById('orderSidebar');
+  if(ss) ss.style.display='none';
+  if(fc) fc.style.display='block';
+  if(sb) sb.style.display='flex';
 }
 
-/* ── CASHFREE PAYMENT ── */
-const CASHFREE_API_URL = 'https://portfolioforge-backend.onrender.com/create-order';
-const CASHFREE_VERIFY_URL = 'https://portfolioforge-backend.onrender.com/verify-payment';
-
-async function initiateCashfreePayment(orderId, total, orderData) {
-  const btn = document.getElementById('submitBtn');
-  btn.disabled = true;
-  document.getElementById('submitBtnText').textContent = 'Redirecting to payment…';
-  try {
-    const res = await fetch(CASHFREE_API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount: total, order_id: orderId })
-    });
-    const data = await res.json();
-    if (!data.payment_session_id) throw new Error(data.message || 'Failed to create payment session');
-    orderData.cashfreeSessionId = data.payment_session_id;
-    orderData.cfOrderId = data.cf_order_id || '';
-    localStorage.setItem('pf_order', JSON.stringify(orderData));
-    const cashfree = Cashfree({ mode: 'production' });
-    cashfree.checkout({ paymentSessionId: data.payment_session_id, redirectTarget: '_self' });
-  } catch (err) {
-    console.error('Cashfree error:', err);
-    btn.disabled = false;
-    document.getElementById('submitBtnText').textContent = 'Place Order & Pay via Cashfree →';
-    showPaymentError(err.message);
-  }
-}
-
-/* ── HANDLE CASHFREE RETURN ── */
-async function checkCashfreeReturn() {
-  const params = new URLSearchParams(window.location.search);
-  if (!params.has('payment') && !params.has('order_id')) return;
-
-  const cfStatus   = params.get('payment');     // 'success' or 'failure' from Cashfree
-  const orderId    = params.get('order_id') || '';
-  const cfOrderId  = params.get('cf_order_id') || orderId;
-  const savedOrder = JSON.parse(localStorage.getItem('pf_order') || 'null');
-
-  // Clean URL immediately
-  window.history.replaceState({}, document.title, window.location.pathname);
-
-  // Show form hidden, success screen visible with verifying state
-  document.getElementById('formCard').style.display = 'none';
-  const sidebar = document.getElementById('orderSidebar');
-  if (sidebar) sidebar.style.display = 'none';
-  const sp = document.getElementById('successScreen');
-  sp.style.display = 'block';
-  ['ss-paid','ss-pending','ss-failed'].forEach(id => document.getElementById(id).style.display = 'none');
-  document.getElementById('ss-verifying').style.display = 'block';
-
-  // If Cashfree already told us it failed, no need to verify
-  if (cfStatus === 'FAILED' || cfStatus === 'failure') {
-    document.getElementById('ss-verifying').style.display = 'none';
-    if (savedOrder) {
-      savedOrder.status = 'Payment Failed';
-      savedOrder.paymentStatus = 'failed';
-      localStorage.setItem('pf_order', JSON.stringify(savedOrder));
-      pushToAdminOrders(savedOrder);
-    }
-    showSuccessScreen(savedOrder?.id || orderId, 'failed');
-    return;
-  }
-
-  // Verify with backend
-  try {
-    const vRes  = await fetch(CASHFREE_VERIFY_URL + '/' + cfOrderId);
-    const vData = await vRes.json();
-    const paid  = vData.order_status === 'PAID';
-
-    document.getElementById('ss-verifying').style.display = 'none';
-
-    if (paid && savedOrder) {
-      savedOrder.status        = 'Payment Confirmed';
-      savedOrder.paymentStatus = 'paid';
-      savedOrder.progress      = 30;
-      savedOrder.cfOrderId     = cfOrderId;
-      if (savedOrder.timeline && savedOrder.timeline[1]) {
-        savedOrder.timeline[1].done = true;
-        savedOrder.timeline[1].time = new Date().toLocaleString();
-      }
-      localStorage.setItem('pf_order', JSON.stringify(savedOrder));
-      pushToAdminOrders(savedOrder);
-      showSuccessScreen(savedOrder.id || orderId, 'paid');
-    } else if (!paid) {
-      if (savedOrder) {
-        savedOrder.status = 'Payment Failed';
-        savedOrder.paymentStatus = 'failed';
-        localStorage.setItem('pf_order', JSON.stringify(savedOrder));
-        pushToAdminOrders(savedOrder);
-      }
-      showSuccessScreen(savedOrder?.id || orderId, 'failed');
-    }
-  } catch (e) {
-    // Network error during verify — optimistic pending
-    document.getElementById('ss-verifying').style.display = 'none';
-    if (savedOrder) {
-      savedOrder.status = 'Payment Pending Verification';
-      savedOrder.paymentStatus = 'pending_verify';
-      localStorage.setItem('pf_order', JSON.stringify(savedOrder));
-      pushToAdminOrders(savedOrder);
-    }
-    showSuccessScreen(savedOrder?.id || orderId, 'pending');
-  }
-}
-
-/* ── PAYMENT ERROR ── */
-function showPaymentError(msg){
-  const existing=document.getElementById('paymentErrorBanner');
-  if(existing) existing.remove();
-  const div=document.createElement('div');
-  div.id='paymentErrorBanner';
-  div.style.cssText='background:var(--red-dim);border:1px solid rgba(239,68,68,.3);color:var(--red);border-radius:var(--r);padding:.85rem 1.1rem;font-size:.82rem;margin-bottom:1rem;line-height:1.6';
-  div.innerHTML=`⚠️ <strong>Payment Error:</strong> ${msg}<br><small style="opacity:.7">If you were charged, contact us on WhatsApp with your Order ID.</small>`;
-  const step2=document.getElementById('step2');
-  if(step2) step2.prepend(div);
-}
-
-/* ── SUBMIT ── */
-async function submitOrder(){
+/* ════════════════════════════════════════════════════════
+   SUBMIT ORDER — main entry point
+════════════════════════════════════════════════════════ */
+function submitOrder() {
   if(!validate2()) return;
-  const orderId='PF-2026-'+Math.floor(1000+Math.random()*9000);
-  const total=selectedPlan.price+addons.reduce((s,a)=>s+a.price,0);
-  const orderData=buildOrderData(orderId);
-  localStorage.setItem('pf_order',JSON.stringify(orderData));
+
+  var orderId   = 'PF-2026-'+Math.floor(1000+Math.random()*9000);
+  var orderData = buildOrderData(orderId);
+
+  /* Save to localStorage + Firestore immediately */
+  localStorage.setItem('pf_order', JSON.stringify(orderData));
   pushToAdminOrders(orderData);
 
-  if(selectedPayment==='cashfree'){
-    await initiateCashfreePayment(orderId,total,orderData);
-  } else if(selectedPayment==='demo'){
-    // ── DEMO PAYMENT SIMULATOR ──
+  if(selectedPayment==='cashfree') {
+    initiateCashfreePayment(orderId, orderData.total, orderData);
+  } else if(selectedPayment==='demo') {
     runDemoPayment(orderId, orderData);
   } else {
-    // Manual payment — show pending state
+    /* Manual / UPI / bank — show pending confirmation */
     showSuccessScreen(orderId, 'pending');
   }
 }
 
-/* ── DEMO PAYMENT SIMULATOR ── */
+/* ════════════════════════════════════════════════════════
+   CASHFREE PAYMENT
+════════════════════════════════════════════════════════ */
+var CF_CREATE  = 'https://portfolioforge-backend.onrender.com/create-order';
+var CF_VERIFY  = 'https://portfolioforge-backend.onrender.com/verify-payment';
+
+function initiateCashfreePayment(orderId, total, orderData) {
+  var btn=document.getElementById('submitBtn'), txt=document.getElementById('submitBtnText');
+  if(btn) btn.disabled=true;
+  if(txt) txt.textContent='Redirecting to payment…';
+  fetch(CF_CREATE,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:total,order_id:orderId})})
+    .then(function(r){return r.json();})
+    .then(function(data){
+      if(!data.payment_session_id) throw new Error(data.message||'No session ID returned');
+      orderData.cashfreeSessionId=data.payment_session_id;
+      orderData.cfOrderId=data.cf_order_id||'';
+      localStorage.setItem('pf_order',JSON.stringify(orderData));
+      var cf=Cashfree({mode:'sandbox'});
+      cf.checkout({paymentSessionId:data.payment_session_id,redirectTarget:'_self'});
+    }).catch(function(err){
+      if(btn){btn.disabled=false;}
+      if(txt) txt.textContent='Place Order & Pay via Cashfree →';
+      alert('Payment error: '+err.message+'\nPlease try Demo payment to test.');
+    });
+}
+
+function checkCashfreeReturn() {
+  var p=new URLSearchParams(window.location.search);
+  if(!p.has('payment')&&!p.has('order_id')) return;
+  var cfStatus=p.get('payment')||'';
+  var orderId=p.get('order_id')||'';
+  var saved=JSON.parse(localStorage.getItem('pf_order')||'null');
+  window.history.replaceState({},document.title,window.location.pathname);
+  var fc=document.getElementById('formCard'), sb=document.getElementById('orderSidebar'), sp=document.getElementById('successScreen');
+  if(fc) fc.style.display='none'; if(sb) sb.style.display='none'; if(sp) sp.style.display='block';
+  ['ss-paid','ss-pending','ss-failed'].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display='none';});
+  var sv=document.getElementById('ss-verifying'); if(sv) sv.style.display='block';
+  if(cfStatus==='FAILED'||cfStatus==='failure'){
+    if(sv) sv.style.display='none';
+    if(saved){saved.status='Payment Failed';saved.paymentStatus='failed';localStorage.setItem('pf_order',JSON.stringify(saved));pushToAdminOrders(saved);}
+    showSuccessScreen(saved?saved.id:orderId,'failed'); return;
+  }
+  var vid=orderId||(saved?saved.id:'');
+  if(!vid){if(sv)sv.style.display='none';showSuccessScreen('','failed');return;}
+  fetch(CF_VERIFY+'?order_id='+vid).then(function(r){return r.json();}).then(function(data){
+    if(sv) sv.style.display='none';
+    var oid=saved?saved.id:orderId;
+    if(data.payment_status==='SUCCESS'||data.order_status==='PAID'){
+      if(saved){saved.status='Payment Confirmed';saved.paymentStatus='paid';saved.progress=30;if(saved.timeline&&saved.timeline[1]){saved.timeline[1].done=true;saved.timeline[1].time=new Date().toLocaleString();}localStorage.setItem('pf_order',JSON.stringify(saved));pushToAdminOrders(saved);}
+      showSuccessScreen(oid,'paid');
+    } else {
+      if(saved){saved.status='Payment Failed';saved.paymentStatus='failed';localStorage.setItem('pf_order',JSON.stringify(saved));pushToAdminOrders(saved);}
+      showSuccessScreen(oid,'failed');
+    }
+  }).catch(function(){if(sv)sv.style.display='none';showSuccessScreen(saved?saved.id:orderId,'failed');});
+}
+
+/* ════════════════════════════════════════════════════════
+   DEMO PAYMENT SIMULATOR
+════════════════════════════════════════════════════════ */
 function runDemoPayment(orderId, orderData) {
-  const outcome = document.querySelector('input[name="demoOutcome"]:checked')?.value || 'success';
+  var oel=document.querySelector('input[name="demoOutcome"]:checked');
+  var outcome=oel?oel.value:'success';
+  var total=selectedPlan.price+addons.reduce(function(s,a){return s+a.price;},0);
+  var fc=document.getElementById('formCard'), sb=document.getElementById('orderSidebar');
+  if(fc) fc.style.display='none'; if(sb) sb.style.display='none';
 
-  // Hide form, show full-screen gateway simulator
-  document.getElementById('formCard').style.display = 'none';
-  const sidebar = document.getElementById('orderSidebar');
-  if(sidebar) sidebar.style.display = 'none';
+  var ov=document.createElement('div'); ov.id='demoGateway';
+  ov.innerHTML=
+    '<style>#demoGateway{position:fixed;inset:0;z-index:9999;background:#0a0c14;display:flex;align-items:center;justify-content:center;font-family:"DM Sans",sans-serif;padding:2rem;animation:dgFI .4s ease}@keyframes dgFI{from{opacity:0}to{opacity:1}}.dgc{width:100%;max-width:400px;background:#131729;border:1px solid #252d4a;border-radius:20px;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,.7)}.dgc::before{content:"";display:block;height:2px;background:linear-gradient(90deg,#00f5c8,#8b5cf6)}.dgh{padding:1.5rem 2rem 1.25rem;border-bottom:1px solid #1e2440;text-align:center}.dgl{font-size:1rem;font-weight:800;color:#fff;margin-bottom:.25rem}.dgl span{color:#00f5c8}.dgs{font-family:"JetBrains Mono",monospace;font-size:.6rem;color:#4a5278;display:flex;align-items:center;justify-content:center;gap:.3rem}.dgs::before{content:"🔒"}.dgb{padding:1.75rem 2rem}.dga{text-align:center;margin-bottom:1.5rem}.dgal{font-size:.72rem;color:#8892b8;margin-bottom:.2rem}.dgav{font-family:"Syne",sans-serif;font-size:2.5rem;font-weight:800;color:#00f5c8;line-height:1}.dgm{font-size:.76rem;color:#8892b8;margin-top:.25rem}.dgss{display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.5rem}.dgst{display:flex;align-items:center;gap:.75rem;padding:.7rem .9rem;border-radius:10px;font-size:.82rem;font-weight:500;transition:all .4s ease}.dgst.w{background:rgba(255,255,255,.03);color:#4a5278}.dgst.a{background:rgba(0,245,200,.08);color:#00f5c8;border:1px solid rgba(0,245,200,.2)}.dgst.d{background:rgba(0,245,200,.06);color:#f0f2fa}.dgst.f{background:rgba(239,68,68,.08);color:#ef4444;border:1px solid rgba(239,68,68,.2)}.dgsi{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;flex-shrink:0;background:#1a1f35}.dgp{height:3px;background:#1e2440;border-radius:2px;overflow:hidden;margin-bottom:1rem}.dgpf{height:100%;background:linear-gradient(90deg,#00f5c8,#8b5cf6);width:0%;transition:width .6s ease}.dgft{padding:.85rem 2rem;border-top:1px solid #1e2440;text-align:center;font-family:"JetBrains Mono",monospace;font-size:.58rem;color:#4a5278}</style>'+
+    '<div class="dgc"><div class="dgh"><div class="dgl">Portfolio<span>Forge</span> × Cashfree</div><div class="dgs">256-bit SSL · Secured by Cashfree</div></div>'+
+    '<div class="dgb"><div class="dga"><div class="dgal">Amount to Pay</div><div class="dgav">₹'+total+'</div><div class="dgm">PortfolioForge · '+orderId+'</div></div>'+
+    '<div class="dgp"><div class="dgpf" id="dgProg"></div></div>'+
+    '<div class="dgss">'+
+      '<div class="dgst w" id="dgS1"><div class="dgsi">1</div><span>Connecting to gateway</span></div>'+
+      '<div class="dgst w" id="dgS2"><div class="dgsi">2</div><span>Authenticating UPI session</span></div>'+
+      '<div class="dgst w" id="dgS3"><div class="dgsi">3</div><span>Processing payment</span></div>'+
+      '<div class="dgst w" id="dgS4"><div class="dgsi">4</div><span>Verifying with bank</span></div>'+
+    '</div></div><div class="dgft">DEMO MODE — NO REAL TRANSACTION</div></div>';
+  document.body.appendChild(ov);
 
-  // Inject the fake payment gateway overlay
-  const overlay = document.createElement('div');
-  overlay.id = 'demoGateway';
-  overlay.innerHTML = `
-    <style>
-    #demoGateway {
-      position:fixed;inset:0;z-index:9999;
-      background:#0a0c14;
-      display:flex;flex-direction:column;align-items:center;justify-content:center;
-      font-family:'DM Sans',sans-serif;padding:2rem;
-      animation:dgFadeIn .4s ease;
-    }
-    @keyframes dgFadeIn{from{opacity:0}to{opacity:1}}
-    .dg-card{
-      width:100%;max-width:400px;
-      background:#131729;border:1px solid #252d4a;border-radius:20px;
-      overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,.7);
-    }
-    .dg-card::before{content:'';display:block;height:2px;background:linear-gradient(90deg,#00f5c8,#8b5cf6)}
-    .dg-head{padding:1.5rem 2rem 1.25rem;border-bottom:1px solid #1e2440;text-align:center}
-    .dg-logo{font-size:1rem;font-weight:800;color:#fff;letter-spacing:-.02em;margin-bottom:.25rem}
-    .dg-logo span{color:#00f5c8}
-    .dg-secure{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:#4a5278;letter-spacing:.06em;display:flex;align-items:center;justify-content:center;gap:.3rem}
-    .dg-secure::before{content:'🔒'}
-    .dg-body{padding:1.75rem 2rem}
-    .dg-amount{text-align:center;margin-bottom:1.5rem}
-    .dg-amt-label{font-size:.72rem;color:#8892b8;margin-bottom:.2rem}
-    .dg-amt-val{font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;color:#00f5c8;letter-spacing:-.03em;line-height:1}
-    .dg-merchant{font-size:.76rem;color:#8892b8;margin-top:.25rem}
-    .dg-steps{display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.5rem}
-    .dg-step{display:flex;align-items:center;gap:.75rem;padding:.7rem .9rem;border-radius:10px;font-size:.82rem;font-weight:500;transition:all .4s ease}
-    .dg-step.waiting{background:rgba(255,255,255,.03);color:#4a5278}
-    .dg-step.active{background:rgba(0,245,200,.08);color:#00f5c8;border:1px solid rgba(0,245,200,.2)}
-    .dg-step.done{background:rgba(0,245,200,.06);color:#f0f2fa;border:1px solid transparent}
-    .dg-step.fail{background:rgba(239,68,68,.08);color:#ef4444;border:1px solid rgba(239,68,68,.2)}
-    .dg-step-icon{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;flex-shrink:0}
-    .dg-step.waiting .dg-step-icon{background:#1a1f35}
-    .dg-step.active  .dg-step-icon{background:rgba(0,245,200,.15);animation:dgSpin 1s linear infinite}
-    .dg-step.done    .dg-step-icon{background:rgba(0,245,200,.15)}
-    .dg-step.fail    .dg-step-icon{background:rgba(239,68,68,.15)}
-    @keyframes dgSpin{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.85);opacity:.5}}
-    .dg-progress{height:3px;background:#1e2440;border-radius:2px;overflow:hidden;margin-bottom:1rem}
-    .dg-prog-fill{height:100%;background:linear-gradient(90deg,#00f5c8,#8b5cf6);border-radius:2px;width:0%;transition:width .6s ease}
-    .dg-footer{padding:.85rem 2rem;border-top:1px solid #1e2440;text-align:center;font-family:'JetBrains Mono',monospace;font-size:.58rem;color:#4a5278;letter-spacing:.05em}
-    </style>
-    <div class="dg-card">
-      <div class="dg-head">
-        <div class="dg-logo">Portfolio<span>Forge</span> × Cashfree</div>
-        <div class="dg-secure">256-bit SSL · Secured by Cashfree</div>
-      </div>
-      <div class="dg-body">
-        <div class="dg-amount">
-          <div class="dg-amt-label">Amount to Pay</div>
-          <div class="dg-amt-val">₹<span id="dgAmt">0</span></div>
-          <div class="dg-merchant">PortfolioForge · ${orderId}</div>
-        </div>
-        <div class="dg-progress"><div class="dg-prog-fill" id="dgProg"></div></div>
-        <div class="dg-steps">
-          <div class="dg-step waiting" id="dgS1"><div class="dg-step-icon">1</div><span>Connecting to Cashfree gateway</span></div>
-          <div class="dg-step waiting" id="dgS2"><div class="dg-step-icon">2</div><span>Authenticating UPI session</span></div>
-          <div class="dg-step waiting" id="dgS3"><div class="dg-step-icon">3</div><span>Processing payment</span></div>
-          <div class="dg-step waiting" id="dgS4"><div class="dg-step-icon">4</div><span id="dgS4text">Verifying with bank</span></div>
-        </div>
-      </div>
-      <div class="dg-footer">DEMO MODE — NO REAL TRANSACTION · TEST ONLY</div>
-    </div>
-  `;
-  document.body.appendChild(overlay);
-
-  // Set amount
-  const total = selectedPlan.price + addons.reduce((s,a)=>s+a.price,0);
-  document.getElementById('dgAmt').textContent = total;
-
-  // Animate through steps
-  const steps = ['dgS1','dgS2','dgS3','dgS4'];
-  const delays = [600, 1400, 2400, 3400];
-  const progSteps = ['18%','42%','72%','95%'];
-
-  steps.forEach((stepId, i) => {
-    setTimeout(() => {
-      // Mark previous done
-      if(i > 0) {
-        const prev = document.getElementById(steps[i-1]);
-        if(prev) { prev.className='dg-step done'; prev.querySelector('.dg-step-icon').textContent='✓'; }
-      }
-      // Activate current
-      const cur = document.getElementById(stepId);
-      if(cur) { cur.className='dg-step active'; cur.querySelector('.dg-step-icon').textContent='⟳'; }
-      const prog = document.getElementById('dgProg');
-      if(prog) prog.style.width = progSteps[i];
-    }, delays[i]);
+  var steps=['dgS1','dgS2','dgS3','dgS4'], delays=[600,1400,2400,3400], progs=['18%','42%','72%','95%'];
+  steps.forEach(function(sid,i){
+    setTimeout(function(){
+      if(i>0){var pv=document.getElementById(steps[i-1]);if(pv){pv.className='dgst d';pv.querySelector('.dgsi').textContent='✓';}}
+      var cu=document.getElementById(sid); if(cu){cu.className='dgst a';cu.querySelector('.dgsi').textContent='⟳';}
+      var pg=document.getElementById('dgProg'); if(pg) pg.style.width=progs[i];
+    },delays[i]);
   });
 
-  // Final resolution
-  setTimeout(() => {
-    const lastStep = document.getElementById('dgS4');
-    const prog = document.getElementById('dgProg');
-
-    if(outcome === 'success') {
-      if(lastStep) { lastStep.className='dg-step done'; lastStep.querySelector('.dg-step-icon').textContent='✓'; lastStep.querySelector('span').textContent='Payment verified ✅'; }
-      if(prog) prog.style.width='100%';
-      // Update order data as paid
-      orderData.status        = 'Payment Confirmed';
-      orderData.paymentStatus = 'paid';
-      orderData.progress      = 30;
-      if(orderData.timeline && orderData.timeline[1]){
-        orderData.timeline[1].done = true;
-        orderData.timeline[1].time = new Date().toLocaleString();
-      }
-      localStorage.setItem('pf_order', JSON.stringify(orderData));
+  setTimeout(function(){
+    var last=document.getElementById('dgS4'), pg=document.getElementById('dgProg');
+    if(outcome==='success'){
+      if(last){last.className='dgst d';last.querySelector('.dgsi').textContent='✓';last.querySelector('span').textContent='Payment verified ✅';}
+      if(pg) pg.style.width='100%';
+      orderData.status='Payment Confirmed'; orderData.paymentStatus='paid'; orderData.progress=30;
+      if(orderData.timeline&&orderData.timeline[1]){orderData.timeline[1].done=true;orderData.timeline[1].time=new Date().toLocaleString();}
+      localStorage.setItem('pf_order',JSON.stringify(orderData));
       pushToAdminOrders(orderData);
-      setTimeout(() => {
-        overlay.style.transition='opacity .5s';
-        overlay.style.opacity='0';
-        setTimeout(()=>{ overlay.remove(); showSuccessScreen(orderId, 'paid'); }, 500);
-      }, 800);
+      setTimeout(function(){ov.style.transition='opacity .5s';ov.style.opacity='0';setTimeout(function(){ov.remove();showSuccessScreen(orderId,'paid');},500);},800);
     } else {
-      if(lastStep) { lastStep.className='dg-step fail'; lastStep.querySelector('.dg-step-icon').textContent='✗'; lastStep.querySelector('span').textContent='Payment declined by bank ❌'; }
-      if(prog) { prog.style.width='85%'; document.getElementById('dgProg').style.background='#ef4444'; }
-      orderData.status        = 'Payment Failed';
-      orderData.paymentStatus = 'failed';
-      localStorage.setItem('pf_order', JSON.stringify(orderData));
+      if(last){last.className='dgst f';last.querySelector('.dgsi').textContent='✗';last.querySelector('span').textContent='Payment declined by bank ❌';}
+      if(pg){pg.style.width='85%';pg.style.background='#ef4444';}
+      orderData.status='Payment Failed'; orderData.paymentStatus='failed';
+      localStorage.setItem('pf_order',JSON.stringify(orderData));
       pushToAdminOrders(orderData);
-      setTimeout(() => {
-        overlay.style.transition='opacity .5s';
-        overlay.style.opacity='0';
-        setTimeout(()=>{ overlay.remove(); showSuccessScreen(orderId, 'failed'); }, 500);
-      }, 1200);
+      setTimeout(function(){ov.style.transition='opacity .5s';ov.style.opacity='0';setTimeout(function(){ov.remove();showSuccessScreen(orderId,'failed');},500);},1200);
     }
-  }, 4400);
+  },4400);
 }
 
 /* ── CONFETTI ── */
 function launchConfetti(){
-  const wrap=document.getElementById('confettiWrap');
-  const colors=['#00f5c8','#8b5cf6','#f59e0b','#ef4444','#ffffff'];
-  for(let i=0;i<80;i++){
-    const p=document.createElement('div');
-    p.className='confetti-piece';
-    p.style.cssText=`left:${Math.random()*100}%;top:-20px;background:${colors[Math.floor(Math.random()*colors.length)]};width:${6+Math.random()*6}px;height:${6+Math.random()*6}px;border-radius:${Math.random()>.5?'50%':'2px'};animation-duration:${2+Math.random()*2.5}s;animation-delay:${Math.random()*.8}s;`;
-    wrap.appendChild(p);
-    setTimeout(()=>p.remove(),5000);
+  var wrap=document.getElementById('confettiWrap'); if(!wrap) return;
+  var colors=['#00f5c8','#8b5cf6','#f59e0b','#ef4444','#fff'];
+  for(var i=0;i<80;i++){
+    (function(){
+      var p=document.createElement('div');
+      p.className='confetti-piece';
+      p.style.cssText='left:'+Math.random()*100+'%;top:-20px;background:'+colors[Math.floor(Math.random()*colors.length)]+';width:'+(6+Math.random()*6)+'px;height:'+(6+Math.random()*6)+'px;border-radius:'+(Math.random()>.5?'50%':'2px')+';animation-duration:'+(2+Math.random()*2.5)+'s;animation-delay:'+Math.random()*.8+'s;';
+      wrap.appendChild(p);
+      setTimeout(function(){if(p.parentNode)p.parentNode.removeChild(p);},5000);
+    })();
   }
 }
+
+/* ════════════════════════════════════════════════════════
+   EXPOSE ALL FUNCTIONS TO GLOBAL SCOPE
+   onclick="goStep(2)" etc. require window.goStep
+════════════════════════════════════════════════════════ */
+window.goStep          = goStep;
+window.selectPlan      = selectPlan;
+window.toggleAddon     = toggleAddon;
+window.selectPayment   = selectPayment;
+window.toggleTerms     = toggleTerms;
+window.updateSummary   = updateSummary;
+window.submitOrder     = submitOrder;
+window.retryPayment    = retryPayment;
+window.runDemoPayment  = runDemoPayment;
+window.launchConfetti  = launchConfetti;
 
 /* ── INIT ── */
 updateSummary();
