@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
-<title>Track Your Order — PortfolioForge</title>
+<title>Client Dashboard — PortfolioForge</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
@@ -22,6 +22,7 @@
   --violet: #8b5cf6;
   --amber:  #f59e0b;
   --red:    #ef4444;
+  --green:  #22c55e;
   --text:   #f0f2fa;
   --t2:     #8892b8;
   --t3:     #4a5278;
@@ -79,16 +80,10 @@ nav {
 .nav-wa:hover { opacity: .88; }
 
 /* ════════════════ PAGE WRAPPER ════════════════ */
-.page-wrap {
-  max-width: 720px; margin: 0 auto;
-  padding: 2.5rem 5vw 5rem;
-}
+.page-wrap { max-width: 720px; margin: 0 auto; padding: 2.5rem 5vw 5rem; }
 
 /* ════════════════ EMPTY STATE ════════════════ */
-.empty-state {
-  text-align: center; padding: 5rem 2rem;
-  display: none;
-}
+.empty-state { text-align: center; padding: 5rem 2rem; display: none; }
 .empty-state.show { display: block; }
 .empty-icon { font-size: 3.5rem; margin-bottom: 1.25rem; }
 .empty-title { font-family: var(--fd); font-size: 1.6rem; font-weight: 800; color: var(--text); margin-bottom: .5rem; letter-spacing: -.02em; }
@@ -113,7 +108,16 @@ nav {
 .order-content { display: none; }
 .order-content.show { display: block; }
 
-/* ─── HEADER ─── */
+/* ─── SECTION LABEL ─── */
+.section-label {
+  font-family: var(--fm); font-size: .6rem; color: var(--t3);
+  letter-spacing: .18em; text-transform: uppercase;
+  display: flex; align-items: center; gap: .55rem;
+  margin-bottom: .85rem;
+}
+.section-label::before { content: '//'; opacity: .4; }
+
+/* ─── ORDER HEADER ─── */
 .order-header {
   background: var(--surface); border: 1px solid var(--b2);
   border-radius: var(--rl); overflow: hidden;
@@ -131,27 +135,20 @@ nav {
   display: inline-flex; align-items: center; gap: .35rem;
   padding: .3rem .85rem; border-radius: 100px;
   font-family: var(--fm); font-size: .62rem; font-weight: 700;
-  letter-spacing: .05em; text-transform: uppercase;
-  flex-shrink: 0;
+  letter-spacing: .05em; text-transform: uppercase; flex-shrink: 0;
 }
 .status-pill .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
 .s-pending  { background: rgba(245,158,11,.12); color: var(--amber); border: 1px solid rgba(245,158,11,.25); }
 .s-building { background: var(--tdim); color: var(--teal); border: 1px solid rgba(0,245,200,.25); }
 .s-preview  { background: rgba(139,92,246,.12); color: var(--violet); border: 1px solid rgba(139,92,246,.25); }
-.s-done     { background: rgba(34,197,94,.12); color: #22c55e; border: 1px solid rgba(34,197,94,.3); }
+.s-done     { background: rgba(34,197,94,.12); color: var(--green); border: 1px solid rgba(34,197,94,.3); }
 .s-pending .dot { animation: blink 1.4s ease infinite; }
-.s-done .dot    { background: #22c55e; }
+.s-done .dot    { background: var(--green); }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
 
-/* completed order header gets a green top bar */
-.order-header.completed::before {
-  background: linear-gradient(90deg, #22c55e, var(--teal));
-}
-.order-header.completed {
-  box-shadow: 0 0 0 1px rgba(34,197,94,.15), 0 8px 32px rgba(34,197,94,.06);
-}
+.order-header.completed::before { background: linear-gradient(90deg, var(--green), var(--teal)); }
+.order-header.completed { box-shadow: 0 0 0 1px rgba(34,197,94,.15), 0 8px 32px rgba(34,197,94,.06); }
 
-/* progress bar */
 .prog-wrap { margin-bottom: 1.25rem; }
 .prog-labels { display: flex; justify-content: space-between; align-items: center; margin-bottom: .45rem; }
 .prog-label { font-family: var(--fm); font-size: .6rem; color: var(--t3); letter-spacing: .08em; text-transform: uppercase; }
@@ -164,19 +161,12 @@ nav {
 }
 
 /* ─── TIMELINE STEPS ─── */
-.steps-row {
-  display: flex; align-items: flex-start;
-  gap: 0; margin-top: .25rem;
-}
-.step-node {
-  flex: 1; display: flex; flex-direction: column; align-items: center;
-  gap: .4rem; position: relative; z-index: 1;
-}
+.steps-row { display: flex; align-items: flex-start; gap: 0; margin-top: .25rem; }
+.step-node { flex: 1; display: flex; flex-direction: column; align-items: center; gap: .4rem; position: relative; z-index: 1; }
 .step-node:not(:last-child)::after {
   content: ''; position: absolute;
   top: 13px; left: calc(50% + 14px); right: calc(-50% + 14px);
-  height: 2px; background: var(--border); z-index: 0;
-  transition: background .6s;
+  height: 2px; background: var(--border); z-index: 0; transition: background .6s;
 }
 .step-node.done:not(:last-child)::after { background: var(--teal); }
 .step-circle {
@@ -209,14 +199,16 @@ nav {
   transition: border-color .22s, transform .22s, box-shadow .22s;
   position: relative; overflow: hidden;
 }
+.action-card.hidden { display: none; }
 .action-card::before {
   content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
   border-radius: 3px 0 0 3px; opacity: 0; transition: opacity .22s;
 }
-.action-card.teal::before { background: var(--teal); }
+.action-card.teal::before   { background: var(--teal); }
 .action-card.violet::before { background: var(--violet); }
-.action-card.amber::before { background: var(--amber); }
-.action-card.green::before { background: #22c55e; }
+.action-card.amber::before  { background: var(--amber); }
+.action-card.green::before  { background: var(--green); }
+.action-card.red::before    { background: var(--red); }
 
 .action-card:hover { transform: translateX(4px); }
 .action-card.teal:hover   { border-color: rgba(0,245,200,.35); box-shadow: 0 4px 24px rgba(0,245,200,.07); }
@@ -227,6 +219,8 @@ nav {
 .action-card.amber:hover::before { opacity: 1; }
 .action-card.green:hover  { border-color: rgba(34,197,94,.35); box-shadow: 0 4px 24px rgba(34,197,94,.07); }
 .action-card.green:hover::before { opacity: 1; }
+.action-card.red:hover    { border-color: rgba(239,68,68,.35); }
+.action-card.red:hover::before   { opacity: 1; }
 
 .ac-icon {
   width: 42px; height: 42px; border-radius: var(--r); flex-shrink: 0;
@@ -236,26 +230,197 @@ nav {
 .action-card.violet .ac-icon { background: rgba(139,92,246,.1); }
 .action-card.amber  .ac-icon { background: rgba(245,158,11,.1); }
 .action-card.green  .ac-icon { background: rgba(34,197,94,.1); }
+.action-card.red    .ac-icon { background: rgba(239,68,68,.1); }
 
-.ac-text {}
 .ac-title { font-family: var(--fd); font-size: 1rem; font-weight: 700; letter-spacing: -.01em; color: var(--text); margin-bottom: .1rem; }
 .action-card.teal   .ac-title { color: var(--teal); }
 .action-card.violet .ac-title { color: #a78bfa; }
 .action-card.amber  .ac-title { color: var(--amber); }
-.action-card.green  .ac-title { color: #22c55e; }
+.action-card.green  .ac-title { color: var(--green); }
+.action-card.red    .ac-title { color: var(--red); }
 .ac-desc { font-size: .76rem; color: var(--t3); font-weight: 400; line-height: 1.4; }
 
-.ac-arrow {
-  margin-left: auto; font-size: .85rem; color: var(--t3); flex-shrink: 0;
-  transition: transform .22s, color .22s;
-}
+.ac-arrow { margin-left: auto; font-size: .85rem; color: var(--t3); flex-shrink: 0; transition: transform .22s, color .22s; }
 .action-card:hover .ac-arrow { transform: translateX(4px); }
 .action-card.teal:hover .ac-arrow   { color: var(--teal); }
 .action-card.violet:hover .ac-arrow { color: #a78bfa; }
 .action-card.amber:hover .ac-arrow  { color: var(--amber); }
-.action-card.green:hover .ac-arrow  { color: #22c55e; }
+.action-card.green:hover .ac-arrow  { color: var(--green); }
 
-/* ─── CHAT SECTION ─── */
+/* Lock badge on collect button */
+.ac-lock {
+  font-size: .62rem; background: rgba(239,68,68,.15); border: 1px solid rgba(239,68,68,.3);
+  color: var(--red); padding: .18rem .55rem; border-radius: 100px;
+  margin-left: auto; display: flex; align-items: center; gap: .3rem;
+  white-space: nowrap; flex-shrink: 0;
+}
+.action-card.collect-locked { opacity: .65; filter: blur(.2px); }
+.action-card.collect-locked:hover { transform: none; cursor: not-allowed; }
+
+/* ════════════════ PORTFOLIO DELIVERY CARD ════════════════ */
+.delivery-card {
+  display: none;
+  background: var(--surface); border: 1.5px solid rgba(34,197,94,.35);
+  border-radius: var(--rl); overflow: hidden;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 0 0 1px rgba(34,197,94,.08), 0 12px 40px rgba(34,197,94,.08);
+  position: relative;
+}
+.delivery-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--green), var(--teal), var(--violet));
+}
+.delivery-card.show { display: block; }
+.dc-head {
+  padding: 1.5rem 1.75rem 1.25rem;
+  background: linear-gradient(180deg, rgba(34,197,94,.05) 0%, transparent 100%);
+  border-bottom: 1px solid var(--border);
+}
+.dc-badge {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: rgba(34,197,94,.12); border: 1px solid rgba(34,197,94,.25);
+  color: var(--green); font-family: var(--fm); font-size: .58rem;
+  letter-spacing: .1em; text-transform: uppercase; padding: .22rem .7rem;
+  border-radius: 100px; margin-bottom: .7rem;
+}
+.dc-badge-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); animation: blink 2s ease infinite; }
+.dc-title { font-family: var(--fd); font-size: 1.5rem; font-weight: 800; letter-spacing: -.03em; color: var(--green); margin-bottom: .2rem; }
+.dc-sub { font-size: .84rem; color: var(--t2); }
+.dc-body { padding: 1.5rem 1.75rem; }
+.dc-preview-link {
+  display: flex; align-items: center; gap: .75rem;
+  background: var(--bg2); border: 1.5px solid var(--b2);
+  border-radius: var(--r); padding: .85rem 1.1rem; margin-bottom: 1.25rem;
+  font-family: var(--fm); font-size: .76rem; color: var(--teal);
+  text-overflow: ellipsis; overflow: hidden; white-space: nowrap;
+}
+.dc-preview-link .link-icon { font-size: 1rem; flex-shrink: 0; }
+.dc-preview-link .link-url { flex: 1; overflow: hidden; text-overflow: ellipsis; }
+.dc-btns { display: flex; flex-direction: column; gap: .65rem; }
+.dc-btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: .65rem; }
+@media (max-width: 480px) { .dc-btn-row { grid-template-columns: 1fr; } }
+
+.btn-green-solid {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  background: var(--green); color: #000;
+  padding: .85rem 1.5rem; border-radius: var(--r);
+  font-size: .86rem; font-weight: 800; border: none; cursor: pointer;
+  transition: box-shadow .2s, transform .2s;
+}
+.btn-green-solid:hover { box-shadow: 0 0 28px rgba(34,197,94,.4); transform: translateY(-1px); }
+
+.btn-outline-green {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  background: rgba(34,197,94,.08); border: 1.5px solid rgba(34,197,94,.3); color: var(--green);
+  padding: .82rem 1.5rem; border-radius: var(--r);
+  font-size: .85rem; font-weight: 700; cursor: pointer;
+  transition: border-color .2s, box-shadow .2s;
+}
+.btn-outline-green:hover { border-color: var(--green); box-shadow: 0 0 20px rgba(34,197,94,.15); }
+
+/* Collect button locked */
+.collect-btn-locked {
+  position: relative; overflow: hidden; cursor: not-allowed !important;
+  filter: blur(.4px); opacity: .5;
+}
+.collect-btn-locked::after {
+  content: '🔒 Submit review to unlock';
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(6,8,16,.75); font-size: .75rem; font-weight: 700;
+  color: var(--red); letter-spacing: .03em; backdrop-filter: blur(2px);
+  border-radius: var(--r);
+}
+
+/* ════════════════ REVIEW CARD ════════════════ */
+.review-card {
+  background: var(--surface); border: 1px solid var(--b2);
+  border-radius: var(--rl); overflow: hidden;
+  margin-bottom: 1.25rem;
+}
+.review-head {
+  padding: 1.1rem 1.4rem; border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(245,158,11,.04) 0%, transparent 100%);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.review-head-l { display: flex; align-items: center; gap: .6rem; }
+.review-head-icon { font-size: 1.1rem; }
+.review-title { font-family: var(--fd); font-size: 1.05rem; font-weight: 700; color: var(--text); letter-spacing: -.01em; }
+.review-title span { color: var(--amber); }
+.review-required-badge {
+  font-family: var(--fm); font-size: .52rem; letter-spacing: .1em;
+  background: rgba(239,68,68,.15); border: 1px solid rgba(239,68,68,.3);
+  color: var(--red); padding: .18rem .55rem; border-radius: 100px; text-transform: uppercase;
+}
+.review-body { padding: 1.4rem; }
+.review-body.submitted-state { text-align: center; padding: 2rem 1.4rem; }
+
+.stars-row { display: flex; gap: .35rem; margin-bottom: 1rem; }
+.star-btn {
+  font-size: 1.8rem; cursor: pointer; transition: transform .15s, filter .15s;
+  filter: grayscale(1) opacity(.35);
+  background: none; border: none; padding: 0; line-height: 1;
+}
+.star-btn.active { filter: none; }
+.star-btn:hover { transform: scale(1.15); filter: none; }
+
+.review-textarea {
+  width: 100%; background: var(--bg); border: 1.5px solid var(--b2);
+  border-radius: var(--r); padding: .75rem 1rem; color: var(--text);
+  font-family: var(--fb); font-size: .86rem; outline: none; resize: vertical; min-height: 88px;
+  transition: border-color .2s, box-shadow .2s; margin-bottom: .85rem;
+}
+.review-textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(0,245,200,.08); }
+.review-textarea::placeholder { color: var(--t3); }
+.review-textarea:disabled { opacity: .5; cursor: not-allowed; }
+
+.review-actions { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .6rem; }
+.review-unlock-note { font-size: .75rem; color: var(--t3); display: flex; align-items: center; gap: .35rem; }
+.review-unlock-note strong { color: var(--amber); }
+
+.review-submitted-ico { font-size: 2.8rem; margin-bottom: .75rem; }
+.review-submitted-title { font-family: var(--fd); font-size: 1.25rem; font-weight: 800; color: var(--green); margin-bottom: .35rem; }
+.review-submitted-sub { font-size: .84rem; color: var(--t2); line-height: 1.6; }
+.review-stars-display { font-size: 1.4rem; letter-spacing: .1rem; margin: .55rem 0; }
+
+/* ════════════════ REVIEW MODAL (popup) ════════════════ */
+.review-modal-overlay {
+  position: fixed; inset: 0; z-index: 9000;
+  background: rgba(6,8,16,.88); backdrop-filter: blur(8px);
+  display: none; align-items: center; justify-content: center;
+  padding: 1.5rem;
+}
+.review-modal-overlay.show { display: flex; }
+.review-modal {
+  background: var(--surface); border: 1.5px solid rgba(245,158,11,.3);
+  border-radius: var(--rl); width: 100%; max-width: 460px;
+  overflow: hidden; animation: modalIn .3s cubic-bezier(.34,1.56,.64,1);
+  position: relative;
+}
+.review-modal::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--amber), var(--teal));
+}
+@keyframes modalIn { from{opacity:0;transform:scale(.92)} to{opacity:1;transform:scale(1)} }
+.rm-head {
+  padding: 1.4rem 1.6rem 1.1rem;
+  background: linear-gradient(180deg, rgba(245,158,11,.05) 0%, transparent 100%);
+  border-bottom: 1px solid var(--border); text-align: center;
+}
+.rm-lock-icon { font-size: 2.2rem; margin-bottom: .5rem; }
+.rm-title { font-family: var(--fd); font-size: 1.25rem; font-weight: 800; letter-spacing: -.02em; color: var(--text); margin-bottom: .25rem; }
+.rm-sub { font-size: .82rem; color: var(--t2); font-weight: 300; }
+.rm-body { padding: 1.4rem 1.6rem; }
+.rm-close {
+  position: absolute; top: 1rem; right: 1rem;
+  width: 28px; height: 28px; border-radius: 50%; background: var(--s2);
+  border: 1px solid var(--border); display: flex; align-items: center;
+  justify-content: center; cursor: pointer; font-size: .75rem; color: var(--t2);
+  transition: border-color .2s, color .2s;
+}
+.rm-close:hover { border-color: var(--red); color: var(--red); }
+
+/* ════════════════ CHAT CARD ════════════════ */
 .chat-card {
   background: var(--surface); border: 1px solid var(--b2);
   border-radius: var(--rl); overflow: hidden;
@@ -282,25 +447,16 @@ nav {
   transition: border-color .2s, color .2s;
 }
 .chat-close:hover { border-color: var(--red); color: var(--red); }
-.chat-messages {
-  height: 280px; overflow-y: auto; padding: 1.1rem 1.4rem;
-  display: flex; flex-direction: column; gap: .6rem;
-}
+.chat-messages { height: 280px; overflow-y: auto; padding: 1.1rem 1.4rem; display: flex; flex-direction: column; gap: .6rem; }
 .chat-messages::-webkit-scrollbar { width: 2px; }
 .msg { max-width: 80%; display: flex; flex-direction: column; gap: .15rem; }
 .msg.out { align-self: flex-end; }
-.msg-bubble {
-  padding: .55rem .85rem; border-radius: 12px;
-  font-size: .83rem; line-height: 1.55;
-}
+.msg-bubble { padding: .55rem .85rem; border-radius: 12px; font-size: .83rem; line-height: 1.55; }
 .msg.in  .msg-bubble { background: var(--s2); color: var(--text); border-radius: 4px 12px 12px 12px; border: 1px solid var(--border); }
 .msg.out .msg-bubble { background: var(--teal); color: #000; border-radius: 12px 4px 12px 12px; }
 .msg-time { font-family: var(--fm); font-size: .52rem; color: var(--t3); }
 .msg.out .msg-time { text-align: right; }
-.chat-input-row {
-  padding: .85rem 1.1rem; border-top: 1px solid var(--border);
-  display: flex; gap: .6rem;
-}
+.chat-input-row { padding: .85rem 1.1rem; border-top: 1px solid var(--border); display: flex; gap: .6rem; }
 .chat-input {
   flex: 1; background: var(--bg); border: 1.5px solid var(--b2);
   border-radius: var(--r); padding: .62rem .9rem; color: var(--text);
@@ -323,10 +479,7 @@ nav {
   margin-bottom: 1.25rem; display: none;
 }
 .revision-card.show { display: block; }
-.rev-head {
-  padding: 1rem 1.4rem; border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: space-between;
-}
+.rev-head { padding: 1rem 1.4rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
 .rev-title { font-family: var(--fd); font-size: 1.05rem; font-weight: 700; color: var(--text); letter-spacing: -.01em; }
 .rev-body { padding: 1.4rem; }
 .rev-label { font-family: var(--fm); font-size: .58rem; color: var(--t3); letter-spacing: .12em; text-transform: uppercase; margin-bottom: .4rem; display: block; }
@@ -341,38 +494,65 @@ nav {
 .rev-actions { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .6rem; }
 .rev-note { font-size: .74rem; color: var(--t3); font-weight: 300; }
 .rev-note strong { color: var(--amber); font-weight: 600; }
+.rev-used { font-size: .74rem; color: var(--red); font-weight: 600; }
 
 /* ─── ORDER DETAILS CARD ─── */
-.details-card {
-  background: var(--surface); border: 1px solid var(--b2);
-  border-radius: var(--rl); overflow: hidden;
-  margin-bottom: 1.25rem; display: none;
-}
+.details-card { background: var(--surface); border: 1px solid var(--b2); border-radius: var(--rl); overflow: hidden; margin-bottom: 1.25rem; display: none; }
 .details-card.show { display: block; }
 .det-head { padding: 1rem 1.4rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
 .det-title { font-family: var(--fd); font-size: 1.05rem; font-weight: 700; color: var(--text); letter-spacing: -.01em; }
 .det-body { padding: 1.4rem; }
-.det-row {
-  display: flex; justify-content: space-between; align-items: flex-start;
-  padding: .55rem 0; border-bottom: 1px solid var(--border); gap: 1rem;
-}
+.det-row { display: flex; justify-content: space-between; align-items: flex-start; padding: .55rem 0; border-bottom: 1px solid var(--border); gap: 1rem; }
 .det-row:last-child { border: none; padding-bottom: 0; }
 .det-key { font-size: .8rem; color: var(--t2); flex-shrink: 0; }
 .det-val { font-size: .82rem; font-weight: 600; color: var(--text); text-align: right; }
 .det-val.teal { color: var(--teal); }
 .det-val.amber { color: var(--amber); }
 
-/* ─── GUARANTEES ─── */
-.guarantee-row {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem;
-  margin-bottom: 1.25rem;
-}
-@media (max-width: 520px) { .guarantee-row { grid-template-columns: 1fr; } }
-.guarantee-item {
+/* ════════════════ ORDER HISTORY ════════════════ */
+.history-section { margin-bottom: 1.25rem; }
+.history-empty { text-align: center; padding: 2rem; color: var(--t3); font-size: .84rem; }
+
+.history-card {
   background: var(--surface); border: 1px solid var(--b2);
-  border-radius: var(--rl); padding: 1.1rem 1rem;
-  text-align: center;
+  border-radius: var(--rl); overflow: hidden;
+  margin-bottom: .75rem; position: relative;
+  transition: border-color .22s, box-shadow .22s;
 }
+.history-card.completed {
+  border-color: rgba(34,197,94,.3);
+  box-shadow: 0 0 0 1px rgba(34,197,94,.06), 0 4px 20px rgba(34,197,94,.05);
+}
+.history-card.completed::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--green), var(--teal));
+}
+.history-card:hover { border-color: rgba(0,245,200,.25); }
+.hc-body { padding: 1.1rem 1.4rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.hc-main { flex: 1; min-width: 0; }
+.hc-name { font-family: var(--fd); font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: .18rem; letter-spacing: -.01em; }
+.hc-id { font-family: var(--fm); font-size: .6rem; color: var(--t3); letter-spacing: .08em; }
+.hc-meta { display: flex; align-items: center; gap: .6rem; margin-top: .35rem; flex-wrap: wrap; }
+.hc-date { font-size: .73rem; color: var(--t3); }
+.hc-plan-tag {
+  font-family: var(--fm); font-size: .55rem; background: var(--tdim);
+  border: 1px solid rgba(0,245,200,.15); color: var(--teal);
+  padding: .12rem .45rem; border-radius: 100px; letter-spacing: .06em; text-transform: uppercase;
+}
+.hc-actions { display: flex; gap: .5rem; flex-shrink: 0; flex-wrap: wrap; }
+.hc-btn {
+  font-size: .75rem; font-weight: 700; padding: .45rem 1rem; border-radius: var(--r);
+  border: 1.5px solid var(--b2); background: transparent; color: var(--t2);
+  cursor: pointer; transition: all .2s;
+}
+.hc-btn.primary { background: var(--teal); border-color: var(--teal); color: #000; }
+.hc-btn.primary:hover { box-shadow: 0 0 18px var(--tglow); }
+.hc-btn:hover { border-color: var(--teal); color: var(--teal); }
+
+/* ─── GUARANTEES ─── */
+.guarantee-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem; margin-bottom: 1.25rem; }
+@media (max-width: 520px) { .guarantee-row { grid-template-columns: 1fr; } }
+.guarantee-item { background: var(--surface); border: 1px solid var(--b2); border-radius: var(--rl); padding: 1.1rem 1rem; text-align: center; }
 .gi-icon { font-size: 1.4rem; margin-bottom: .5rem; }
 .gi-title { font-size: .82rem; font-weight: 700; color: var(--text); margin-bottom: .2rem; }
 .gi-desc  { font-size: .72rem; color: var(--t3); font-weight: 300; line-height: 1.4; }
@@ -389,101 +569,33 @@ nav {
 }
 #toast.show { transform: translateX(-50%) translateY(0); }
 
+/* ─── CONFETTI ─── */
+.confetti-wrap { position: fixed; inset: 0; pointer-events: none; z-index: 8000; overflow: hidden; }
+.confetti-piece { position: absolute; border-radius: 1px; animation: confettiFall linear forwards; }
+@keyframes confettiFall { 0%{transform:translateY(-20px) rotate(0);opacity:1} 100%{transform:translateY(110vh) rotate(720deg);opacity:0} }
+
 /* section fade-in */
 .fade-in { animation: fadeUp .35s ease both; }
 @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:none} }
 
-/* ═══ MOBILE — COMPREHENSIVE ═══ */
+/* ═══ MOBILE ═══ */
 @media (max-width: 600px) {
   .page-wrap { padding: 1.25rem 4vw 5rem; }
   .oh-body { padding: 1.1rem 1.15rem; }
   .chat-messages { height: 220px; }
+  .dc-head, .dc-body { padding: 1.1rem 1.25rem; }
 }
-
-@media (max-width: 520px) {
-  .guarantee-row { grid-template-columns: 1fr; }
-}
-
 @media (max-width: 480px) {
-  /* Nav */
   nav { height: 56px; padding: 0 4vw; }
   .nav-logo { font-size: 1.2rem; }
   .nav-wa { padding: .35rem .85rem; font-size: .72rem; }
-  .nav-wa svg { display: none; }
   .theme-btn { width: 30px; height: 30px; font-size: .78rem; }
-
-  /* Payment banner */
-  #payBanner { flex-direction: column; align-items: flex-start; padding: .65rem 4vw; gap: .5rem; }
-  #payBanner a { width: 100%; text-align: center; justify-content: center; }
-
-  /* Order header */
   .oh-name { font-size: 1.2rem; }
-  .oh-id { font-size: .58rem; }
-  .oh-top { margin-bottom: .9rem; }
   .status-pill { font-size: .56rem; padding: .25rem .7rem; }
-
-  /* Progress */
-  .prog-label { font-size: .55rem; }
-  .prog-pct { font-size: .65rem; }
-
-  /* Steps row — compact on phone */
-  .steps-row { gap: 0; }
   .step-circle { width: 22px; height: 22px; font-size: .5rem; }
-  .step-label { font-size: .5rem; line-height: 1.2; }
+  .step-label { font-size: .5rem; }
   .step-node:not(:last-child)::after { top: 11px; }
-
-  /* Action cards — single column */
   .actions-grid { grid-template-columns: 1fr; gap: .65rem; }
-  .action-card { padding: 1rem 1.1rem; }
-  .ac-icon { width: 38px; height: 38px; font-size: 1.1rem; }
-  .ac-title { font-size: .9rem; }
-  .ac-desc { font-size: .72rem; }
-
-  /* Chat */
-  .chat-head { padding: .85rem 1.1rem; }
-  .chat-name { font-size: .84rem; }
-  .chat-messages { height: 200px; padding: .85rem 1rem; }
-  .msg-bubble { font-size: .78rem; padding: .5rem .75rem; }
-  .chat-input-row { padding: .7rem .9rem; gap: .5rem; }
-  .chat-input { font-size: .82rem; padding: .58rem .8rem; }
-  .chat-send { padding: .58rem 1rem; font-size: .8rem; }
-
-  /* Revision */
-  .rev-head { padding: .85rem 1.1rem; }
-  .rev-body { padding: 1.1rem; }
-  .rev-textarea { font-size: .84rem; min-height: 75px; }
-  .rev-note { font-size: .7rem; }
-
-  /* Details */
-  .det-head { padding: .85rem 1.1rem; }
-  .det-body { padding: 1.1rem; }
-  .det-key, .det-val { font-size: .76rem; }
-
-  /* Guarantees */
-  .guarantee-item { padding: .9rem .85rem; }
-  .gi-icon { font-size: 1.2rem; }
-  .gi-title { font-size: .78rem; }
-  .gi-desc { font-size: .68rem; }
-
-  /* Review card */
-  .review-unlock-card { padding: 1.5rem 1.1rem; }
-  .ruc-title { font-size: 1.1rem; }
-  .ruc-sub { font-size: .8rem; }
-  .star-btn { font-size: 1.5rem; }
-  .ruc-textarea { font-size: .83rem; min-height: 70px; }
-  .ruc-actions { flex-direction: column; gap: .6rem; }
-  .btn-green-solid { width: 100%; justify-content: center; }
-  .ruc-submitted-title { font-size: 1.1rem; }
-  .ruc-submitted-sub { font-size: .8rem; }
-
-  /* Empty state */
-  .empty-icon { font-size: 2.5rem; }
-  .empty-title { font-size: 1.3rem; }
-  .empty-sub { font-size: .83rem; }
-  .btn-teal { padding: .72rem 1.5rem; font-size: .84rem; }
-  .btn-ghost { padding: .7rem 1.5rem; font-size: .82rem; }
-
-  /* Toast */
   #toast { font-size: .76rem; padding: .55rem 1.2rem; white-space: normal; text-align: center; max-width: 88vw; }
 }
 </style>
@@ -491,6 +603,33 @@ nav {
 <body>
 
 <div id="toast"></div>
+<div class="confetti-wrap" id="confettiWrap"></div>
+
+<!-- REVIEW MODAL (popup when trying to collect without review) -->
+<div class="review-modal-overlay" id="reviewModalOverlay">
+  <div class="review-modal">
+    <div class="rm-close" onclick="closeReviewModal()">✕</div>
+    <div class="rm-head">
+      <div class="rm-lock-icon">🔒</div>
+      <div class="rm-title">Submit Review to Unlock Delivery</div>
+      <div class="rm-sub">Your portfolio is ready! Leave a quick review to unlock your files.</div>
+    </div>
+    <div class="rm-body">
+      <div class="stars-row" id="modalStars">
+        <button class="star-btn" data-v="1" onclick="setModalStar(1)">⭐</button>
+        <button class="star-btn" data-v="2" onclick="setModalStar(2)">⭐</button>
+        <button class="star-btn" data-v="3" onclick="setModalStar(3)">⭐</button>
+        <button class="star-btn" data-v="4" onclick="setModalStar(4)">⭐</button>
+        <button class="star-btn" data-v="5" onclick="setModalStar(5)">⭐</button>
+      </div>
+      <textarea class="review-textarea" id="modalReviewText" placeholder="Share your experience — what did you love? How will this portfolio help you? (optional but appreciated 🙏)"></textarea>
+      <div class="review-actions">
+        <div class="review-unlock-note"><strong>🔓</strong> Collect button unlocks instantly after submit</div>
+        <button class="btn-teal" onclick="submitModalReview()" style="padding:.65rem 1.5rem;font-size:.84rem">Submit &amp; Unlock →</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- NAV -->
 <nav>
@@ -504,7 +643,7 @@ nav {
   </div>
 </nav>
 
-<!-- PAYMENT SUCCESS BANNER (shown only when payment confirmed) -->
+<!-- PAYMENT SUCCESS BANNER -->
 <div id="payBanner" style="display:none;background:linear-gradient(90deg,rgba(0,245,200,.1),rgba(139,92,246,.07));border-bottom:1px solid rgba(0,245,200,.2);padding:.7rem 5vw;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap">
   <div style="display:flex;align-items:center;gap:.75rem">
     <span style="font-size:1.2rem">🎉</span>
@@ -536,7 +675,7 @@ nav {
   <div class="order-content fade-in" id="orderContent">
 
     <!-- ORDER HEADER CARD -->
-    <div class="order-header">
+    <div class="order-header" id="mainOrderHeader">
       <div class="oh-body">
         <div class="oh-top">
           <div>
@@ -548,8 +687,6 @@ nav {
             <span id="oh-status-text">Pending Payment</span>
           </div>
         </div>
-
-        <!-- Progress bar -->
         <div class="prog-wrap">
           <div class="prog-labels">
             <span class="prog-label">Build Progress</span>
@@ -557,17 +694,43 @@ nav {
           </div>
           <div class="prog-bar"><div class="prog-fill" id="oh-bar" style="width:10%"></div></div>
         </div>
+        <div class="steps-row" id="stepsRow"></div>
+      </div>
+    </div>
 
-        <!-- Timeline steps -->
-        <div class="steps-row" id="stepsRow">
-          <!-- rendered by JS -->
+    <!-- ══ PORTFOLIO DELIVERY CARD (shown when completed) ══ -->
+    <div class="delivery-card" id="deliveryCard">
+      <div class="dc-head">
+        <div class="dc-badge"><div class="dc-badge-dot"></div> Portfolio Ready</div>
+        <div class="dc-title">🎉 Your Portfolio is Live!</div>
+        <div class="dc-sub">Your custom portfolio has been built and deployed. Collect your files below.</div>
+      </div>
+      <div class="dc-body">
+        <div class="dc-preview-link" id="previewLink">
+          <span class="link-icon">🌐</span>
+          <span class="link-url" id="portfolioLinkText">yourname.netlify.app</span>
+          <span style="font-size:.7rem;color:var(--t3);margin-left:auto;flex-shrink:0">↗</span>
+        </div>
+        <div class="dc-btns">
+          <div class="dc-btn-row">
+            <a id="viewPortfolioBtn" href="#" target="_blank" class="btn-green-solid">🌐 View Live Portfolio</a>
+            <a id="downloadCodeBtn" href="#" target="_blank" class="btn-outline-green">⬇️ Download Source Code</a>
+          </div>
+          <button class="btn-green-solid collect-btn" id="collectBtn" onclick="handleCollect()" style="width:100%;font-size:.9rem;padding:.95rem">
+            📦 Collect Portfolio
+          </button>
+          <div id="collectLockedNote" style="display:none;text-align:center;font-size:.75rem;color:var(--red);margin-top:-.2rem">
+            🔒 Submit your review above to unlock delivery
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- ACTION CARDS -->
-    <div class="actions-grid">
-      <a class="action-card teal" onclick="toggleChat()" href="#">
+    <!-- ══ SMART ACTION CARDS ══ -->
+    <div class="section-label">Quick Actions</div>
+    <div class="actions-grid" id="actionsGrid">
+
+      <a class="action-card teal" id="ac-chat" onclick="toggleChat()" href="#">
         <div class="ac-icon">💬</div>
         <div class="ac-text">
           <div class="ac-title">Message Builder</div>
@@ -575,7 +738,8 @@ nav {
         </div>
         <div class="ac-arrow">→</div>
       </a>
-      <a class="action-card violet" onclick="toggleRevision()" href="#">
+
+      <a class="action-card violet" id="ac-revision" onclick="toggleRevision()" href="#">
         <div class="ac-icon">✏️</div>
         <div class="ac-text">
           <div class="ac-title">Request Revision</div>
@@ -583,15 +747,44 @@ nav {
         </div>
         <div class="ac-arrow">→</div>
       </a>
-      <a href="https://wa.me/919999999999" target="_blank" class="action-card green">
-        <div class="ac-icon">📱</div>
+
+      <a class="action-card green hidden" id="ac-portfolio" href="#" target="_blank" onclick="openPortfolio(event)">
+        <div class="ac-icon">🌐</div>
         <div class="ac-text">
-          <div class="ac-title">WhatsApp</div>
-          <div class="ac-desc">Fastest way to reach us</div>
+          <div class="ac-title">View Portfolio</div>
+          <div class="ac-desc">See your live site</div>
         </div>
         <div class="ac-arrow">↗</div>
       </a>
-      <a class="action-card amber" onclick="toggleDetails()" href="#">
+
+      <a class="action-card amber hidden" id="ac-review" onclick="scrollToReview()" href="#">
+        <div class="ac-icon">⭐</div>
+        <div class="ac-text">
+          <div class="ac-title">Leave Review</div>
+          <div class="ac-desc">Unlock portfolio delivery</div>
+        </div>
+        <div class="ac-arrow">→</div>
+      </a>
+
+      <a class="action-card green hidden collect-locked" id="ac-collect" onclick="handleCollect()" href="#">
+        <div class="ac-icon">📦</div>
+        <div class="ac-text">
+          <div class="ac-title">Collect Portfolio</div>
+          <div class="ac-desc">Download your files</div>
+        </div>
+        <div class="ac-lock" id="ac-collect-lock">🔒 Review first</div>
+      </a>
+
+      <a class="action-card amber" id="ac-history" onclick="toggleHistory()" href="#">
+        <div class="ac-icon">📜</div>
+        <div class="ac-text">
+          <div class="ac-title">Order History</div>
+          <div class="ac-desc">All your past projects</div>
+        </div>
+        <div class="ac-arrow">→</div>
+      </a>
+
+      <a class="action-card amber" id="ac-details" onclick="toggleDetails()" href="#">
         <div class="ac-icon">🧾</div>
         <div class="ac-text">
           <div class="ac-title">Order Details</div>
@@ -599,6 +792,7 @@ nav {
         </div>
         <div class="ac-arrow">→</div>
       </a>
+
     </div>
 
     <!-- CHAT CARD -->
@@ -630,8 +824,33 @@ nav {
         <label class="rev-label">Describe what you'd like changed</label>
         <textarea class="rev-textarea" id="revText" placeholder="E.g. Change the hero background to dark blue, make the skills section bigger, add a link to my GitHub on the project cards…"></textarea>
         <div class="rev-actions">
-          <div class="rev-note"><strong>⚠️ 1 free revision</strong> included in your plan</div>
-          <button class="btn-teal" onclick="submitRevision()" style="padding:.65rem 1.5rem;font-size:.84rem">Submit →</button>
+          
+          <button class="btn-teal" onclick="submitRevision()" id="revSubmitBtn" style="padding:.65rem 1.5rem;font-size:.84rem">Submit →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- REVIEW CARD (inline, always visible when completed) -->
+    <div class="review-card" id="reviewCard" style="display:none">
+      <div class="review-head">
+        <div class="review-head-l">
+          <div class="review-head-icon">⭐</div>
+          <div class="review-title">Leave a <span>Review</span></div>
+        </div>
+        <span class="review-required-badge" id="reviewRequiredBadge">Required to unlock</span>
+      </div>
+      <div class="review-body" id="reviewBody">
+        <div class="stars-row" id="inlineStars">
+          <button class="star-btn" data-v="1" onclick="setInlineStar(1)">⭐</button>
+          <button class="star-btn" data-v="2" onclick="setInlineStar(2)">⭐</button>
+          <button class="star-btn" data-v="3" onclick="setInlineStar(3)">⭐</button>
+          <button class="star-btn" data-v="4" onclick="setInlineStar(4)">⭐</button>
+          <button class="star-btn" data-v="5" onclick="setInlineStar(5)">⭐</button>
+        </div>
+        <textarea class="review-textarea" id="inlineReviewText" placeholder="Share your experience — what did you love? How will this portfolio help you?"></textarea>
+        <div class="review-actions">
+          <div class="review-unlock-note">🔒 <strong>Required</strong> · Submit to unlock your portfolio delivery</div>
+          <button class="btn-teal" onclick="submitInlineReview()" style="padding:.65rem 1.5rem;font-size:.84rem">Submit Review →</button>
         </div>
       </div>
     </div>
@@ -642,9 +861,13 @@ nav {
         <div class="det-title">🧾 Order Details</div>
         <div class="chat-close" onclick="toggleDetails()">✕</div>
       </div>
-      <div class="det-body" id="detailsBody">
-        <!-- rendered by JS -->
-      </div>
+      <div class="det-body" id="detailsBody"></div>
+    </div>
+
+    <!-- ORDER HISTORY -->
+    <div class="history-section" id="historySection" style="display:none">
+      <div class="section-label">Order History</div>
+      <div id="historyList"></div>
     </div>
 
     <!-- GUARANTEES -->
@@ -656,7 +879,7 @@ nav {
       </div>
       <div class="guarantee-item">
         <div class="gi-icon">🔄</div>
-        <div class="gi-title">Free Revision</div>
+        <div class="gi-title">Additional Revisions (₹15 each)</div>
         <div class="gi-desc">One complete round included</div>
       </div>
       <div class="guarantee-item">
@@ -666,7 +889,6 @@ nav {
       </div>
     </div>
 
-    <!-- BACK LINK -->
     <div style="text-align:center;padding-top:.5rem">
       <a href="index.html" style="font-size:.8rem;color:var(--t3);transition:color .2s" onmouseover="this.style.color='var(--teal)'" onmouseout="this.style.color='var(--t3)'">← Back to Home</a>
     </div>
@@ -674,107 +896,13 @@ nav {
   </div><!-- /order-content -->
 </div><!-- /page-wrap -->
 
-<!-- Firebase Real-Time Order Tracking -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
-// ────────────────────────────────────────────────
-//  SUPABASE CLIENT (public anon key only)
-// ────────────────────────────────────────────────
-const SUPABASE_URL = "https://qpacvtaxzbdtolpycuqr.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_dG9BWTPBqVSuS29otNtNvA_6UhA8F8G";
+/* ═══════════════════════════════════════════════════
+   PORTFOLIOFORGE — CLIENT DASHBOARD JS
+   Full system: Review unlock, Delivery card,
+   Order History, Revision tracking
+═══════════════════════════════════════════════════ */
 
-const supabase = Supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-console.log("%cSupabase initialized (submit-order)", "color:#00d4ff; font-weight:bold");
-
-// ────────────────────────────────────────────────
-//  Global submit handler (fixes "not defined" error)
-// ────────────────────────────────────────────────
-window.handleOrderSubmit = function(e) {
-    e.preventDefault(); // very important
-    submitOrder();
-};
-
-// ────────────────────────────────────────────────
-//  Main submit function
-// ────────────────────────────────────────────────
-async function submitOrder() {
-    if (!validate2()) return;
-
-    const orderId = 'PF-' + new Date().getFullYear() + '-' + String(Date.now()).slice(-6);
-
-    const orderData = buildOrderData(orderId);
-
-    // Show loading
-    const btn = document.getElementById('submitBtn');
-    const txt = document.getElementById('submitBtnText');
-    if (btn) btn.disabled = true;
-    if (txt) txt.textContent = 'Submitting...';
-
-    try {
-        const { error } = await supabase
-            .from('orders')
-            .insert([orderData]);
-
-        if (error) throw error;
-
-        console.log("Order saved →", orderId);
-        showToast("Order submitted successfully!");
-
-        // Save locally as fallback
-        localStorage.setItem('last_order', JSON.stringify(orderData));
-
-        if (selectedPayment === 'demo') {
-            runDemoPayment(orderId, orderData);
-        } else if (selectedPayment === 'cashfree') {
-            initiateCashfreePayment(orderId, orderData.total, orderData);
-        } else {
-            // UPI / bank / manual
-            showSuccessScreen(orderId, 'pending');
-        }
-    } catch (err) {
-        console.error("Submit failed:", err.message);
-        showToast("Failed to submit order. Please try again.");
-    } finally {
-        if (btn) btn.disabled = false;
-        if (txt) txt.textContent = selectedPayment === 'demo'
-            ? '🧪 Run Demo Payment →'
-            : selectedPayment === 'cashfree'
-                ? 'Place Order & Pay via Cashfree →'
-                : 'Place Order →';
-    }
-}
-
-// ────────────────────────────────────────────────
-//  Keep your existing functions below
-//  (validate1, validate2, goStep, selectPlan, toggleAddon, etc.)
-// ────────────────────────────────────────────────
-
-// ... paste all your existing helper functions here ...
-
-// Make sure these are still global:
-window.goStep         = goStep;
-window.selectPlan     = selectPlan;
-window.toggleAddon    = toggleAddon;
-window.selectPayment  = selectPayment;
-window.toggleTerms    = toggleTerms;
-window.updateSummary  = updateSummary;
-window.retryPayment   = retryPayment;
-window.runDemoPayment = runDemoPayment;
-window.launchConfetti = launchConfetti;
-
-// Optional: auto-focus first field on load
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('f-name')?.focus();
-    updateSummary();
-    checkCashfreeReturn();
-});
-</script>
-
-<script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
-
-<script>
 /* ── THEME ── */
 document.getElementById('themeBtn').addEventListener('click', () => {
   const d = document.documentElement;
@@ -795,15 +923,64 @@ function checkAndShowBanner() {
 }
 checkAndShowBanner();
 
-/* ── LOAD ORDER (from localStorage, Firestore updates it live) ── */
+/* ── LOAD ORDER ── */
 const raw = localStorage.getItem('pf_order');
 let order = raw ? JSON.parse(raw) : null;
 
-const STEP_LABELS = ['Order Placed','Payment','Building','Preview','Delivered'];
-const STEP_ICONS  = ['📋','💳','🔨','👁️','✅'];
+/* Ensure new fields exist on existing orders */
+function normalizeOrder(o) {
+  if (!o) return o;
+  if (o.reviewSubmitted === undefined) o.reviewSubmitted = false;
+  if (o.rating === undefined) o.rating = 0;
+  if (o.reviewText === undefined) o.reviewText = '';
+  if (o.portfolioLink === undefined) o.portfolioLink = '';
+  if (o.sourceCodeLink === undefined) o.sourceCodeLink = '';
+  if (o.revisionsLeft === undefined) o.revisionsLeft = 1;
+  if (!Array.isArray(o.history)) o.history = [];
+  return o;
+}
+order = normalizeOrder(order);
 
+/* ── DEMO: inject a completed order for preview/testing ── */
+function injectDemoCompletedOrder() {
+  if (!order) {
+    order = {
+      id: 'PF-2026-' + String(Date.now()).slice(-4),
+      status: 'Completed',
+      paymentStatus: 'paid',
+      plan: { name: 'Pro' },
+      total: 179,
+      name: 'Demo Client',
+      email: 'demo@example.com',
+      phone: '+91 99999 00000',
+      placedAt: new Date(Date.now() - 86400000).toISOString(),
+      reviewSubmitted: false,
+      rating: 0,
+      reviewText: '',
+      portfolioLink: 'https://yourname.netlify.app',
+      sourceCodeLink: '#',
+      revisionsLeft: 1,
+      history: [],
+      progress: 100,
+      timeline: [
+        { label: 'Order Placed', done: true },
+        { label: 'Payment',      done: true },
+        { label: 'Building',     done: true },
+        { label: 'Preview',      done: true },
+        { label: 'Delivered',    done: true }
+      ],
+      messages: [{ from: 'admin', text: '🎉 Your portfolio is ready! Collect your files from the dashboard.', time: 'Now' }]
+    };
+    localStorage.setItem('pf_order', JSON.stringify(order));
+  }
+}
+// Comment out the below line in production to avoid overriding real orders:
+// injectDemoCompletedOrder();
+
+const STEP_LABELS = ['Order Placed','Payment','Building','Preview','Delivered'];
 let msgs = [];
 
+/* ── STATUS CLASS ── */
 function statusClass(s) {
   const m = (s || '').toLowerCase();
   if (m.includes('complet') || m.includes('deliver') || m.includes('final')) return 's-done';
@@ -813,6 +990,7 @@ function statusClass(s) {
   return 's-pending';
 }
 
+/* ── RENDER STEPS ── */
 function renderSteps(timeline) {
   if (!timeline) return;
   const row = document.getElementById('stepsRow');
@@ -820,33 +998,11 @@ function renderSteps(timeline) {
   const curIdx = steps.findIndex(s => !s.done);
   row.innerHTML = steps.map((s, i) => {
     const cls = s.done ? 'done' : (i === curIdx ? 'cur' : '');
-    return `
-      <div class="step-node ${cls}">
-        <div class="step-circle">${s.done ? '✓' : (i === curIdx ? '' : i + 1)}</div>
-        <div class="step-label">${s.label}</div>
-      </div>`;
+    return `<div class="step-node ${cls}"><div class="step-circle">${s.done ? '✓' : (i === curIdx ? '' : i + 1)}</div><div class="step-label">${s.label}</div></div>`;
   }).join('');
 }
 
-function renderDetails() {
-  if (!order) return;
-  const body = document.getElementById('detailsBody');
-  const rows = [
-    ['Order ID',   order.id || '—',          'teal'],
-    ['Plan',       order.plan?.name || '—',   ''],
-    ['Total Paid', '₹' + (order.total || 0),  'teal'],
-    ['Status',     order.status || 'Pending', 'amber'],
-    ['Name',       order.name || '—',         ''],
-    ['Email',      order.email || '—',        ''],
-    ['Phone',      order.phone || '—',        ''],
-    ['Placed',     order.placedAt ? new Date(order.placedAt).toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'}) : '—', ''],
-  ];
-  body.innerHTML = rows.map(([k, v, cls]) =>
-    `<div class="det-row"><div class="det-key">${k}</div><div class="det-val ${cls}">${v}</div></div>`
-  ).join('');
-}
-
-/* ── COMPUTE PROGRESS FROM TIMELINE + STATUS ── */
+/* ── COMPUTE PROGRESS ── */
 function calcProgress(o) {
   const s = (o.status || '').toLowerCase();
   if (s.includes('complet') || s.includes('deliver') || s.includes('final')) return 100;
@@ -858,6 +1014,91 @@ function calcProgress(o) {
   return Math.max(milestones[idx], o.progress || 10);
 }
 
+/* ── RENDER DETAILS ── */
+function renderDetails() {
+  if (!order) return;
+  const body = document.getElementById('detailsBody');
+  const rows = [
+    ['Order ID',   order.id || '—',          'teal'],
+    ['Plan',       order.plan?.name || '—',   ''],
+    ['Total Paid', '₹' + (order.total || 0),  'teal'],
+    ['Status',     order.status || 'Pending', 'amber'],
+    ['Revisions Left', String(order.revisionsLeft ?? 1), ''],
+    ['Review',     order.reviewSubmitted ? '✅ Submitted' : '⏳ Pending', ''],
+    ['Name',       order.name || '—',         ''],
+    ['Email',      order.email || '—',        ''],
+    ['Phone',      order.phone || '—',        ''],
+    ['Placed',     order.placedAt ? new Date(order.placedAt).toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'}) : '—', ''],
+  ];
+  body.innerHTML = rows.map(([k, v, cls]) =>
+    `<div class="det-row"><div class="det-key">${k}</div><div class="det-val ${cls}">${v}</div></div>`
+  ).join('');
+}
+
+/* ══════════════════════════════════════════
+   COMPLETED STATE — show/hide sections
+══════════════════════════════════════════ */
+function handleCompletedState() {
+  const isCompleted = statusClass(order?.status) === 's-done';
+  if (!isCompleted) return;
+
+  /* Show delivery card */
+  document.getElementById('deliveryCard').classList.add('show');
+
+  /* Portfolio link */
+  const link = order.portfolioLink || '#';
+  document.getElementById('portfolioLinkText').textContent = link.replace(/^https?:\/\//, '');
+  document.getElementById('previewLink').href = link;
+  document.getElementById('previewLink').target = '_blank';
+  document.getElementById('viewPortfolioBtn').href = link;
+  document.getElementById('downloadCodeBtn').href = order.sourceCodeLink || '#';
+
+  /* Show review card */
+  document.getElementById('reviewCard').style.display = 'block';
+
+  /* Smart action cards — show portfolio, review, collect */
+  document.getElementById('ac-portfolio').classList.remove('hidden');
+  document.getElementById('ac-portfolio').href = link;
+  document.getElementById('ac-collect').classList.remove('hidden');
+
+  /* Review state */
+  if (order.reviewSubmitted) {
+    showReviewSubmittedState();
+  } else {
+    document.getElementById('ac-review').classList.remove('hidden');
+  }
+
+  updateCollectLockState();
+
+  /* Confetti if just completed */
+  if (order.paymentStatus === 'paid') launchConfetti();
+}
+
+/* Update collect button lock based on review status */
+function updateCollectLockState() {
+  const collectBtn  = document.getElementById('collectBtn');
+  const collectNote = document.getElementById('collectLockedNote');
+  const acCollect   = document.getElementById('ac-collect');
+  const acLock      = document.getElementById('ac-collect-lock');
+
+  if (order.reviewSubmitted) {
+    /* Unlock collect */
+    collectBtn.classList.remove('collect-btn-locked');
+    collectNote.style.display = 'none';
+    acCollect.classList.remove('collect-locked');
+    if (acLock) acLock.style.display = 'none';
+  } else {
+    /* Lock collect */
+    collectBtn.classList.add('collect-btn-locked');
+    collectNote.style.display = 'block';
+    acCollect.classList.add('collect-locked');
+    if (acLock) acLock.style.display = 'flex';
+  }
+}
+
+/* ══════════════════════════════════════════
+   POPULATE MAIN ORDER
+══════════════════════════════════════════ */
 function populate() {
   if (!order) {
     document.getElementById('emptyState').classList.add('show');
@@ -866,52 +1107,250 @@ function populate() {
   document.getElementById('orderContent').classList.add('show');
   document.getElementById('oh-name').textContent = order.plan?.name || 'Your Portfolio';
   document.getElementById('oh-id').textContent   = 'Order ' + (order.id || '#—');
+
   const pill = document.getElementById('oh-status');
   const sc   = statusClass(order.status);
   pill.className = 'status-pill ' + sc;
   document.getElementById('oh-status-text').textContent = order.status || 'Pending Payment';
+
   const pct = calcProgress(order);
   document.getElementById('oh-pct').textContent = pct + '%';
   document.getElementById('oh-bar').style.width = pct + '%';
   if (sc === 's-done') {
     document.getElementById('oh-bar').style.background = 'linear-gradient(90deg, #22c55e, var(--teal))';
-    document.querySelector('.order-header').classList.add('completed');
+    document.getElementById('mainOrderHeader').classList.add('completed');
   }
+
   renderSteps(order.timeline);
   renderDetails();
   msgs = order.messages || [{ from: 'admin', text: 'Hi! Thanks for your order 🎉 Payment details will be shared within 30 minutes.', time: 'Just now' }];
   renderMsgs();
+
+  /* Revision count */
+  updateRevisionUI();
+
+  /* Completed state */
+  handleCompletedState();
+
+  /* Order history */
+  renderHistory();
 }
 
-/* ── FIRESTORE REAL-TIME CALLBACK ── */
+/* ═══ REVISION UI ═══ */
+function updateRevisionUI() {
+  const left = order?.revisionsLeft ?? 1;
+  const note = document.getElementById('revCountNote');
+  const btn  = document.getElementById('revSubmitBtn');
+  if (left <= 0) {
+    note.innerHTML = '<span class="rev-used">⛔ No Additional Revisions (₹15 each)s remaining</span>';
+    btn.disabled = true;
+    btn.style.opacity = '.45';
+    btn.style.cursor = 'not-allowed';
+    btn.textContent = 'No revisions left';
+  } else {
+    note.innerHTML = `<strong>✅ ${left} Additional Revisions (₹15 each)</strong> remaining`;
+  }
+}
+
+/* ═══ REVIEW — INLINE ═══ */
+let inlineRating = 0;
+let modalRating  = 0;
+
+function setInlineStar(v) {
+  inlineRating = v;
+  document.querySelectorAll('#inlineStars .star-btn').forEach((b, i) => {
+    b.classList.toggle('active', i < v);
+  });
+}
+function setModalStar(v) {
+  modalRating = v;
+  document.querySelectorAll('#modalStars .star-btn').forEach((b, i) => {
+    b.classList.toggle('active', i < v);
+  });
+}
+
+function doSubmitReview(rating, text) {
+  if (!rating) { toast('⭐ Please select a star rating'); return false; }
+  order.reviewSubmitted = true;
+  order.rating = rating;
+  order.reviewText = text;
+  localStorage.setItem('pf_order', JSON.stringify(order));
+  if (window._saveReviewToFirestore) window._saveReviewToFirestore(order.id, { rating, text }).catch(() => {});
+  return true;
+}
+
+function submitInlineReview() {
+  const text = document.getElementById('inlineReviewText').value.trim();
+  if (!doSubmitReview(inlineRating, text)) return;
+  showReviewSubmittedState();
+  updateCollectLockState();
+  document.getElementById('ac-review').classList.add('hidden');
+  toast('✅ Thank you! Your portfolio is now unlocked.');
+}
+
+function submitModalReview() {
+  const text = document.getElementById('modalReviewText').value.trim();
+  if (!doSubmitReview(modalRating, text)) return;
+  closeReviewModal();
+  showReviewSubmittedState();
+  updateCollectLockState();
+  document.getElementById('ac-review').classList.add('hidden');
+  toast('✅ Thank you! Your portfolio is now unlocked.');
+}
+
+function showReviewSubmittedState() {
+  const starsStr = '⭐'.repeat(order.rating || 5);
+  document.getElementById('reviewBody').innerHTML = `
+    <div class="review-body submitted-state">
+      <div class="review-submitted-ico">✅</div>
+      <div class="review-submitted-title">Review Submitted!</div>
+      <div class="review-stars-display">${starsStr}</div>
+      <div class="review-submitted-sub">${order.reviewText ? '"' + order.reviewText.substring(0, 120) + '"' : 'Thank you for your feedback!'}<br><br>Your portfolio delivery is now <strong style="color:var(--green)">unlocked</strong>. Collect your files above.</div>
+    </div>`;
+  document.getElementById('reviewRequiredBadge').textContent = '✅ Submitted';
+  document.getElementById('reviewRequiredBadge').style.background = 'rgba(34,197,94,.15)';
+  document.getElementById('reviewRequiredBadge').style.borderColor = 'rgba(34,197,94,.3)';
+  document.getElementById('reviewRequiredBadge').style.color = 'var(--green)';
+}
+
+/* ═══ REVIEW MODAL ═══ */
+function openReviewModal() {
+  document.getElementById('reviewModalOverlay').classList.add('show');
+}
+function closeReviewModal() {
+  document.getElementById('reviewModalOverlay').classList.remove('show');
+}
+document.getElementById('reviewModalOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeReviewModal();
+});
+
+/* ═══ COLLECT HANDLER ═══ */
+function handleCollect() {
+  if (!order.reviewSubmitted) {
+    openReviewModal();
+    return;
+  }
+  /* Already reviewed — trigger download/open */
+  const link = order.sourceCodeLink || order.portfolioLink || '#';
+  if (link !== '#') window.open(link, '_blank');
+  toast('📦 Your portfolio files are ready!');
+
+  /* Archive current order to history */
+  archiveToHistory();
+}
+
+/* ═══ VIEW PORTFOLIO ═══ */
+function openPortfolio(e) {
+  const link = order?.portfolioLink;
+  if (link && link !== '#') {
+    window.open(link, '_blank');
+  } else {
+    e.preventDefault();
+    toast('🔗 Portfolio link will appear here once deployed.');
+  }
+}
+
+/* ═══ SCROLL TO REVIEW ═══ */
+function scrollToReview() {
+  const card = document.getElementById('reviewCard');
+  if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+/* ═══ ORDER HISTORY ═══ */
+function archiveToHistory() {
+  const history = JSON.parse(localStorage.getItem('pf_order_history') || '[]');
+  const exists = history.find(h => h.id === order.id);
+  if (!exists) {
+    const archived = { ...order, archivedAt: new Date().toISOString() };
+    history.unshift(archived);
+    localStorage.setItem('pf_order_history', JSON.stringify(history));
+    toast('📜 Order saved to history');
+  }
+}
+
+let historyOpen = false;
+function toggleHistory() {
+  historyOpen = !historyOpen;
+  document.getElementById('historySection').style.display = historyOpen ? 'block' : 'none';
+  if (historyOpen) {
+    renderHistory();
+    document.getElementById('historySection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+function renderHistory() {
+  const history = JSON.parse(localStorage.getItem('pf_order_history') || '[]');
+  const list = document.getElementById('historyList');
+  if (!list) return;
+
+  if (!history.length) {
+    list.innerHTML = '<div class="history-empty">No past orders found. Completed orders appear here after collection.</div>';
+    return;
+  }
+
+  list.innerHTML = history.map(h => {
+    const date = h.archivedAt ? new Date(h.archivedAt).toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'}) : '—';
+    const planName = h.plan?.name || 'Portfolio';
+    const portLink = h.portfolioLink || '#';
+    return `
+      <div class="history-card completed fade-in">
+        <div class="hc-body">
+          <div class="hc-main">
+            <div class="hc-name">${planName} Portfolio</div>
+            <div class="hc-id">${h.id || '—'}</div>
+            <div class="hc-meta">
+              <span class="hc-date">📅 ${date}</span>
+              <span class="hc-plan-tag">${planName}</span>
+              <span class="status-pill s-done" style="font-size:.54rem;padding:.18rem .6rem"><span class="dot"></span>Completed ✅</span>
+            </div>
+          </div>
+          <div class="hc-actions">
+            ${portLink !== '#' ? `<a href="${portLink}" target="_blank" class="hc-btn primary">🌐 View Project</a>` : ''}
+            <button class="hc-btn" onclick="requestHistoryRevision('${h.id}')">✏️ Request Revision</button>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function requestHistoryRevision(orderId) {
+  toast('✏️ Opening revision form for ' + orderId);
+  toggleRevision();
+  setTimeout(() => {
+    const t = document.getElementById('revText');
+    if (t) { t.value = '[Re: ' + orderId + '] '; t.focus(); }
+  }, 200);
+}
+
+/* ═══ REAL-TIME UPDATE CALLBACK ═══ */
 window._onFirestoreOrderUpdate = function(freshData) {
   const prevStatus = order?.status;
-  const prevPct    = order?.progress;
   const prevPay    = order?.paymentStatus;
-
-  order = freshData;
+  order = normalizeOrder(freshData);
   msgs  = freshData.messages || msgs;
 
-  // Re-render everything
   document.getElementById('oh-name').textContent = order.plan?.name || 'Your Portfolio';
   document.getElementById('oh-id').textContent   = 'Order ' + (order.id || '#—');
   const pill = document.getElementById('oh-status');
   const sc   = statusClass(order.status);
   pill.className = 'status-pill ' + sc;
   document.getElementById('oh-status-text').textContent = order.status || 'Pending';
+
   const pct = calcProgress(order);
   document.getElementById('oh-pct').textContent = pct + '%';
-  document.getElementById('oh-bar').style.width = pct + '%';
+  document.getElementById('oh-bar').style.width  = pct + '%';
   if (sc === 's-done') {
     document.getElementById('oh-bar').style.background = 'linear-gradient(90deg, #22c55e, var(--teal))';
-    document.querySelector('.order-header').classList.add('completed');
+    document.getElementById('mainOrderHeader').classList.add('completed');
+    handleCompletedState();
   }
+
   renderSteps(order.timeline);
   renderDetails();
+  updateRevisionUI();
   if (chatOpen) renderMsgs();
 
-  // Show toast only if something actually changed
-  const changed = prevStatus !== order.status || prevPct !== order.progress || prevPay !== order.paymentStatus;
+  const changed = prevStatus !== order.status || prevPay !== order.paymentStatus;
   if (changed && prevStatus !== undefined) {
     toast('🔄 Your order status was updated!');
     if (order.paymentStatus === 'paid' && prevPay !== 'paid') {
@@ -921,7 +1360,7 @@ window._onFirestoreOrderUpdate = function(freshData) {
   }
 };
 
-/* ── CHAT ── */
+/* ═══ CHAT ═══ */
 let chatOpen = false;
 function toggleChat(e) {
   if (e) e.preventDefault();
@@ -936,7 +1375,6 @@ function toggleChat(e) {
     }, 60);
   }
 }
-
 function renderMsgs() {
   const wrap = document.getElementById('chatMessages');
   if (!wrap) return;
@@ -947,26 +1385,22 @@ function renderMsgs() {
     </div>`).join('');
   wrap.scrollTop = wrap.scrollHeight;
 }
-
 function sendMsg() {
   const input = document.getElementById('chatInput');
   const text  = input.value.trim();
   if (!text) return;
   const time  = new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
   msgs.push({ from: 'client', text, time });
-
-  // Save to localStorage + Firestore
   if (order) {
     order.messages = msgs;
     localStorage.setItem('pf_order', JSON.stringify(order));
     if (window._sendMsgToFirestore) window._sendMsgToFirestore(order.id, msgs).catch(() => {});
   }
-
   renderMsgs();
   input.value = '';
 }
 
-/* ── REVISION ── */
+/* ═══ REVISION ═══ */
 let revOpen = false;
 function toggleRevision(e) {
   if (e) e.preventDefault();
@@ -974,30 +1408,32 @@ function toggleRevision(e) {
   document.getElementById('revisionCard').classList.toggle('show', revOpen);
   if (revOpen) document.getElementById('revText').focus();
 }
-
 function submitRevision() {
+  if ((order?.revisionsLeft ?? 1) <= 0) {
+    toast('⛔ No Additional Revisions (₹15 each)s remaining. Contact us for paid revisions.');
+    return;
+  }
   const text = document.getElementById('revText').value.trim();
   if (!text) { toast('⚠️ Please describe what you\'d like changed'); return; }
   const time = new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
   msgs.push({ from: 'client', text: '✏️ Revision request: ' + text, time });
-
   if (order) {
     order.messages = msgs;
     order.status   = 'Revision Requested';
+    order.revisionsLeft = Math.max(0, (order.revisionsLeft ?? 1) - 1);
     localStorage.setItem('pf_order', JSON.stringify(order));
-    // Write revision to Firestore so admin sees it immediately
     if (window._sendRevisionToFirestore) {
       window._sendRevisionToFirestore(order.id, msgs, 'Revision Requested').catch(() => {});
     }
   }
-
   document.getElementById('revText').value = '';
   revOpen = false;
   document.getElementById('revisionCard').classList.remove('show');
+  updateRevisionUI();
   toast('✓ Revision submitted! We\'ll respond within 2 hours.');
 }
 
-/* ── ORDER DETAILS ── */
+/* ═══ DETAILS ═══ */
 let detOpen = false;
 function toggleDetails(e) {
   if (e) e.preventDefault();
@@ -1005,7 +1441,7 @@ function toggleDetails(e) {
   document.getElementById('detailsCard').classList.toggle('show', detOpen);
 }
 
-/* ── TOAST ── */
+/* ═══ TOAST ═══ */
 function toast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
@@ -1013,17 +1449,24 @@ function toast(msg) {
   setTimeout(() => t.classList.remove('show'), 2800);
 }
 
-/* ── GUARANTEE & REVIEW CARDS (kept from original) ── */
-let reviewOpen = false;
-function openReview() {
-  reviewOpen = true;
-  const card = document.getElementById('reviewCard');
-  if (card) card.style.display = 'block';
+/* ═══ CONFETTI ═══ */
+function launchConfetti() {
+  const wrap = document.getElementById('confettiWrap');
+  if (!wrap) return;
+  const colors = ['#00f5c8','#8b5cf6','#f59e0b','#22c55e','#fff'];
+  for (let i = 0; i < 90; i++) {
+    (function() {
+      const p = document.createElement('div');
+      p.className = 'confetti-piece';
+      p.style.cssText = 'left:' + Math.random()*100 + '%;top:-20px;background:' + colors[Math.floor(Math.random()*colors.length)] + ';width:' + (5+Math.random()*6) + 'px;height:' + (5+Math.random()*6) + 'px;border-radius:' + (Math.random()>.5?'50%':'2px') + ';animation-duration:' + (2+Math.random()*2.5) + 's;animation-delay:' + Math.random()*.8 + 's;';
+      wrap.appendChild(p);
+      setTimeout(() => { if (p.parentNode) p.parentNode.removeChild(p); }, 5000);
+    })();
+  }
 }
 
-/* ── INIT ── */
+/* ═══ INIT ═══ */
 populate();
 </script>
--e 
 </body>
 </html>
