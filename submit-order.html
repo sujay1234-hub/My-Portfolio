@@ -315,8 +315,8 @@ nav {
 /* ═══════════════════════════════════════════════════════
    PLAN CARDS — premium feel
 ═══════════════════════════════════════════════════════ */
-.plan-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:.75rem; margin-bottom:1.25rem }
-@media(max-width:500px) { .plan-grid { grid-template-columns:1fr } }
+.plan-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:.75rem; margin-bottom:.6rem }
+@media(max-width:680px) { .plan-grid { grid-template-columns:1fr } }
 
 .plan-card {
   position:relative; cursor:pointer;
@@ -373,9 +373,61 @@ nav {
 .plan-badge.hot { background:var(--red); color:#fff }
 .plan-badge.best { background:var(--teal); color:#000 }
 
-/* ═══ ADD-ONS ═══ */
+/* ═══ ADDON GRID 3-col ═══ */
 .addon-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:.6rem; margin-bottom:1.25rem }
 @media(max-width:480px) { .addon-grid { grid-template-columns:1fr 1fr } }
+
+/* ═══ PLAN VERTICAL ═══ */
+.plan-card-v {
+  flex-direction:column; align-items:flex-start; gap:.55rem;
+  padding:1.25rem 1.1rem;
+}
+.plan-card-v .plan-radio { margin-bottom:.1rem }
+.plan-card-v .plan-body { width:100% }
+.plan-price-inline {
+  font-family:var(--fd); font-size:1.8rem; font-weight:800;
+  color:var(--teal); letter-spacing:-.03em; line-height:1; margin-bottom:.5rem;
+}
+.plan-feats {
+  list-style:none; margin:0; padding:0;
+  display:flex; flex-direction:column; gap:.28rem;
+}
+.plan-feats li {
+  font-size:.71rem; color:var(--text3); font-weight:400;
+  display:flex; align-items:center; gap:.4rem; line-height:1.3;
+}
+.plan-feats li::before { content:'✓'; color:var(--teal); font-size:.65rem; flex-shrink:0; font-weight:800 }
+.plan-card.selected .plan-feats li { color:var(--text2) }
+
+.plan-card-pro { border-color:rgba(0,245,200,.35) !important }
+.plan-card-pro.selected { border-color:var(--teal) !important }
+
+.plan-clients-choose {
+  font-size:.64rem; color:var(--teal); font-weight:600;
+  margin-bottom:.45rem; opacity:.85;
+}
+
+/* ═══ SUBDOMAIN NOTE ═══ */
+.subdomain-note {
+  font-size:.76rem; color:var(--text2); line-height:1.6;
+  background:rgba(0,245,200,.04); border:1px solid rgba(0,245,200,.15);
+  border-radius:var(--r); padding:.7rem 1rem; margin-bottom:1.25rem;
+}
+.subdomain-eg {
+  font-family:var(--fm); color:var(--teal); font-size:.7rem;
+}
+
+/* ═══ ADDON VERTICAL ═══ */
+.addon-card-v {
+  text-align:left; flex-direction:column; align-items:flex-start;
+  gap:.25rem; padding:.9rem .85rem;
+}
+.addon-card-v .addon-tick { margin-top:.2rem; align-self:flex-end }
+.addon-card-v .addon-name { font-size:.74rem; line-height:1.3; text-align:left }
+.addon-card-v .addon-sub { text-align:left; font-size:.63rem; line-height:1.35 }
+.addon-card-v .addon-price { font-size:.7rem; font-weight:700 }
+.addon-card-v .addon-icon { font-size:1.1rem }
+
 
 .addon-card {
   cursor:pointer; text-align:center;
@@ -788,83 +840,101 @@ nav {
         <!-- PLANS -->
         <div class="sec-title">Choose Your Plan</div>
         <div class="plan-grid">
-          <label class="plan-card selected" id="plan-founding" onclick="selectPlan(this,'⚡ Founding Offer',49,'founding')">
-            <input type="radio" name="plan" value="founding" checked/>
+          <label class="plan-card plan-card-v plan-card selected" id="plan-starter" onclick="selectPlan(this,'Starter',49,'starter')">
+            <input type="radio" name="plan" value="starter" checked/>
             <div class="plan-radio"></div>
             <div class="plan-body">
-              <div class="plan-name">⚡ Founding Offer</div>
-              <div class="plan-desc">Core sections · 24h delivery</div>
+              <div class="plan-name">Starter</div>
+              <div class="plan-price-inline">₹49</div>
+              <ul class="plan-feats">
+                <li>1-page portfolio</li>
+                <li>Basic responsive design</li>
+                <li>24h delivery</li>
+                <li>Subdomain included</li>
+              </ul>
             </div>
-            <div class="plan-price">₹49</div>
-            <div class="plan-badge hot">2 LEFT</div>
           </label>
-          <label class="plan-card" id="plan-pro" onclick="selectPlan(this,'Pro Animated',179,'pro')">
+          <label class="plan-card plan-card-v plan-card-pro" id="plan-pro" onclick="selectPlan(this,'Pro',179,'pro')">
             <input type="radio" name="plan" value="pro"/>
+            <div class="plan-badge best">BEST VALUE</div>
             <div class="plan-radio"></div>
             <div class="plan-body">
-              <div class="plan-name">Pro Animated</div>
-              <div class="plan-desc">Animations · GSAP · Best value</div>
+              <div class="plan-name">Pro</div>
+              <div class="plan-price-inline">₹179</div>
+              <div class="plan-clients-choose">👉 Most clients choose this</div>
+              <ul class="plan-feats">
+                <li>Multi-section portfolio</li>
+                <li>Smooth GSAP animations</li>
+                <li>Mobile optimized</li>
+                <li>Contact integration</li>
+              </ul>
             </div>
-            <div class="plan-price">₹179</div>
-            <div class="plan-badge best">VALUE</div>
           </label>
-          <label class="plan-card" id="plan-premium" onclick="selectPlan(this,'Premium Portfolio',449,'premium')">
+          <label class="plan-card plan-card-v" id="plan-premium" onclick="selectPlan(this,'Premium',449,'premium')">
             <input type="radio" name="plan" value="premium"/>
             <div class="plan-radio"></div>
             <div class="plan-body">
               <div class="plan-name">Premium</div>
-              <div class="plan-desc">3D · GitHub stats · Full custom</div>
+              <div class="plan-price-inline">₹449</div>
+              <ul class="plan-feats">
+                <li>Fully custom portfolio</li>
+                <li>Advanced animations</li>
+                <li>GitHub + deployment</li>
+                <li>Performance optimized</li>
+                <li>Priority support</li>
+              </ul>
             </div>
-            <div class="plan-price">₹449</div>
           </label>
         </div>
+        <div class="subdomain-note">🌐 <strong>Free subdomain included in all plans</strong> — e.g. <span class="subdomain-eg">yourname.netlify.app</span> · Want your own .com / .in? Add <strong>Custom Domain Setup (+₹499)</strong> below.</div>
 
         <!-- ADD-ONS -->
         <div class="sec-title">Optional Add-ons</div>
         <div class="addon-grid">
-          <div class="addon-card" onclick="toggleAddon(this,49,'Custom Domain')">
+          <div class="addon-card addon-card-v" onclick="toggleAddon(this,499,'Custom Domain Setup')">
             <div class="addon-icon">🌐</div>
-            <div class="addon-name">Domain Setup</div>
-            <div class="addon-sub">Config + deploy</div>
-            <div class="addon-price">+₹49</div>
+            <div class="addon-name">Custom Domain Setup</div>
+            <div class="addon-sub">Connect .com / .in professionally · DNS + deploy</div>
+            <div class="addon-price">+₹499</div>
             <div class="addon-tick">✓</div>
           </div>
-          <div class="addon-card" onclick="toggleAddon(this,79,'Blog Section')">
-            <div class="addon-icon">📝</div>
-            <div class="addon-name">Blog Section</div>
-            <div class="addon-sub">Write &amp; publish</div>
-            <div class="addon-price">+₹79</div>
-            <div class="addon-tick">✓</div>
-          </div>
-          <div class="addon-card" onclick="toggleAddon(this,59,'Contact Form')">
+          <div class="addon-card addon-card-v" onclick="toggleAddon(this,99,'Contact Form + Email Backend')">
             <div class="addon-icon">📬</div>
-            <div class="addon-name">Contact Form</div>
-            <div class="addon-sub">Email backend</div>
-            <div class="addon-price">+₹59</div>
-            <div class="addon-tick">✓</div>
-          </div>
-          <div class="addon-card" onclick="toggleAddon(this,99,'SEO Package')">
-            <div class="addon-icon">🔍</div>
-            <div class="addon-name">SEO Package</div>
-            <div class="addon-sub">Meta + sitemap</div>
+            <div class="addon-name">Contact Form + Email Backend</div>
+            <div class="addon-sub">Real working contact system</div>
             <div class="addon-price">+₹99</div>
             <div class="addon-tick">✓</div>
           </div>
-          <div class="addon-card" onclick="toggleAddon(this,149,'Analytics')">
-            <div class="addon-icon">📊</div>
-            <div class="addon-name">Analytics</div>
-            <div class="addon-sub">Visitor tracking</div>
-            <div class="addon-price">+₹149</div>
+          <div class="addon-card addon-card-v" onclick="toggleAddon(this,49,'WhatsApp Chat Integration')">
+            <div class="addon-icon">💬</div>
+            <div class="addon-name">WhatsApp Chat Integration</div>
+            <div class="addon-sub">Direct client communication button</div>
+            <div class="addon-price">+₹49</div>
             <div class="addon-tick">✓</div>
           </div>
-          <div class="addon-card" onclick="toggleAddon(this,199,'Dark/Light Mode')">
-            <div class="addon-icon">🌓</div>
-            <div class="addon-name">Dark/Light</div>
-            <div class="addon-sub">Theme switcher</div>
+          <div class="addon-card addon-card-v" onclick="toggleAddon(this,199,'SEO Optimization')">
+            <div class="addon-icon">🔍</div>
+            <div class="addon-name">SEO Optimization</div>
+            <div class="addon-sub">Google indexing + meta tags</div>
             <div class="addon-price">+₹199</div>
             <div class="addon-tick">✓</div>
           </div>
+          <div class="addon-card addon-card-v" onclick="toggleAddon(this,149,'Analytics Setup')">
+            <div class="addon-icon">📊</div>
+            <div class="addon-name">Analytics Setup</div>
+            <div class="addon-sub">Visitor tracking via Google Analytics</div>
+            <div class="addon-price">+₹149</div>
+            <div class="addon-tick">✓</div>
+          </div>
+          <div class="addon-card addon-card-v" onclick="toggleAddon(this,99,'Speed Optimization')">
+            <div class="addon-icon">⚡</div>
+            <div class="addon-name">Speed Optimization</div>
+            <div class="addon-sub">Faster loading, better Core Web Vitals</div>
+            <div class="addon-price">+₹99</div>
+            <div class="addon-tick">✓</div>
+          </div>
         </div>
+
 
         <div class="form-nav">
           <div></div>
@@ -1059,7 +1129,7 @@ nav {
     <div class="s-card">
       <div class="s-card-head"><span class="s-card-ico">🧾</span><div class="s-card-title">Order Summary</div></div>
       <div class="s-card-body">
-        <div class="sum-plan" id="sum-plan-name">⚡ Founding Offer</div>
+        <div class="sum-plan" id="sum-plan-name">Starter</div>
         <div class="sum-price">₹<span id="sum-plan-price">49</span><small> one-time</small></div>
         <div id="sum-addons-wrap" style="margin-bottom:.5rem;display:none">
           <div style="font-family:var(--fm);font-size:.56rem;color:var(--text3);letter-spacing:.1em;margin-bottom:.3rem;text-transform:uppercase">Add-ons</div>
@@ -1196,7 +1266,7 @@ console.log('[PF Firebase] ✅ Module loaded');
    STATE
 ════════════════════════════════════════════════════════ */
 var currentStep    = 1;
-var selectedPlan   = {name:'⚡ Founding Offer', price:49, id:'founding'};
+var selectedPlan   = {name:'Starter', price:49, id:'starter'};
 var addons         = [];
 var termsAccepted  = false;
 var selectedPayment= '';
