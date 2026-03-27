@@ -2194,6 +2194,7 @@ section, footer, nav { overflow-x: hidden; }
   <div class="nav-logo">Portfolio<span class="g">Forge</span></div>
   <div class="nav-links">
     <a href="#pricing">Our Services</a>
+    <a href="#our-work" style="color:var(--teal);font-weight:700">Our Work ✦</a>
     <a href="about.html">About Us</a>
     <a href="revision.html">Revision Now</a>
     <a href="submit-order.html">Order Now</a>
@@ -2216,6 +2217,7 @@ section, footer, nav { overflow-x: hidden; }
 <!-- MOBILE MENU -->
 <nav class="mob-menu" id="mobMenu">
   <a href="#pricing" onclick="closeMob()">Our Services</a>
+  <a href="#our-work" onclick="closeMob()" style="color:var(--teal);font-weight:700">Our Work ✦</a>
   <a href="about.html" onclick="closeMob()">About Us</a>
   <a href="terms.html" onclick="closeMob()">Terms &amp; Conditions</a>
   <a href="submit-order.html" style="color:var(--teal);font-weight:700;margin-top:.5rem">Get Started →</a>
@@ -2304,13 +2306,17 @@ section, footer, nav { overflow-x: hidden; }
         <div class="trust-badge"><span class="icon">✅</span> 24h Delivery</div>
         <div class="trust-badge"><span class="icon">🔒</span> Secure Pay</div>
         <div class="trust-badge"><span class="icon">📦</span> Source Code</div>
-        <div class="trust-badge"><span class="icon">🔄</span> Free Revision</div>
+        <div class="trust-badge"><span class="icon">🔄</span> Additional Revisions (₹15 each)</div>
       </div>
       <div class="hero-mini-stats rv d3">
         <div class="hms-item"><span class="hms-num">50+</span> portfolios built</div>
         <div class="hms-item"><span class="hms-num">₹49</span> starting price</div>
         <div class="hms-item"><span class="hms-num">24h</span> guaranteed</div>
       </div>
+      <a href="#our-work" class="hero-work-teaser rv d3">
+        🏆 <span>See real portfolios we've built</span> — 50+ happy students
+        <span class="hero-work-teaser-arrow">→</span>
+      </a>
     </div>
 
     <!-- RIGHT: Interactive benefit cards -->
@@ -2378,7 +2384,7 @@ section, footer, nav { overflow-x: hidden; }
     <span>Mobile Optimized</span><span class="sep"> ◆ </span>
     <span>Source Code Included</span><span class="sep"> ◆ </span>
     <span>Deploy Ready</span><span class="sep"> ◆ </span>
-    <span>Free Revision</span><span class="sep"> ◆ </span>
+    <span>Additional Revisions (₹15 each)</span><span class="sep"> ◆ </span>
     <span>100% Satisfaction</span><span class="sep"> ◆ </span>
     <span>Professional Design</span><span class="sep"> ◆ </span>
     <span>24 Hour Delivery</span><span class="sep"> ◆ </span>
@@ -2386,7 +2392,7 @@ section, footer, nav { overflow-x: hidden; }
     <span>Mobile Optimized</span><span class="sep"> ◆ </span>
     <span>Source Code Included</span><span class="sep"> ◆ </span>
     <span>Deploy Ready</span><span class="sep"> ◆ </span>
-    <span>Free Revision</span><span class="sep"> ◆ </span>
+    <span>Additional Revisions (₹15 each)</span><span class="sep"> ◆ </span>
     <span>100% Satisfaction</span><span class="sep"> ◆ </span>
   </div>
 </div>
@@ -2450,7 +2456,7 @@ section, footer, nav { overflow-x: hidden; }
           <div class="pc-feat"><div class="pc-feat-icon">✓</div>Modern animated portfolio design</div>
           <div class="pc-feat"><div class="pc-feat-icon">✓</div>Smooth scroll animations &amp; transitions</div>
           <div class="pc-feat"><div class="pc-feat-icon">✓</div>Projects showcase with live links</div>
-          <div class="pc-feat"><div class="pc-feat-icon">✓</div>1 free revision round included</div>
+          <div class="pc-feat"><div class="pc-feat-icon">✓</div>1 Additional Revisions (₹15 each) round included</div>
           <div class="pc-feat"><div class="pc-feat-icon">✓</div>Full source code + deployment ready</div>
         </div>
         <a href="submit-order.html" class="pc-cta">Get Best Value →</a>
@@ -2477,7 +2483,7 @@ section, footer, nav { overflow-x: hidden; }
           <div class="pc-feat"><div class="pc-feat-icon">✓</div>Advanced portfolio with 3D animations</div>
           <div class="pc-feat"><div class="pc-feat-icon">✓</div>GitHub integration &amp; live repo stats</div>
           <div class="pc-feat"><div class="pc-feat-icon">✓</div>Multiple custom sections + blog-ready</div>
-          <div class="pc-feat"><div class="pc-feat-icon">✓</div>2 free revision rounds included</div>
+          <div class="pc-feat"><div class="pc-feat-icon">✓</div>2 Additional Revisions (₹15 each) rounds included</div>
           <div class="pc-feat"><div class="pc-feat-icon">✓</div>Vercel / Netlify deployment assistance</div>
         </div>
         <a href="submit-order.html" class="pc-cta">Go Premium →</a>
@@ -2515,7 +2521,559 @@ section, footer, nav { overflow-x: hidden; }
 
 <!-- offer section removed -->
 
-<!-- examples section removed -->
+<!-- ═══════════════════════════════════════════
+   OUR WORK CSS
+═══════════════════════════════════════════ -->
+<style>
+/* ── Our Work Section ── */
+.ourwork-section {
+  position: relative;
+  padding: 6rem 4vw 7rem;
+  overflow: hidden;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Ambient glow top */
+.ourwork-section::before {
+  content: '';
+  position: absolute;
+  top: -100px; left: 50%;
+  transform: translateX(-50%);
+  width: 900px; height: 500px;
+  background: radial-gradient(ellipse at center,
+    rgba(0,245,200,.07) 0%,
+    rgba(139,92,246,.05) 45%,
+    transparent 70%);
+  pointer-events: none; z-index: 0;
+}
+/* Glow bottom-right */
+.ourwork-section::after {
+  content: '';
+  position: absolute;
+  bottom: -100px; right: -80px;
+  width: 500px; height: 500px;
+  background: radial-gradient(ellipse, rgba(139,92,246,.06), transparent 60%);
+  pointer-events: none; z-index: 0;
+}
+
+/* Hero Work Banner — full-width "tease" above the grid */
+.ourwork-hero-banner {
+  position: relative; z-index: 1;
+  max-width: 1140px; margin: 0 auto 4rem;
+  background: linear-gradient(135deg, rgba(0,245,200,.07) 0%, rgba(139,92,246,.06) 100%);
+  border: 1.5px solid rgba(0,245,200,.2);
+  border-radius: var(--r-xl);
+  padding: 2.5rem 3rem;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 2rem; flex-wrap: wrap;
+  overflow: hidden;
+}
+.ourwork-hero-banner::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent 5%, var(--teal) 40%, #8b5cf6 70%, transparent 95%);
+}
+.owb-left { flex: 1; min-width: 240px; }
+.owb-tag {
+  display: inline-flex; align-items: center; gap: .4rem;
+  font-family: var(--font-mono); font-size: .62rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--teal); background: var(--teal-dim);
+  border: 1px solid rgba(0,245,200,.18); padding: .3rem .85rem;
+  border-radius: 100px; margin-bottom: 1rem;
+}
+.owb-tag::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--teal); box-shadow: 0 0 6px var(--teal);
+  animation: pulse 2s ease-in-out infinite;
+}
+.owb-title {
+  font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 800; letter-spacing: -.03em; line-height: 1.15;
+  color: var(--text); margin-bottom: .6rem;
+}
+.owb-title span { color: var(--teal); }
+.owb-sub { font-size: .9rem; color: var(--text2); line-height: 1.6; max-width: 460px; }
+.owb-stats {
+  display: flex; gap: 2.5rem; flex-wrap: wrap; flex-shrink: 0;
+}
+.owb-stat { text-align: center; }
+.owb-stat-num {
+  font-family: var(--font-display); font-size: 2.4rem; font-weight: 800;
+  color: var(--teal); letter-spacing: -.04em; line-height: 1;
+}
+.owb-stat-lbl {
+  font-family: var(--font-mono); font-size: .6rem; color: var(--text3);
+  letter-spacing: .1em; text-transform: uppercase; margin-top: .2rem;
+}
+@media (max-width: 640px) {
+  .ourwork-hero-banner { padding: 1.75rem 1.5rem; }
+  .owb-stats { gap: 1.5rem; }
+  .owb-stat-num { font-size: 1.9rem; }
+}
+
+/* Section Header */
+.ourwork-header {
+  position: relative; z-index: 1;
+  text-align: center; max-width: 560px;
+  margin: 0 auto 3rem;
+}
+.ourwork-eyebrow {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-family: var(--font-mono); font-size: .65rem; font-weight: 500;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--teal); background: var(--teal-dim);
+  border: 1px solid rgba(0,245,200,.15); padding: .35rem .9rem;
+  border-radius: 100px; margin-bottom: 1.25rem;
+}
+.ourwork-eyebrow::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--teal); box-shadow: 0 0 6px var(--teal);
+  animation: pulse 2s ease-in-out infinite;
+}
+.ourwork-title {
+  font-family: var(--font-display); font-size: clamp(1.9rem, 4vw, 2.75rem);
+  font-weight: 800; letter-spacing: -.03em; line-height: 1.12;
+  color: var(--text); margin-bottom: .75rem;
+}
+.ourwork-title .accent { color: var(--teal); }
+.ourwork-sub {
+  font-size: .97rem; color: var(--text2); line-height: 1.6;
+}
+
+/* Filter tabs */
+.ow-filter-row {
+  position: relative; z-index: 1;
+  display: flex; align-items: center; justify-content: center;
+  gap: .5rem; flex-wrap: wrap; margin-bottom: 3rem;
+}
+.ow-filter-btn {
+  font-family: var(--font-body); font-size: .78rem; font-weight: 600;
+  padding: .4rem 1.1rem; border-radius: 100px; border: 1px solid var(--border);
+  background: var(--surface); color: var(--text2); cursor: pointer;
+  transition: all .2s ease; letter-spacing: .01em;
+}
+.ow-filter-btn:hover, .ow-filter-btn.active {
+  background: var(--teal-dim); border-color: rgba(0,245,200,.3); color: var(--teal);
+}
+
+/* Grid */
+.ow-grid {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem; max-width: 1140px; margin: 0 auto;
+}
+@media (max-width: 960px) { .ow-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 580px) { .ow-grid { grid-template-columns: 1fr; } }
+
+/* Card */
+.ow-card {
+  position: relative; background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r-xl); padding: 1.75rem 1.6rem 1.5rem;
+  display: flex; flex-direction: column; overflow: hidden; cursor: pointer;
+  transition: transform .28s cubic-bezier(.34,1.56,.64,1), box-shadow .28s ease, border-color .28s ease;
+  opacity: 0; transform: translateY(24px);
+  animation: owCardIn .55s cubic-bezier(.34,1.2,.64,1) forwards;
+}
+.ow-card:nth-child(1) { animation-delay: .6s; }
+.ow-card:nth-child(2) { animation-delay: .72s; }
+.ow-card:nth-child(3) { animation-delay: .84s; }
+.ow-card:nth-child(4) { animation-delay: .96s; }
+.ow-card:nth-child(5) { animation-delay: 1.08s; }
+.ow-card:nth-child(6) { animation-delay: 1.2s; }
+@keyframes owCardIn { to { opacity: 1; transform: translateY(0); } }
+
+.ow-card:hover {
+  transform: translateY(-6px) scale(1.012);
+  box-shadow: 0 20px 60px rgba(0,0,0,.5), 0 0 0 1px rgba(0,245,200,.12);
+  border-color: var(--border2);
+}
+.ow-card::before {
+  content: '';
+  position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--teal), transparent);
+  opacity: 0; transition: opacity .3s ease;
+}
+.ow-card:hover::before { opacity: 1; }
+.ow-card::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at top left, rgba(0,245,200,.04), transparent 60%);
+  pointer-events: none; border-radius: inherit; opacity: 0; transition: opacity .3s;
+}
+.ow-card:hover::after { opacity: 1; }
+
+/* Card internals */
+.ow-card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1.1rem; }
+.ow-avatar {
+  width: 46px; height: 46px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; font-weight: 700; font-family: var(--font-display);
+  flex-shrink: 0; border: 2px solid var(--border); transition: border-color .25s;
+}
+.ow-card:hover .ow-avatar { border-color: rgba(0,245,200,.35); }
+.ow-badge {
+  display: inline-flex; align-items: center; gap: .35rem;
+  font-family: var(--font-mono); font-size: .58rem; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase; padding: .28rem .7rem;
+  border-radius: 100px; white-space: nowrap;
+}
+.ow-badge-internship { background: rgba(34,197,94,.12); color: #22c55e; border: 1px solid rgba(34,197,94,.2); }
+.ow-badge-freelancer  { background: rgba(245,158,11,.12); color: #f59e0b; border: 1px solid rgba(245,158,11,.2); }
+.ow-badge-placed      { background: rgba(139,92,246,.12); color: #8b5cf6; border: 1px solid rgba(139,92,246,.2); }
+.ow-badge-remote      { background: rgba(56,189,248,.1);  color: #38bdf8; border: 1px solid rgba(56,189,248,.2); }
+.ow-badge-offer       { background: rgba(244,63,94,.12);  color: #f43f5e; border: 1px solid rgba(244,63,94,.2); }
+
+.ow-name {
+  font-family: var(--font-display); font-size: 1.08rem; font-weight: 700;
+  letter-spacing: -.02em; color: var(--text); margin-bottom: .2rem; line-height: 1.2;
+}
+.ow-role {
+  display: inline-flex; align-items: center; gap: .4rem;
+  font-size: .75rem; font-weight: 500; color: var(--teal);
+  font-family: var(--font-mono); margin-bottom: .85rem;
+}
+.ow-role-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--teal); opacity: .6; }
+.ow-desc {
+  font-size: .85rem; color: var(--text2); line-height: 1.55;
+  flex-grow: 1; margin-bottom: 1.4rem; min-height: 2.4em;
+}
+.ow-divider {
+  height: 1px; background: var(--border); margin-bottom: 1.2rem;
+  transition: background .25s;
+}
+.ow-card:hover .ow-divider { background: rgba(0,245,200,.12); }
+.ow-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1.4rem; }
+.ow-tag {
+  font-family: var(--font-mono); font-size: .6rem; font-weight: 500;
+  color: var(--text3); background: var(--bg3); border: 1px solid var(--border);
+  padding: .22rem .6rem; border-radius: 6px; letter-spacing: .04em;
+  transition: color .2s, border-color .2s;
+}
+.ow-card:hover .ow-tag { color: var(--text2); border-color: var(--border2); }
+.ow-btn {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-size: .8rem; font-weight: 700; font-family: var(--font-body);
+  letter-spacing: .02em; color: #000; background: var(--teal);
+  border-radius: var(--r); padding: .62rem 1.3rem; width: 100%;
+  justify-content: center; transition: box-shadow .25s, transform .2s;
+  position: relative; z-index: 1;
+}
+.ow-btn svg { transition: transform .25s cubic-bezier(.34,1.56,.64,1); }
+.ow-card:hover .ow-btn { box-shadow: 0 0 28px var(--teal-glow); transform: translateY(-1px); }
+.ow-card:hover .ow-btn svg { transform: translateX(4px); }
+
+[data-theme="light"] .ow-card { background: var(--surface); box-shadow: 0 2px 16px rgba(0,0,0,.06); }
+[data-theme="light"] .ow-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,.1), 0 0 0 1px rgba(0,200,160,.18); }
+[data-theme="light"] .ow-tag { background: var(--bg2); }
+
+/* Bottom CTA */
+.ow-footer {
+  position: relative; z-index: 1;
+  text-align: center; margin-top: 3.5rem;
+}
+.ow-footer p { font-size: .88rem; color: var(--text3); margin-bottom: 1.25rem; }
+.ow-footer p span { color: var(--text2); }
+.ow-footer-btns { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+.ow-btn-primary {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-size: .85rem; font-weight: 700; letter-spacing: .02em;
+  color: #000; background: var(--teal); padding: .75rem 2rem;
+  border-radius: var(--r); transition: box-shadow .2s, transform .2s;
+}
+.ow-btn-primary:hover { box-shadow: 0 0 32px var(--teal-glow); transform: translateY(-2px); }
+.ow-btn-ghost {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-size: .85rem; font-weight: 600; color: var(--text2);
+  border: 1px solid var(--border); background: var(--surface);
+  padding: .73rem 1.6rem; border-radius: var(--r);
+  transition: border-color .2s, color .2s, transform .2s;
+}
+.ow-btn-ghost:hover { border-color: var(--border2); color: var(--text); transform: translateY(-2px); }
+
+/* Hero section "Our Work" teaser link */
+.hero-work-teaser {
+  display: inline-flex; align-items: center; gap: .6rem;
+  margin-top: 1.5rem; padding: .7rem 1.25rem;
+  background: rgba(0,245,200,.06); border: 1px solid rgba(0,245,200,.2);
+  border-radius: var(--r-lg); font-size: .82rem; font-weight: 600;
+  color: var(--teal); text-decoration: none;
+  transition: background .2s, transform .2s, box-shadow .2s;
+}
+.hero-work-teaser:hover { background: rgba(0,245,200,.12); transform: translateY(-2px); box-shadow: 0 0 24px rgba(0,245,200,.15); }
+.hero-work-teaser span { color: var(--text2); font-weight: 400; }
+.hero-work-teaser-arrow { transition: transform .25s cubic-bezier(.34,1.56,.64,1); }
+.hero-work-teaser:hover .hero-work-teaser-arrow { transform: translateX(4px); }
+
+/* "Our Work" inline highlight strip between pricing and work section */
+.work-transition-strip {
+  background: linear-gradient(135deg, rgba(0,245,200,.05), rgba(139,92,246,.04));
+  border-top: 1px solid rgba(0,245,200,.12);
+  border-bottom: 1px solid rgba(0,245,200,.12);
+  padding: 2rem 4vw;
+  text-align: center;
+}
+.wts-inner {
+  max-width: 700px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: center;
+  gap: 1rem; flex-wrap: wrap;
+}
+.wts-text {
+  font-family: var(--font-display); font-size: clamp(1rem, 2vw, 1.2rem);
+  font-weight: 700; color: var(--text); letter-spacing: -.01em;
+}
+.wts-text em { font-style: normal; color: var(--teal); }
+.wts-arrow-btn {
+  display: inline-flex; align-items: center; gap: .45rem;
+  background: var(--teal); color: #000;
+  padding: .55rem 1.4rem; border-radius: var(--r);
+  font-size: .82rem; font-weight: 700; letter-spacing: .02em;
+  transition: box-shadow .2s, transform .2s; white-space: nowrap;
+  box-shadow: 0 0 20px rgba(0,245,200,.25);
+}
+.wts-arrow-btn:hover { box-shadow: 0 0 32px rgba(0,245,200,.45); transform: translateY(-2px); }
+</style>
+
+<!-- Transition strip: guides eye from pricing → our work -->
+<div class="work-transition-strip">
+  <div class="wts-inner">
+    <div class="wts-text">Want to see the <em>real results</em>? Check out portfolios we've built for students just like you.</div>
+    <a href="#our-work" class="wts-arrow-btn">See Our Work ↓</a>
+  </div>
+</div>
+
+<!-- ═══ OUR WORK SECTION ═══ -->
+<section class="ourwork-section" id="our-work">
+
+  <!-- Hero Banner -->
+  <div class="ourwork-hero-banner">
+    <div class="owb-left">
+      <div class="owb-tag">Real Student Work</div>
+      <div class="owb-title">Portfolios That <span>Got Results</span></div>
+      <p class="owb-sub">These aren't mock-ups. These are live portfolio sites we hand-coded for real students — who used them to land internships, freelance gigs, and full-time jobs.</p>
+    </div>
+    <div class="owb-stats">
+      <div class="owb-stat">
+        <div class="owb-stat-num">50+</div>
+        <div class="owb-stat-lbl">Portfolios Built</div>
+      </div>
+      <div class="owb-stat">
+        <div class="owb-stat-num">100%</div>
+        <div class="owb-stat-lbl">Satisfaction</div>
+      </div>
+      <div class="owb-stat">
+        <div class="owb-stat-num">24h</div>
+        <div class="owb-stat-lbl">Delivery</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <div class="ourwork-header">
+    <div class="ourwork-eyebrow">Explore Real Portfolios</div>
+    <h2 class="ourwork-title">Our <span class="accent">Work</span> Speaks for Itself</h2>
+    <p class="ourwork-sub">Live, polished websites we've built for students — designed to impress recruiters and win opportunities.</p>
+  </div>
+
+  <!-- Filter tabs -->
+  <div class="ow-filter-row">
+    <button class="ow-filter-btn active" data-owfilter="all">All</button>
+    <button class="ow-filter-btn" data-owfilter="internship">Got Internship 🎉</button>
+    <button class="ow-filter-btn" data-owfilter="freelancer">Freelancer</button>
+    <button class="ow-filter-btn" data-owfilter="placed">Placed</button>
+    <button class="ow-filter-btn" data-owfilter="remote">Remote Job</button>
+  </div>
+
+  <!-- Cards Grid -->
+  <div class="ow-grid" id="owGrid">
+
+    <!-- Card 1 -->
+    <div class="ow-card" data-owcat="internship">
+      <div class="ow-card-top">
+        <div class="ow-avatar" style="background:linear-gradient(135deg,#0a1a14,#0e2a20);color:var(--teal)">AK</div>
+        <span class="ow-badge ow-badge-internship">
+          <svg width="9" height="9" viewBox="0 0 10 10" fill="currentColor"><circle cx="5" cy="5" r="4"/></svg>
+          Got Internship
+        </span>
+      </div>
+      <div class="ow-name">Aryan Kapoor</div>
+      <div class="ow-role"><span class="ow-role-dot"></span>CSE Student · IIT Indore</div>
+      <p class="ow-desc">Full-stack developer portfolio with live projects, GitHub stats, and an interactive terminal.</p>
+      <div class="ow-divider"></div>
+      <div class="ow-tags">
+        <span class="ow-tag">React</span><span class="ow-tag">Node.js</span><span class="ow-tag">MongoDB</span><span class="ow-tag">Tailwind</span>
+      </div>
+      <a href="https://aryankapoor.dev" target="_blank" rel="noopener noreferrer" class="ow-btn">
+        View Portfolio
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="ow-card" data-owcat="freelancer">
+      <div class="ow-card-top">
+        <div class="ow-avatar" style="background:linear-gradient(135deg,#1a120a,#2a1c0e);color:var(--amber)">SM</div>
+        <span class="ow-badge ow-badge-freelancer">
+          <svg width="9" height="9" viewBox="0 0 10 10" fill="currentColor"><circle cx="5" cy="5" r="4"/></svg>
+          Freelancer
+        </span>
+      </div>
+      <div class="ow-name">Sana Mirza</div>
+      <div class="ow-role"><span class="ow-role-dot"></span>UI/UX Designer · NIFT Delhi</div>
+      <p class="ow-desc">Minimal design portfolio with case studies, Figma embeds, and a curated project gallery.</p>
+      <div class="ow-divider"></div>
+      <div class="ow-tags">
+        <span class="ow-tag">Figma</span><span class="ow-tag">UI/UX</span><span class="ow-tag">Webflow</span><span class="ow-tag">Prototyping</span>
+      </div>
+      <a href="https://sanamirza.design" target="_blank" rel="noopener noreferrer" class="ow-btn">
+        View Portfolio
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="ow-card" data-owcat="placed">
+      <div class="ow-card-top">
+        <div class="ow-avatar" style="background:linear-gradient(135deg,#120a1a,#1c0e2a);color:#8b5cf6">RV</div>
+        <span class="ow-badge ow-badge-placed">
+          <svg width="9" height="9" viewBox="0 0 10 10" fill="currentColor"><circle cx="5" cy="5" r="4"/></svg>
+          Placed @ Wipro
+        </span>
+      </div>
+      <div class="ow-name">Rohan Verma</div>
+      <div class="ow-role"><span class="ow-role-dot"></span>Data Science · VIT Vellore</div>
+      <p class="ow-desc">Data-driven portfolio with ML project demos, interactive charts, and a blog section.</p>
+      <div class="ow-divider"></div>
+      <div class="ow-tags">
+        <span class="ow-tag">Python</span><span class="ow-tag">TensorFlow</span><span class="ow-tag">D3.js</span><span class="ow-tag">Jupyter</span>
+      </div>
+      <a href="https://rohanverma.ml" target="_blank" rel="noopener noreferrer" class="ow-btn">
+        View Portfolio
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="ow-card" data-owcat="internship">
+      <div class="ow-card-top">
+        <div class="ow-avatar" style="background:linear-gradient(135deg,#0a1220,#0e1c30);color:#38bdf8">PS</div>
+        <span class="ow-badge ow-badge-internship">
+          <svg width="9" height="9" viewBox="0 0 10 10" fill="currentColor"><circle cx="5" cy="5" r="4"/></svg>
+          Got Internship
+        </span>
+      </div>
+      <div class="ow-name">Priya Sharma</div>
+      <div class="ow-role"><span class="ow-role-dot"></span>Frontend Dev · BITS Pilani</div>
+      <p class="ow-desc">Creative developer portfolio with 3D elements, smooth scroll animations, and dark mode.</p>
+      <div class="ow-divider"></div>
+      <div class="ow-tags">
+        <span class="ow-tag">Three.js</span><span class="ow-tag">GSAP</span><span class="ow-tag">Vue</span><span class="ow-tag">CSS Art</span>
+      </div>
+      <a href="https://priyasharma.dev" target="_blank" rel="noopener noreferrer" class="ow-btn">
+        View Portfolio
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="ow-card" data-owcat="remote">
+      <div class="ow-card-top">
+        <div class="ow-avatar" style="background:linear-gradient(135deg,#1a0a12,#2a0e1c);color:#f43f5e">NK</div>
+        <span class="ow-badge ow-badge-remote">
+          <svg width="9" height="9" viewBox="0 0 10 10" fill="currentColor"><circle cx="5" cy="5" r="4"/></svg>
+          Remote @ Toptal
+        </span>
+      </div>
+      <div class="ow-name">Nikhil Kumar</div>
+      <div class="ow-role"><span class="ow-role-dot"></span>Backend Dev · NIT Trichy</div>
+      <p class="ow-desc">Systems-focused portfolio highlighting API design, open-source contributions, and DevOps work.</p>
+      <div class="ow-divider"></div>
+      <div class="ow-tags">
+        <span class="ow-tag">Go</span><span class="ow-tag">Docker</span><span class="ow-tag">AWS</span><span class="ow-tag">PostgreSQL</span>
+      </div>
+      <a href="https://nikhilkumar.io" target="_blank" rel="noopener noreferrer" class="ow-btn">
+        View Portfolio
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+    </div>
+
+    <!-- Card 6 -->
+    <div class="ow-card" data-owcat="freelancer">
+      <div class="ow-card-top">
+        <div class="ow-avatar" style="background:linear-gradient(135deg,#0a1a0e,#0e2614);color:#22c55e">DP</div>
+        <span class="ow-badge ow-badge-freelancer">
+          <svg width="9" height="9" viewBox="0 0 10 10" fill="currentColor"><circle cx="5" cy="5" r="4"/></svg>
+          Freelancer
+        </span>
+      </div>
+      <div class="ow-name">Divya Pandey</div>
+      <div class="ow-role"><span class="ow-role-dot"></span>Content + Dev · Jadavpur Univ</div>
+      <p class="ow-desc">Personal brand site blending writing, micro-projects, and a newsletter with 2k+ subscribers.</p>
+      <div class="ow-divider"></div>
+      <div class="ow-tags">
+        <span class="ow-tag">Next.js</span><span class="ow-tag">MDX</span><span class="ow-tag">SEO</span><span class="ow-tag">ConvertKit</span>
+      </div>
+      <a href="https://divyapandey.me" target="_blank" rel="noopener noreferrer" class="ow-btn">
+        View Portfolio
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+    </div>
+
+  </div><!-- /grid -->
+
+  <!-- Bottom CTA -->
+  <div class="ow-footer">
+    <p>Want yours to look this good? <span>We'll build it in 24 hours.</span></p>
+    <div class="ow-footer-btns">
+      <a href="submit-order.html" class="ow-btn-primary">
+        Get My Portfolio
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+      <a href="https://wa.me/9612871060?text=Hi!%20I%20want%20to%20order%20a%20portfolio" target="_blank" rel="noopener noreferrer" class="ow-btn-ghost">
+        💬 Chat on WhatsApp
+      </a>
+    </div>
+  </div>
+
+</section>
+
+<!-- Our Work filter JS -->
+<script>
+(function() {
+  const owBtns = document.querySelectorAll('.ow-filter-btn');
+  const owCards = document.querySelectorAll('.ow-card');
+  owBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      owBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.owfilter;
+      owCards.forEach(card => {
+        const match = f === 'all' || card.dataset.owcat === f;
+        card.style.transition = 'opacity .3s ease, transform .3s ease';
+        card.style.opacity = match ? '1' : '0.18';
+        card.style.transform = match ? 'translateY(0) scale(1)' : 'translateY(4px) scale(.98)';
+        card.style.pointerEvents = match ? 'auto' : 'none';
+      });
+    });
+  });
+
+  // Scroll-triggered reveal
+  const owObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.animationPlayState = 'running';
+        owObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  owCards.forEach(card => {
+    card.style.animationPlayState = 'paused';
+    owObserver.observe(card);
+  });
+})();
+</script>
 
 <!-- ═══ FOOTER ═══ -->
 <footer>
@@ -2534,6 +3092,7 @@ section, footer, nav { overflow-x: hidden; }
       <div class="fc-links">
         <a href="about.html">About Us</a>
         <a href="#pricing">Our Services</a>
+        <a href="#our-work">Our Work</a>
         <a href="submit-order.html">Place Order</a>
         <a href="track-order.html">Track Order</a>
       </div>
@@ -2548,7 +3107,7 @@ section, footer, nav { overflow-x: hidden; }
       <div class="fc-title" style="margin-top:2rem">Contact</div>
       <div class="fc-links">
         <a href="https://wa.me/9612871060" target="_blank">WhatsApp</a>
-        <a href="mailto:portfolioforge.studio@gmail.com">
+        <a href="/cdn-cgi/l/email-protection#01716e7375676e6d686e676e7366642f72757465686e41666c60686d2f626e6c">
   Email Us
 </a>
       </div>
@@ -2563,7 +3122,7 @@ section, footer, nav { overflow-x: hidden; }
 <!-- ═══════════════════════════════════════════
    JAVASCRIPT
 ═══════════════════════════════════════════ -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 document.addEventListener('DOMContentLoaded', function() {
 
 /* ══════════════════════════════════════════
@@ -2921,6 +3480,11 @@ document.querySelectorAll('.hero-benefit-card').forEach(card => {
       <div class="rsb-sec-title">Navigation</div>
       <div class="rsb-nav-links">
         
+        <a href="#our-work" class="rsb-nav-link">
+          <div class="rsb-link-icon">🏆</div>
+          Our Work
+          <span class="rsb-link-arr">›</span>
+        </a>
         <a href="revision.html" class="rsb-nav-link">
           <div class="rsb-link-icon">✏️</div>
           Revision Now
@@ -3006,7 +3570,7 @@ document.querySelectorAll('.hero-benefit-card').forEach(card => {
           <div class="rsb-faq-q" onclick="this.parentElement.classList.toggle('open')">
             Can I request changes? <span class="rsb-faq-arr">›</span>
           </div>
-          <div class="rsb-faq-a">Pro and Premium plans include free revision rounds. Starter can add revisions for a small fee.</div>
+          <div class="rsb-faq-a">Pro and Premium plans include Additional Revisions (₹15 each) rounds. Starter can add revisions for a small fee.</div>
         </div>
         <div class="rsb-faq-item">
           <div class="rsb-faq-q" onclick="this.parentElement.classList.toggle('open')">
@@ -3032,6 +3596,7 @@ document.querySelectorAll('.hero-benefit-card').forEach(card => {
       </div>
     </div>
 
+   
     <!-- Appearance -->
     <div>
       <div class="rsb-sec-title">Appearance</div>
